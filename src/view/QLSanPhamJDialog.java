@@ -89,30 +89,28 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         }
     }
 
-    public SanPham readForm() {
+    public SanPham readFormSanPham() {
         return new SanPham(txtTenSP.getText(), cboHang.getSelectedItem() + "", rdoHoatDong.isSelected() ? 1 : 0, Double.parseDouble(txtGiaTien.getText()));
     }
 
-    public CTSanPham readRead() {
+    public CTSanPham readFormCTSP() {
         CTSanPham chiTietSanPham = new CTSanPham();
-//        chiTietSanPham.setXuatXu(Integer.parseInt(cboXuatXu.getSelectedItem()));
-//        chiTietSanPham.setMauSac(cboMauSac.getSelectedItem());
-//        chiTietSanPham.setXuatXu(lblHinhSP.getSelectedItem());
-//        chiTietSanPham.setXuatXu(cboXuatXu.getSelectedItem());
-//        chiTietSanPham.setXuatXu(cboXuatXu.getSelectedItem());
-//        chiTietSanPham.setSize(cboSize.getSelectedItem());
-//        chiTietSanPham.setMoTa(txtMoTa.getText());
-        
+        chiTietSanPham.setXuatXu(cboXuatXu.getSelectedIndex());
+        chiTietSanPham.setMauSac(cboMauSac.getSelectedIndex());
+        chiTietSanPham.setHinhAnh(lblHinhSP.getToolTipText());
+        chiTietSanPham.setSize(cboXuatXu.getSelectedIndex());
+        chiTietSanPham.setMoTa(txtMoTa.getText());
+
         return chiTietSanPham;
     }
 
     public void insert() {
-        if (SPDao.insert(readForm())) {
-            fillTable();
-        }
-        if (CTSPDao.insert(readRead())) {
-            JOptionPane.showMessageDialog(this, "Đã thêm");
-            fillTable();
+
+        if (CTSPDao.insert(readFormCTSP())) {
+            if (SPDao.insert(readFormSanPham())) {
+                JOptionPane.showMessageDialog(this, "Đã thêm");
+                fillTable();
+            }
         }
     }
 
