@@ -25,6 +25,18 @@ public class CTSanPham {
         this.size = size;
     }
 
+    public CTSanPham(String xuatXu, String mauSac, String hinhAnh, String moTa, int size) {
+        this.xuatXu = xuatXu;
+        this.mauSac = mauSac;
+        this.hinhAnh = hinhAnh;
+        this.moTa = moTa;
+        this.size = size;
+    }
+
+    
+    
+    
+
     public String getIdCTSP() {
         return idCTSP;
     }

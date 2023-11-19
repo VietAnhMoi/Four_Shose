@@ -25,6 +25,15 @@ public class SanPham {
         this.giaTien = giaTien;
     }
 
+    public SanPham(String tenSP, String hang, int trangThai, double giaTien) {
+        this.tenSP = tenSP;
+        this.hang = hang;
+        this.trangThai = trangThai;
+        this.giaTien = giaTien;
+    }
+    
+    
+
     public int getIdSP() {
         return idSP;
     }
