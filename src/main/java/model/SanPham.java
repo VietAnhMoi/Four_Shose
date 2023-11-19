@@ -9,32 +9,28 @@ package model;
  * @author Viet Anh
  */
 public class SanPham {
-    private String IDSP, tenSP, hang;
+    private int idSP;
+    private String tenSP, hang;
     private int trangThai;
+    private double giaTien;
 
     public SanPham() {
     }
 
-    public SanPham(String IDSP, String tenSP, String hang, int trangThai) {
-        this.IDSP = IDSP;
+    public SanPham(int idSP, String tenSP, String hang, int trangThai, double giaTien) {
+        this.idSP = idSP;
         this.tenSP = tenSP;
         this.hang = hang;
         this.trangThai = trangThai;
+        this.giaTien = giaTien;
     }
 
-    public boolean isTrangThai() {
-        if (trangThai == 0) {
-            return false;
-        }
-        return true;
-    }
-    
-    public String getIDSP() {
-        return IDSP;
+    public int getIdSP() {
+        return idSP;
     }
 
-    public void setIDSP(String IDSP) {
-        this.IDSP = IDSP;
+    public void setIdSP(int idSP) {
+        this.idSP = idSP;
     }
 
     public String getTenSP() {
@@ -60,8 +56,18 @@ public class SanPham {
     public void setTrangThai(int trangThai) {
         this.trangThai = trangThai;
     }
+
+    public double getGiaTien() {
+        return giaTien;
+    }
+
+    public void setGiaTien(double giaTien) {
+        this.giaTien = giaTien;
+    }
+
+    
      
     public Object[] toData() {
-        return new Object[] {IDSP, tenSP, hang, trangThai};
+        return new Object[] {idSP, tenSP, hang,giaTien, trangThai};
     }
 }

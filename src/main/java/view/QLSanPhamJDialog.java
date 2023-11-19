@@ -4,12 +4,21 @@
  */
 package view;
 
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import model.CTSanPham;
+import model.SanPham;
+import service.CTSanPhamService;
+import service.SanPhamService;
+
 /**
  *
  * @author Viet Anh
  */
 public class QLSanPhamJDialog extends javax.swing.JDialog {
-
+    SanPhamService SPDao = new SanPhamService();
+    CTSanPhamService CTSPDao = new CTSanPhamService();
+    DefaultTableModel tblModel = new DefaultTableModel();
     /**
      * Creates new form QLSanPhamJDialog
      */
@@ -17,6 +26,16 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
+        fillTable();
+    }
+    
+    public void fillTable() {
+        tblModel.setRowCount(0);
+        tblModel = (DefaultTableModel) tblQLSanPham.getModel();
+        List<SanPham> list = SPDao.getAll();
+        for (SanPham x : list) {
+            tblModel.addRow(x.toData());
+        }
     }
 
     /**
@@ -200,10 +219,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
 
         tblQLSanPham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "ID", "Tên SP", "Hãng", "Giá Bán", "Trạng Thái"

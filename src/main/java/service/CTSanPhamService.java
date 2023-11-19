@@ -1,3 +1,5 @@
+
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -6,29 +8,28 @@ package service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import model.CTSanPham;
-import model.SanPham;
-import java.sql.*;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import model.CTSanPham;
+import model.SanPham;
+
 /**
  *
  * @author Viet Anh
  */
-public class SanPhamService {
-    public List<SanPham> getAll() {
+public class CTSanPhamService {
+    public List<CTSanPham> getAll() {
         try {
-            String sql = "SELECT [ID],[TENSANPHAM],[HANG],[GIAITEN],[TRANGTHAI] FROM [dbo].[SANPHAM]";
+            String sql = "";
             try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 try(ResultSet rs = ps.executeQuery();) {
-                    List<SanPham> list = new ArrayList<>();
+                    List<CTSanPham> list = new ArrayList<>();
                     while (rs.next()) {                        
-                        SanPham x = new SanPham();
-                        x.setIdSP(rs.getInt("id"));
-                        x.setTenSP(rs.getString("TENSANPHAM"));
-                        x.setHang(rs.getString("Hang"));
-                        x.setGiaTien(rs.getDouble("GIAITEN"));
-                        x.setTrangThai(rs.getInt("trangThai"));
+                        CTSanPham x = new CTSanPham();
+                        x.setHinhAnh(rs.getString("HinhAnh"));
+                        x.setMauSac(rs.getString("MauSac"));
+                        x.setMoTa(rs.getString("MoTa"));
                         
                         list.add(x);
                     }
