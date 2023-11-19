@@ -77,4 +77,24 @@ public class SanPhamService {
             return null;
         }
     }
+    
+    public List<SanPham> getID() {
+        try {
+            String sql = "SELECT ID FROM dbo.SANPHAM";
+            try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                try(ResultSet rs = ps.executeQuery();) {
+                    List<SanPham> list = new ArrayList<>();
+                    while (rs.next()) {                        
+                        SanPham x = new SanPham();
+                        x.setIdSP(rs.getInt("ID"));
+                        list.add(x);
+                    }
+                    return list;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
