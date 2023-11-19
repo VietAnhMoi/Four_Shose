@@ -18,7 +18,7 @@ import java.util.List;
 public class SanPhamService {
     public List<SanPham> getAll() {
         try {
-            String sql = "SELECT [ID],[TENSANPHAM],[HANG],[GIAITEN],[TRANGTHAI] FROM [dbo].[SANPHAM]";
+            String sql = "SELECT ID,TENSANPHAM,HANG,GIAITEN,TRANGTHAI FROM dbo.SANPHAM";
             try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 try(ResultSet rs = ps.executeQuery();) {
                     List<SanPham> list = new ArrayList<>();
@@ -43,7 +43,7 @@ public class SanPhamService {
     
     public boolean insert(SanPham x) {
         try {
-            String sql = "INSERT INTO [dbo].[SANPHAM]([TENSANPHAM],[HANG],[GIAITEN],[TRANGTHAI]) values (?,?,?,?)";
+            String sql = "INSERT INTO dbo.SANPHAM (TENSANPHAM,HANG,GIAITEN,TRANGTHAI) values (?,?,?,?)";
             try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 ps.setObject(1, x.getTenSP());
                 ps.setObject(2, x.getHang());
@@ -60,7 +60,7 @@ public class SanPhamService {
     
     public List<SanPham> getHang() {
         try {
-            String sql = "SELECT [HANG] FROM [dbo].[SANPHAM]";
+            String sql = "SELECT HANG FROM dbo.SANPHAM";
             try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 try(ResultSet rs = ps.executeQuery();) {
                     List<SanPham> list = new ArrayList<>();

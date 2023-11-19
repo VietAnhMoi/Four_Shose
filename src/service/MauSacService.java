@@ -19,12 +19,13 @@ import model.MauSac;
 public class MauSacService {
     public List<MauSac> getAll() {
         try {
-            String sql = "select tenmau from mauSac";
+            String sql = "select id, tenmau from mauSac";
             try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 try(ResultSet rs = ps.executeQuery();) {
                     List<MauSac> list = new ArrayList<>();
                     while (rs.next()) {                        
                         MauSac x = new MauSac();
+                        x.setId(rs.getInt("ID"));
                         x.setMauSac(rs.getString("tenmau"));
                         list.add(x);
                     }
