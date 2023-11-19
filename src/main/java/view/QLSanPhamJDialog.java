@@ -9,13 +9,11 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.CTSanPham;
-import model.Hang;
 import model.MauSac;
 import model.SanPham;
 import model.Size;
 import model.XuatXu;
 import service.CTSanPhamService;
-import service.HangService;
 import service.MauSacService;
 import service.SanPhamService;
 import service.SizeService;
@@ -31,7 +29,6 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
     DefaultTableModel tblModel = new DefaultTableModel();
     MauSacService mauSacDao = new MauSacService();
     SizeService sizeDao = new SizeService();
-    HangService hangDao = new HangService();
     XuatXuService xuatXuDao = new XuatXuService();
     int index = -1;
     /**
@@ -75,7 +72,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
     public void fillHang() {
         DefaultComboBoxModel model = (DefaultComboBoxModel) cboHang.getModel();
         model.removeAllElements();
-        List<SanPham> list = SPDao.getAll();
+        List<SanPham> list = SPDao.getHang();
         for (SanPham x : list) {
             model.addElement(String.valueOf(x.getHang()));
         }
@@ -186,11 +183,6 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
 
         buttonGroup1.add(rdoKhongHD);
         rdoKhongHD.setText("Không Hoạt Động");
-
-        cboHang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cboXuatXu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mỹ ", "Việt Nam", "Trung Quốc", "Nhật Bản" }));
-        cboXuatXu.setSelectedIndex(1);
 
         jLabel9.setText("Màu Sắc");
 
@@ -322,11 +314,6 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
                 "ID", "Tên SP", "Hãng", "Giá Bán", "Trạng Thái"
             }
         ));
-        tblQLSanPham.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblQLSanPhamMouseClicked(evt);
-            }
-        });
         jScrollPane2.setViewportView(tblQLSanPham);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -393,17 +380,12 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         fillMauSac();
         fillSize();
         fillHang();
-//        fillXuatXu();
+        fillXuatXu();
     }//GEN-LAST:event_formWindowOpened
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         insert();
     }//GEN-LAST:event_btnThemActionPerformed
-
-    private void tblQLSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblQLSanPhamMouseClicked
-//        index = tblQLSanPham.getSelectedRow();
-//        fillForm(index);
-    }//GEN-LAST:event_tblQLSanPhamMouseClicked
 
     /**
      * @param args the command line arguments

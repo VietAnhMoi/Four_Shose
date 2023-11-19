@@ -46,7 +46,7 @@ public class SanPhamService {
             String sql = "INSERT INTO [dbo].[SANPHAM]([TENSANPHAM],[HANG],[GIAITEN],[TRANGTHAI]) values (?,?,?,?)";
             try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 ps.setObject(1, x.getTenSP());
-                ps.setObject(2, String.valueOf(x.getHang()));
+                ps.setObject(2, x.getHang());
                 ps.setObject(3, x.getGiaTien());
                 ps.setObject(4, x.getTrangThai());
                 
@@ -55,6 +55,26 @@ public class SanPhamService {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+    }
+    
+    public List<SanPham> getHang() {
+        try {
+            String sql = "SELECT [HANG] FROM [dbo].[SANPHAM]";
+            try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                try(ResultSet rs = ps.executeQuery();) {
+                    List<SanPham> list = new ArrayList<>();
+                    while (rs.next()) {                        
+                        SanPham x = new SanPham();
+                        x.setHang(rs.getString("Hang"));
+                        list.add(x);
+                    }
+                    return list;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

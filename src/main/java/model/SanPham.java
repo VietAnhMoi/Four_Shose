@@ -74,18 +74,18 @@ public class SanPham {
         this.giaTien = giaTien;
     }
 
-    public String isHang() {
-        if (hang.equals(1)) {
-            return "Mỹ";
-        } else if (hang.equals(2)) {
-            return "Việt Nam";
-        } else if (hang.equals(3)) {
-            return "Trung Quốc";
-        } else {
-            return "Nhật Bản";
-        }
-    }
-     
+//    public String isHang() {
+//        if (hang.equals(1)) {
+//            return "Mỹ";
+//        } else if (hang.equals(2)) {
+//            return "Việt Nam";
+//        } else if (hang.equals(3)) {
+//            return "Trung Quốc";
+//        } else {
+//            return "Nhật Bản";
+//        }
+//    }
+//     
     public Object[] toData() {
         return new Object[] {idSP, tenSP, hang,giaTien, trangThai};
     }
