@@ -58,7 +58,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         model.removeAllElements();
         List<MauSac> list = mauSacDao.getAll();
         for (MauSac x : list) {
-            model.addElement(x.getMauSac());
+            model.addElement(x.getMauSac()+"");
         }
     }
 
@@ -193,6 +193,8 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
 
         buttonGroup1.add(rdoKhongHD);
         rdoKhongHD.setText("Không Hoạt Động");
+
+        cboHang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
 
         jLabel9.setText("Màu Sắc");
 
