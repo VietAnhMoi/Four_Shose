@@ -24,6 +24,7 @@ import service.XuatXuService;
  * @author Viet Anh
  */
 public class QLSanPhamJDialog extends javax.swing.JDialog {
+
     SanPhamService SPDao = new SanPhamService();
     CTSanPhamService CTSPDao = new CTSanPhamService();
     DefaultTableModel tblModel = new DefaultTableModel();
@@ -31,6 +32,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
     SizeService sizeDao = new SizeService();
     XuatXuService xuatXuDao = new XuatXuService();
     int index = -1;
+
     /**
      * Creates new form QLSanPhamJDialog
      */
@@ -40,7 +42,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         fillTable();
     }
-    
+
     public void fillTable() {
         tblModel.setRowCount(0);
         tblModel = (DefaultTableModel) tblQLSanPham.getModel();
@@ -50,7 +52,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         }
         tblModel.fireTableDataChanged();
     }
-    
+
     public void fillMauSac() {
         DefaultComboBoxModel model = (DefaultComboBoxModel) cboMauSac.getModel();
         model.removeAllElements();
@@ -59,7 +61,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
             model.addElement(x.getMauSac());
         }
     }
-    
+
     public void fillSize() {
         DefaultComboBoxModel model = (DefaultComboBoxModel) cboSize.getModel();
         model.removeAllElements();
@@ -68,7 +70,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
             model.addElement(x.getSize());
         }
     }
-    
+
     public void fillHang() {
         DefaultComboBoxModel model = (DefaultComboBoxModel) cboHang.getModel();
         model.removeAllElements();
@@ -77,7 +79,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
             model.addElement(String.valueOf(x.getHang()));
         }
     }
-    
+
     public void fillXuatXu() {
         DefaultComboBoxModel model = (DefaultComboBoxModel) cboXuatXu.getModel();
         model.removeAllElements();
@@ -86,31 +88,41 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
             model.addElement(x.getXuatXu());
         }
     }
-    
+
     public SanPham readForm() {
-        return new SanPham(txtTenSP.getText(), cboHang.getSelectedItem()+"", rdoHoatDong.isSelected() ? 1 : 0, Double.parseDouble(txtGiaTien.getText()));
+        return new SanPham(txtTenSP.getText(), cboHang.getSelectedItem() + "", rdoHoatDong.isSelected() ? 1 : 0, Double.parseDouble(txtGiaTien.getText()));
     }
-    
+
     public CTSanPham readRead() {
-        return new CTSanPham(cboXuatXu.getSelectedItem()+"", cboMauSac.getSelectedItem()+"", lblHinhSP.getToolTipText(), txtMoTa.getText(), Integer.parseInt(cboSize.getSelectedItem()+""));
+        CTSanPham chiTietSanPham = new CTSanPham();
+//        chiTietSanPham.setXuatXu(Integer.parseInt(cboXuatXu.getSelectedItem()));
+//        chiTietSanPham.setMauSac(cboMauSac.getSelectedItem());
+//        chiTietSanPham.setXuatXu(lblHinhSP.getSelectedItem());
+//        chiTietSanPham.setXuatXu(cboXuatXu.getSelectedItem());
+//        chiTietSanPham.setXuatXu(cboXuatXu.getSelectedItem());
+//        chiTietSanPham.setSize(cboSize.getSelectedItem());
+//        chiTietSanPham.setMoTa(txtMoTa.getText());
+        
+        return chiTietSanPham;
     }
-    
+
     public void insert() {
         if (SPDao.insert(readForm())) {
-            if (CTSPDao.insert(readRead())) {
-                JOptionPane.showMessageDialog(this, "Đã thêm");
-                fillTable();
-            }
+            fillTable();
+        }
+        if (CTSPDao.insert(readRead())) {
+            JOptionPane.showMessageDialog(this, "Đã thêm");
+            fillTable();
         }
     }
-    
+
     public void fillForm(int index) {
         SanPham x = SPDao.getAll().get(index);
         CTSanPham s = CTSPDao.getAll().get(index);
         txtGiaTien.setText(String.valueOf(x.getGiaTien()));
         txtMoTa.setText(String.valueOf(s.getMoTa()));
         txtTenSP.setText(x.getTenSP());
-        cboHang.setSelectedItem(x.getHang()+"");
+        cboHang.setSelectedItem(x.getHang() + "");
         cboMauSac.setSelectedItem(s.getMauSac());
         cboSize.setSelectedItem(s.getSize());
         cboXuatXu.setSelectedItem(s.getXuatXu());

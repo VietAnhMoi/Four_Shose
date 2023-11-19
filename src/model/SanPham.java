@@ -86,7 +86,15 @@ public class SanPham {
 //        }
 //    }
 //     
+    
+    public String isHang() {
+        if (trangThai == 0) {
+            return "Không Hoạt Động";
+        }
+        return "Hoạt Động";
+    }
+    
     public Object[] toData() {
-        return new Object[] {idSP, tenSP, hang,giaTien, trangThai};
+        return new Object[] {idSP, tenSP, hang,giaTien, isHang()};
     }
 }

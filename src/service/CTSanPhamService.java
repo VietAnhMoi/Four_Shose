@@ -1,5 +1,3 @@
-
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -19,18 +17,20 @@ import model.SanPham;
  * @author Viet Anh
  */
 public class CTSanPhamService {
+
     public List<CTSanPham> getAll() {
         try {
-            String sql = "SELECT [IDXUATXU],[IDMAUSAC],[IDSIZE],[HINHANH],[MOTA]FROM [dbo].[CHITIETSANPHAM]";
-            try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
-                try(ResultSet rs = ps.executeQuery();) {
+            String sql = "SELECT IDXUATXU,IDMAUSAC,IDSIZE,HINHANH,MOTA FROM dbo.CHITIETSANPHAM";
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                try (ResultSet rs = ps.executeQuery();) {
                     List<CTSanPham> list = new ArrayList<>();
-                    while (rs.next()) {                        
+                    while (rs.next()) {
                         CTSanPham x = new CTSanPham();
+                        x.setXuatXu(rs.getInt("IDXUATXU"));
+                        x.setMauSac(rs.getInt("IDMAUSAC"));
+                        x.setSize(rs.getInt("IDSIZE"));
                         x.setHinhAnh(rs.getString("HinhAnh"));
-                        x.setMauSac(rs.getString("MauSac"));
                         x.setMoTa(rs.getString("MoTa"));
-                        
                         list.add(x);
                     }
                     return list;
@@ -41,17 +41,17 @@ public class CTSanPhamService {
             return null;
         }
     }
-    
+
     public boolean insert(CTSanPham x) {
         try {
-            String sql = "INSERT INTO [dbo].[CHITIETSANPHAM] ([IDXUATXU],[IDMAUSAC],[IDSIZE],[HINHANH],[MOTA]) values (?,?,?,?,?)";
-            try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
-                ps.setObject(1, x.getXuatXu());
-                ps.setObject(2, x.getMauSac());
-                ps.setObject(3, x.getSize());
-                ps.setObject(4, x.getHinhAnh());
-                ps.setObject(5, x.getMoTa());
-                
+            String sql = "INSERT INTO CHITIETSANPHAM (IDXUATXU, IDMAUSAC, IDSIZE, HINHANH, MOTA) values (?,?,?,?,?)";
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                ps.setInt(1, x.getXuatXu());
+                ps.setInt(2, x.getMauSac());
+                ps.setInt(3, x.getSize());
+                ps.setString(4, x.getHinhAnh());
+                ps.setString(5, x.getMoTa());
+
                 return ps.executeUpdate() > 0;
             }
         } catch (Exception e) {
