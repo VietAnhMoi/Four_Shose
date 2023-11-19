@@ -40,4 +40,21 @@ public class SanPhamService {
             return null;
         }
     }
+    
+    public boolean insert(SanPham x) {
+        try {
+            String sql = "INSERT INTO [dbo].[SANPHAM]([TENSANPHAM],[HANG],[GIAITEN],[TRANGTHAI]) values (?,?,?,?)";
+            try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                ps.setObject(1, x.getTenSP());
+                ps.setObject(2, String.valueOf(x.getHang()));
+                ps.setObject(3, x.getGiaTien());
+                ps.setObject(4, x.getTrangThai());
+                
+                return ps.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

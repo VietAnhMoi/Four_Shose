@@ -6,6 +6,7 @@ package view;
 
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.CTSanPham;
 import model.Hang;
@@ -32,6 +33,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
     SizeService sizeDao = new SizeService();
     HangService hangDao = new HangService();
     XuatXuService xuatXuDao = new XuatXuService();
+    int index = -1;
     /**
      * Creates new form QLSanPhamJDialog
      */
@@ -49,6 +51,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         for (SanPham x : list) {
             tblModel.addRow(x.toData());
         }
+        tblModel.fireTableDataChanged();
     }
     
     public void fillMauSac() {
@@ -72,9 +75,9 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
     public void fillHang() {
         DefaultComboBoxModel model = (DefaultComboBoxModel) cboHang.getModel();
         model.removeAllElements();
-        List<Hang> list = hangDao.getAll();
-        for (Hang x : list) {
-            model.addElement(x.getTenHang());
+        List<SanPham> list = SPDao.getAll();
+        for (SanPham x : list) {
+            model.addElement(String.valueOf(x.getHang()));
         }
     }
     
@@ -88,7 +91,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
     }
     
     public SanPham readForm() {
-        return new SanPham(txtTenSP.getText(), cboHang.getSelectedItem()+"", rdoHoatDong.isSelected() ? 0 : 1, Double.parseDouble(txtGiaTien.getText()));
+        return new SanPham(txtTenSP.getText(), cboHang.getSelectedItem()+"", rdoHoatDong.isSelected() ? 1 : 0, Double.parseDouble(txtGiaTien.getText()));
     }
     
     public CTSanPham readRead() {
@@ -96,7 +99,24 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
     }
     
     public void insert() {
-        
+        if (SPDao.insert(readForm())) {
+            if (CTSPDao.insert(readRead())) {
+                JOptionPane.showMessageDialog(this, "Đã thêm");
+                fillTable();
+            }
+        }
+    }
+    
+    public void fillForm(int index) {
+        SanPham x = SPDao.getAll().get(index);
+        CTSanPham s = CTSPDao.getAll().get(index);
+        txtGiaTien.setText(String.valueOf(x.getGiaTien()));
+        txtMoTa.setText(String.valueOf(s.getMoTa()));
+        txtTenSP.setText(x.getTenSP());
+        cboHang.setSelectedItem(x.getHang()+"");
+        cboMauSac.setSelectedItem(s.getMauSac());
+        cboSize.setSelectedItem(s.getSize());
+        cboXuatXu.setSelectedItem(s.getXuatXu());
     }
 
     /**
@@ -169,7 +189,8 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
 
         cboHang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        cboXuatXu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboXuatXu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mỹ ", "Việt Nam", "Trung Quốc", "Nhật Bản" }));
+        cboXuatXu.setSelectedIndex(1);
 
         jLabel9.setText("Màu Sắc");
 
@@ -301,6 +322,11 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
                 "ID", "Tên SP", "Hãng", "Giá Bán", "Trạng Thái"
             }
         ));
+        tblQLSanPham.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblQLSanPhamMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblQLSanPham);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -367,12 +393,17 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         fillMauSac();
         fillSize();
         fillHang();
-        fillXuatXu();
+//        fillXuatXu();
     }//GEN-LAST:event_formWindowOpened
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        // TODO add your handling code here:
+        insert();
     }//GEN-LAST:event_btnThemActionPerformed
+
+    private void tblQLSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblQLSanPhamMouseClicked
+//        index = tblQLSanPham.getSelectedRow();
+//        fillForm(index);
+    }//GEN-LAST:event_tblQLSanPhamMouseClicked
 
     /**
      * @param args the command line arguments
