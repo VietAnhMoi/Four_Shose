@@ -138,6 +138,8 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         lblHinhSP.setToolTipText(x.getHinhAnh());
         txtIDSanPham.setText(x.getIdSP());
         txtGiaTien.setText(String.valueOf(x.getGiaTien()));
+        rdoHoatDong.setSelected(x.isTrangThai());
+        rdoKhongHD.setSelected(!x.isTrangThai());
     }
 
     /**

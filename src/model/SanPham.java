@@ -117,9 +117,12 @@ public class SanPham {
         this.moTa = moTa;
     }
 
-    
-
-    
+    public boolean isTrangThai() {
+        if (trangThai == 0) {
+            return false;
+        }
+        return true;
+    }
     
     public String isHang() {
         if (trangThai == 0) {
