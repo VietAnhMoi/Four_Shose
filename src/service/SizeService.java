@@ -25,7 +25,7 @@ public class SizeService {
                     List<Size> list = new ArrayList<>();
                     while (rs.next()) {                        
                         Size x = new Size();
-                        x.setId(rs.getInt("ID"));
+                        x.setId(rs.getString("ID"));
                         x.setSize(rs.getInt("tensize"));
                         list.add(x);
                     }

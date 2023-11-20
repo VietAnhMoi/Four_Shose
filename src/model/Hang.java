@@ -8,16 +8,16 @@ package model;
  *
  * @author Viet Anh
  */
-public class MauSac {
+public class Hang {
     private String id;
-    private String mauSac;
+    private String tenHang;
 
-    public MauSac() {
+    public Hang() {
     }
 
-    public MauSac(String id, String mauSac) {
+    public Hang(String id, String tenHang) {
         this.id = id;
-        this.mauSac = mauSac;
+        this.tenHang = tenHang;
     }
 
     public String getId() {
@@ -28,13 +28,13 @@ public class MauSac {
         this.id = id;
     }
 
-    public String getMauSac() {
-        return mauSac;
+    public String getTenHang() {
+        return tenHang;
     }
 
-    public void setMauSac(String mauSac) {
-        this.mauSac = mauSac;
+    public void setTenHang(String tenHang) {
+        this.tenHang = tenHang;
     }
-
+    
     
 }

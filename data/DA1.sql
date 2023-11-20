@@ -64,14 +64,22 @@ CREATE TABLE SIZE
 	TenSize INT NOT NULL 
 )
 GO
+
+CREATE TABLE Hang
+(
+	ID varchar(10) PRIMARY KEY NOT NULL,
+	TenHang nvarchar(50) NOT NULL 
+)
+GO
+
 CREATE TABLE SanPham
 (
 	ID varchar(10) PRIMARY KEY NOT NULL,
 	TenSanPham NVARCHAR(50)NOT NULL,
-	Hang NVARCHAR(20) NOT NULL,
 	GiaTien FLOAT NOT NULL,
 	TrangThai BIT,
 	HinhAnh NVARCHAR(20),
+	IDHang varchar(10) NOT NULL FOREIGN KEY REFERENCES Hang(ID),
 	IDXuatXu varchar(10) NOT NULL FOREIGN KEY REFERENCES XUATXU(ID),
 	IDMauSac varchar(10) NOT NULL FOREIGN KEY REFERENCES MAUSAC(ID),
 	IDSize varchar(10) NOT NULL FOREIGN KEY REFERENCES SIZE(ID),
@@ -139,11 +147,17 @@ VALUES ('SZ1',36),
 	('SZ6',41),
 	('SZ7',42)
 
+Insert Into Hang (id, TenHang)
+values ('H1','Gucci'),
+('H2','Dior'),
+('H3','Adidas'),
+('H4','Jordan')
+
 INSERT INTO SANPHAM
-                  (ID, TenSanPham, Hang, GiaTien, TrangThai, HinhAnh, IDXuatXu, IDMauSac, IDSize, MoTa)
-VALUES ('SP1', N'Yordan nike', N'Nike', 500000, 1, N'abc.png', 'XX2', 'M5', 'SZ4', N'dep trai'),
-	('SP2', N'Gucci bẩn', N'Gucci', 4500000, 1, N'abc1.png', 'XX2', 'M7', 'SZ5', N'dep trai'),
-	('SP3', N'Adidas thể thao', N'Nike', 600000, 1, N'abc2.png', 'XX1', 'M5', 'SZ4', N'dep trai')
+                  (ID, TenSanPham, GiaTien, TrangThai, HinhAnh, IDHang, IDXuatXu, IDMauSac, IDSize, MoTa)
+VALUES ('SP1', N'Yordan nike', 500000, 1, N'abc.png', 'H1', 'XX2', 'M5', 'SZ4', N'dep trai'),
+	('SP2', N'Gucci bẩn', 4500000, 1, N'abc1.png', 'H2', 'XX2', 'M7', 'SZ5', N'dep trai'),
+	('SP3', N'Adidas thể thao', 600000, 1, N'abc2.png', 'H3', 'XX1', 'M5', 'SZ4', N'dep trai')
 
 
 INSERT INTO DANGNHAP

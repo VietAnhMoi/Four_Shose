@@ -9,22 +9,22 @@ package model;
  * @author Viet Anh
  */
 public class XuatXu {
-    private int id;
+    private String id;
     private String xuatXu;
 
     public XuatXu() {
     }
 
-    public XuatXu(int id, String xuatXu) {
+    public XuatXu(String id, String xuatXu) {
         this.id = id;
         this.xuatXu = xuatXu;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -35,6 +35,6 @@ public class XuatXu {
     public void setXuatXu(String xuatXu) {
         this.xuatXu = xuatXu;
     }
-    
+
     
 }

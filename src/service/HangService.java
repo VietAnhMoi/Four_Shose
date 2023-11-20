@@ -9,24 +9,24 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import model.CTSanPham;
+import model.Hang;
 import model.MauSac;
 
 /**
  *
  * @author Viet Anh
  */
-public class MauSacService {
-    public List<MauSac> getAll() {
+public class HangService {
+    public List<Hang> getAll() {
         try {
-            String sql = "select id, tenmau from mauSac";
+            String sql = "select id, tenHang from Hang";
             try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 try(ResultSet rs = ps.executeQuery();) {
-                    List<MauSac> list = new ArrayList<>();
+                    List<Hang> list = new ArrayList<>();
                     while (rs.next()) {                        
-                        MauSac x = new MauSac();
+                        Hang x = new Hang();
                         x.setId(rs.getString("ID"));
-                        x.setMauSac(rs.getString("tenmau"));
+                        x.setTenHang(rs.getString("tenHang"));
                         list.add(x);
                     }
                     return list;
