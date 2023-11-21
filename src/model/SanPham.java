@@ -9,36 +9,39 @@ package model;
  * @author Viet Anh
  */
 public class SanPham {
-    private int idSP;
-    private String tenSP, hang;
-    private int trangThai;
+    private String idSP;
+    private String tenSP;
     private double giaTien;
+    private int trangThai;
+    private String hinhAnh;
+    private String hang;
+    private String xuatXu;
+    private String mauSac;
+    private int size;
+    private String moTa;
+    
 
     public SanPham() {
     }
 
-    public SanPham(int idSP, String tenSP, String hang, int trangThai, double giaTien) {
+    public SanPham(String idSP, String tenSP, double giaTien, int trangThai, String hinhAnh, String hang, String xuatXu, String mauSac, int size, String moTa) {
         this.idSP = idSP;
         this.tenSP = tenSP;
-        this.hang = hang;
-        this.trangThai = trangThai;
         this.giaTien = giaTien;
+        this.trangThai = trangThai;
+        this.hinhAnh = hinhAnh;
+        this.hang = hang;
+        this.xuatXu = xuatXu;
+        this.mauSac = mauSac;
+        this.size = size;
+        this.moTa = moTa;
     }
 
-    public SanPham(String tenSP, String hang, int trangThai, double giaTien) {
-        this.tenSP = tenSP;
-        this.hang = hang;
-        this.trangThai = trangThai;
-        this.giaTien = giaTien;
-    }
-    
-    
-
-    public int getIdSP() {
+    public String getIdSP() {
         return idSP;
     }
 
-    public void setIdSP(int idSP) {
+    public void setIdSP(String idSP) {
         this.idSP = idSP;
     }
 
@@ -50,12 +53,12 @@ public class SanPham {
         this.tenSP = tenSP;
     }
 
-    public String getHang() {
-        return hang;
+    public double getGiaTien() {
+        return giaTien;
     }
 
-    public void setHang(String hang) {
-        this.hang = hang;
+    public void setGiaTien(double giaTien) {
+        this.giaTien = giaTien;
     }
 
     public int getTrangThai() {
@@ -66,26 +69,60 @@ public class SanPham {
         this.trangThai = trangThai;
     }
 
-    public double getGiaTien() {
-        return giaTien;
+    public String getHinhAnh() {
+        return hinhAnh;
     }
 
-    public void setGiaTien(double giaTien) {
-        this.giaTien = giaTien;
+    public void setHinhAnh(String hinhAnh) {
+        this.hinhAnh = hinhAnh;
     }
 
-//    public String isHang() {
-//        if (hang.equals(1)) {
-//            return "Mỹ";
-//        } else if (hang.equals(2)) {
-//            return "Việt Nam";
-//        } else if (hang.equals(3)) {
-//            return "Trung Quốc";
-//        } else {
-//            return "Nhật Bản";
-//        }
-//    }
-//     
+    public String getHang() {
+        return hang;
+    }
+
+    public void setHang(String hang) {
+        this.hang = hang;
+    }
+
+    public String getXuatXu() {
+        return xuatXu;
+    }
+
+    public void setXuatXu(String xuatXu) {
+        this.xuatXu = xuatXu;
+    }
+
+    public String getMauSac() {
+        return mauSac;
+    }
+
+    public void setMauSac(String mauSac) {
+        this.mauSac = mauSac;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public String getMoTa() {
+        return moTa;
+    }
+
+    public void setMoTa(String moTa) {
+        this.moTa = moTa;
+    }
+
+    public boolean isTrangThai() {
+        if (trangThai == 0) {
+            return false;
+        }
+        return true;
+    }
     
     public String isHang() {
         if (trangThai == 0) {

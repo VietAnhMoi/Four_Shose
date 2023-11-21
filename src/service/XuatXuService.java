@@ -24,7 +24,7 @@ public class XuatXuService {
                     List<XuatXu> list = new ArrayList<>();
                     while (rs.next()) {                        
                         XuatXu x = new XuatXu();
-                        x.setId(rs.getInt("ID"));
+                        x.setId(rs.getString("ID"));
                         x.setXuatXu(rs.getString("TENXUATXU"));
                         list.add(x);
                     }

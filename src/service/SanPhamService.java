@@ -11,24 +11,123 @@ import model.SanPham;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  *
  * @author Viet Anh
  */
 public class SanPhamService {
+    public boolean insert(SanPham x) {
+        try {
+            String sql = "INSERT INTO dbo.SanPham (ID,TenSanPham,GiaTien,TrangThai,HinhAnh,IDHang,IDXuatXu,IDMauSac,IDSize,MoTa) values (?,?,?,?,?,?,?,?,?,?)";
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                ps.setObject(1, x.getIdSP());
+                ps.setObject(2, x.getTenSP());
+                ps.setObject(3, x.getGiaTien());
+                ps.setObject(4, x.getTrangThai());
+                ps.setObject(5, x.getHinhAnh());
+                ps.setObject(6, x.getHang());
+                ps.setObject(7, x.getXuatXu());
+                ps.setObject(8, x.getMauSac());
+                ps.setObject(9, x.getSize());
+                ps.setObject(10, x.getMoTa());
+
+                return ps.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean update(SanPham x) {
+        try {
+            String sql = "UPDATE SanPham SET TenSanPham = ?,GiaTien = ?,TrangThai = ?,HinhAnh = ?,IDHang = ?,IDXuatXu = ?,IDMauSac = ?,IDSize = ?,MoTa = ? from sanpham where id = ?";
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                ps.setObject(10, x.getIdSP());
+                ps.setObject(1, x.getTenSP());
+                ps.setObject(2, x.getGiaTien());
+                ps.setObject(3, x.getTrangThai());
+                ps.setObject(4, x.getHinhAnh());
+                ps.setObject(5, x.getHang());
+                ps.setObject(6, x.getXuatXu());
+                ps.setObject(7, x.getMauSac());
+                ps.setObject(8, x.getSize());
+                ps.setObject(9, x.getMoTa());
+
+                return ps.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean delete(String id) {
+        try {
+            String sql = " delete from sanpham where id like ?";
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                ps.setObject(1, id);
+
+                return ps.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public List<SanPham> getAll() {
         try {
-            String sql = "SELECT ID,TENSANPHAM,HANG,GIAITEN,TRANGTHAI FROM dbo.SANPHAM";
+            String sql = "SELECT ID,TenSanPham,GiaTien,TrangThai,HinhAnh,IDHang,IDXuatXu,IDMauSac,IDSize,MoTa FROM dbo.SanPham";
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                try (ResultSet rs = ps.executeQuery();) {
+                    List<SanPham> list = new ArrayList<>();
+                    while (rs.next()) {
+                        SanPham x = new SanPham();
+                        x.setIdSP(rs.getString("id"));
+                        x.setTenSP(rs.getString("TENSANPHAM"));
+                        x.setHang(rs.getString("IDHang"));
+                        x.setGiaTien(rs.getDouble("GiaTien"));
+                        x.setTrangThai(rs.getInt("trangThai"));
+                        x.setHinhAnh(rs.getString("HinhAnh"));
+                        x.setHang(rs.getString("IDHang"));
+                        x.setXuatXu(rs.getString("IDXuatXu"));
+                        x.setMauSac(rs.getString("IDMauSac"));
+                        x.setSize(rs.getInt("IDSize"));
+                        x.setMoTa(rs.getString("MoTa"));
+
+                        list.add(x);
+                    }
+                    return list;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<SanPham> findByName(String id) {
+        try {
+            String sql = "SELECT * FROM dbo.SANPHAM where id like ?";
             try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                ps.setObject(1, "%" + id + "%");
                 try(ResultSet rs = ps.executeQuery();) {
                     List<SanPham> list = new ArrayList<>();
                     while (rs.next()) {                        
                         SanPham x = new SanPham();
-                        x.setIdSP(rs.getInt("id"));
+                        x.setIdSP(rs.getString("id"));
                         x.setTenSP(rs.getString("TENSANPHAM"));
-                        x.setHang(rs.getString("Hang"));
-                        x.setGiaTien(rs.getDouble("GIAITEN"));
+                        x.setHang(rs.getString("IDHang"));
+                        x.setGiaTien(rs.getDouble("GiaTien"));
                         x.setTrangThai(rs.getInt("trangThai"));
+                        x.setHinhAnh(rs.getString("HinhAnh"));
+                        x.setHang(rs.getString("IDHang"));
+                        x.setXuatXu(rs.getString("IDXuatXu"));
+                        x.setMauSac(rs.getString("IDMauSac"));
+                        x.setSize(rs.getInt("IDSize"));
+                        x.setMoTa(rs.getString("MoTa"));
                         
                         list.add(x);
                     }
@@ -41,56 +140,25 @@ public class SanPhamService {
         }
     }
     
-    public boolean insert(SanPham x) {
+    public SanPham getByID(String id) {
         try {
-            String sql = "INSERT INTO dbo.SANPHAM (TENSANPHAM,HANG,GIAITEN,TRANGTHAI) values (?,?,?,?)";
+            String sql = "SELECT ID ,TenSanPham, IDHang,GiaTien,TrangThai FROM dbo.SANPHAM where id like ?";
             try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
-                ps.setObject(1, x.getTenSP());
-                ps.setObject(2, x.getHang());
-                ps.setObject(3, x.getGiaTien());
-                ps.setObject(4, x.getTrangThai());
-                
-                return ps.executeUpdate() > 0;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-    
-    public List<SanPham> getHang() {
-        try {
-            String sql = "SELECT HANG FROM dbo.SANPHAM";
-            try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                ps.setObject(1, id);
                 try(ResultSet rs = ps.executeQuery();) {
                     List<SanPham> list = new ArrayList<>();
-                    while (rs.next()) {                        
+                    if (rs.next()) {                        
                         SanPham x = new SanPham();
-                        x.setHang(rs.getString("Hang"));
-                        list.add(x);
+                        x.setIdSP(rs.getString("id"));
+                        x.setTenSP(rs.getString("TENSANPHAM"));
+                        x.setHang(rs.getString("IDHang"));
+                        x.setGiaTien(rs.getDouble("GiaTien"));
+                        x.setTrangThai(rs.getInt("trangThai"));
+                        
+                        return x;
                     }
-                    return list;
                 }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-    
-    public List<SanPham> getID() {
-        try {
-            String sql = "SELECT ID FROM dbo.SANPHAM";
-            try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
-                try(ResultSet rs = ps.executeQuery();) {
-                    List<SanPham> list = new ArrayList<>();
-                    while (rs.next()) {                        
-                        SanPham x = new SanPham();
-                        x.setIdSP(rs.getInt("ID"));
-                        list.add(x);
-                    }
-                    return list;
-                }
+                return null;
             }
         } catch (Exception e) {
             e.printStackTrace();
