@@ -165,7 +165,7 @@ public class TrangChu extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Sylfaen", 3, 20)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("FOURSHOE");
+        jLabel2.setText("FOURSHOES");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
