@@ -291,7 +291,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="FOURSHOE"/>
+                <Property name="text" type="java.lang.String" value="FOURSHOES"/>
               </Properties>
             </Component>
           </SubComponents>
