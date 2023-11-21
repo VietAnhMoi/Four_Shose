@@ -67,7 +67,7 @@ public class DonHangService {
         }
         }
         public int Update(DonHang dh,String id){
-            sql= "update HONHANG set ID=?, IDSanPham=?,SoLuong=?,IDKhuyenMai=? where  id = ?";
+            sql= "update DONHANG set ID=?, IDSanPham=?,SoLuong=?,IDKhuyenMai=? where  id = ?";
             try {
                 con= DBConnect.getConnection();
                 ps=con.prepareStatement(sql);
@@ -82,4 +82,6 @@ public class DonHangService {
                 return 0;
             }
         }
-}
+ 
+    }
+     

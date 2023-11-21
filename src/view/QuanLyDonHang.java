@@ -112,8 +112,8 @@ public class QuanLyDonHang extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbldonhang = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
-        txtmahoadon4 = new javax.swing.JTextField();
-        jButton13 = new javax.swing.JButton();
+        txttimkiem = new javax.swing.JTextField();
+        btnfind = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -367,12 +367,12 @@ public class QuanLyDonHang extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbldonhang);
 
-        jLabel7.setText("Mã hóa đơn:");
+        jLabel7.setText("Nhập mã hóa đơn:");
 
-        jButton13.setText("Tìm kiếm");
-        jButton13.addActionListener(new java.awt.event.ActionListener() {
+        btnfind.setText("Tìm kiếm");
+        btnfind.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton13ActionPerformed(evt);
+                btnfindActionPerformed(evt);
             }
         });
 
@@ -386,10 +386,10 @@ public class QuanLyDonHang extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel7)
-                        .addGap(36, 36, 36)
-                        .addComponent(txtmahoadon4, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(49, 49, 49)
-                        .addComponent(jButton13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txttimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45)
+                        .addComponent(btnfind)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel4Layout.setVerticalGroup(
@@ -398,8 +398,8 @@ public class QuanLyDonHang extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(txtmahoadon4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton13))
+                    .addComponent(txttimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnfind))
                 .addGap(16, 16, 16)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -459,9 +459,9 @@ public class QuanLyDonHang extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton8ActionPerformed
 
-    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+    private void btnfindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnfindActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton13ActionPerformed
+    }//GEN-LAST:event_btnfindActionPerformed
 
     private void tbldonhangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbldonhangMouseClicked
         // TODO add your handling code here:
@@ -553,10 +553,10 @@ public class QuanLyDonHang extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnadd;
     private javax.swing.JButton btndelete;
+    private javax.swing.JButton btnfind;
     private javax.swing.JButton btnnew;
     private javax.swing.JButton btnupdate;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -578,9 +578,9 @@ public class QuanLyDonHang extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbldonhang;
     private javax.swing.JTextField txtmahoadon;
-    private javax.swing.JTextField txtmahoadon4;
     private javax.swing.JTextField txtmakhuyenmai;
     private javax.swing.JTextField txtmasanpham;
     private javax.swing.JTextField txtsoluong;
+    private javax.swing.JTextField txttimkiem;
     // End of variables declaration//GEN-END:variables
 }
