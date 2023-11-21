@@ -11,25 +11,27 @@ import model.SanPham;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  *
  * @author Viet Anh
  */
 public class SanPhamService {
+
     public List<SanPham> getAll() {
         try {
             String sql = "SELECT ID ,TenSanPham, IDHang,GiaTien,TrangThai FROM dbo.SANPHAM";
-            try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
-                try(ResultSet rs = ps.executeQuery();) {
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                try (ResultSet rs = ps.executeQuery();) {
                     List<SanPham> list = new ArrayList<>();
-                    while (rs.next()) {                        
+                    while (rs.next()) {
                         SanPham x = new SanPham();
                         x.setIdSP(rs.getString("id"));
                         x.setTenSP(rs.getString("TENSANPHAM"));
                         x.setHang(rs.getString("IDHang"));
                         x.setGiaTien(rs.getDouble("GiaTien"));
                         x.setTrangThai(rs.getInt("trangThai"));
-                        
+
                         list.add(x);
                     }
                     return list;
@@ -40,11 +42,11 @@ public class SanPhamService {
             return null;
         }
     }
-    
+
     public boolean insert(SanPham x) {
         try {
             String sql = "INSERT INTO dbo.SanPham (ID,TenSanPham,GiaTien,TrangThai,HinhAnh,IDHang,IDXuatXu,IDMauSac,IDSize,MoTa) values (?,?,?,?,?,?,?,?,?,?)";
-            try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 ps.setObject(1, x.getIdSP());
                 ps.setObject(2, x.getTenSP());
                 ps.setObject(3, x.getGiaTien());
@@ -55,7 +57,7 @@ public class SanPhamService {
                 ps.setObject(8, x.getMauSac());
                 ps.setObject(9, x.getSize());
                 ps.setObject(10, x.getMoTa());
-                
+
                 return ps.executeUpdate() > 0;
             }
         } catch (Exception e) {
@@ -63,11 +65,11 @@ public class SanPhamService {
             return false;
         }
     }
-    
+
     public boolean update(SanPham x) {
         try {
             String sql = "UPDATE SanPham SET TenSanPham = ?,GiaTien = ?,TrangThai = ?,HinhAnh = ?,IDHang = ?,IDXuatXu = ?,IDMauSac = ?,IDSize = ?,MoTa = ? from sanpham where id = ?";
-            try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 ps.setObject(10, x.getIdSP());
                 ps.setObject(1, x.getTenSP());
                 ps.setObject(2, x.getGiaTien());
@@ -78,7 +80,7 @@ public class SanPhamService {
                 ps.setObject(7, x.getMauSac());
                 ps.setObject(8, x.getSize());
                 ps.setObject(9, x.getMoTa());
-                
+
                 return ps.executeUpdate() > 0;
             }
         } catch (Exception e) {
@@ -86,13 +88,13 @@ public class SanPhamService {
             return false;
         }
     }
-    
+
     public boolean delete(String id) {
         try {
             String sql = " delete from sanpham where id like ?";
-            try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 ps.setObject(1, id);
-                
+
                 return ps.executeUpdate() > 0;
             }
         } catch (Exception e) {
@@ -100,11 +102,43 @@ public class SanPhamService {
             return false;
         }
     }
-    
+
     public List<SanPham> getAll2() {
         try {
             String sql = "SELECT ID,TenSanPham,GiaTien,TrangThai,HinhAnh,IDHang,IDXuatXu,IDMauSac,IDSize,MoTa FROM dbo.SanPham";
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                try (ResultSet rs = ps.executeQuery();) {
+                    List<SanPham> list = new ArrayList<>();
+                    while (rs.next()) {
+                        SanPham x = new SanPham();
+                        x.setIdSP(rs.getString("id"));
+                        x.setTenSP(rs.getString("TENSANPHAM"));
+                        x.setHang(rs.getString("IDHang"));
+                        x.setGiaTien(rs.getDouble("GiaTien"));
+                        x.setTrangThai(rs.getInt("trangThai"));
+                        x.setHinhAnh(rs.getString("HinhAnh"));
+                        x.setHang(rs.getString("IDHang"));
+                        x.setXuatXu(rs.getString("IDXuatXu"));
+                        x.setMauSac(rs.getString("IDMauSac"));
+                        x.setSize(rs.getInt("IDSize"));
+                        x.setMoTa(rs.getString("MoTa"));
+
+                        list.add(x);
+                    }
+                    return list;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<SanPham> findByName(String id) {
+        try {
+            String sql = "SELECT * FROM dbo.SANPHAM where id like ?";
             try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                ps.setObject(1, "%" + id + "%");
                 try(ResultSet rs = ps.executeQuery();) {
                     List<SanPham> list = new ArrayList<>();
                     while (rs.next()) {                        
@@ -132,19 +166,25 @@ public class SanPhamService {
         }
     }
     
-    public List<SanPham> getID() {
+    public SanPham getByID(String id) {
         try {
-            String sql = "SELECT ID FROM dbo.SANPHAM";
+            String sql = "SELECT ID ,TenSanPham, IDHang,GiaTien,TrangThai FROM dbo.SANPHAM where id like ?";
             try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                ps.setObject(1, id);
                 try(ResultSet rs = ps.executeQuery();) {
                     List<SanPham> list = new ArrayList<>();
-                    while (rs.next()) {                        
+                    if (rs.next()) {                        
                         SanPham x = new SanPham();
-                        x.setIdSP(rs.getString("ID"));
-                        list.add(x);
+                        x.setIdSP(rs.getString("id"));
+                        x.setTenSP(rs.getString("TENSANPHAM"));
+                        x.setHang(rs.getString("IDHang"));
+                        x.setGiaTien(rs.getDouble("GiaTien"));
+                        x.setTrangThai(rs.getInt("trangThai"));
+                        
+                        return x;
                     }
-                    return list;
                 }
+                return null;
             }
         } catch (Exception e) {
             e.printStackTrace();
