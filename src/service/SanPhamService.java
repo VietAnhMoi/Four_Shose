@@ -17,32 +17,6 @@ import java.util.List;
  * @author Viet Anh
  */
 public class SanPhamService {
-
-    public List<SanPham> getAll() {
-        try {
-            String sql = "SELECT ID ,TenSanPham, IDHang,GiaTien,TrangThai FROM dbo.SANPHAM";
-            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
-                try (ResultSet rs = ps.executeQuery();) {
-                    List<SanPham> list = new ArrayList<>();
-                    while (rs.next()) {
-                        SanPham x = new SanPham();
-                        x.setIdSP(rs.getString("id"));
-                        x.setTenSP(rs.getString("TENSANPHAM"));
-                        x.setHang(rs.getString("IDHang"));
-                        x.setGiaTien(rs.getDouble("GiaTien"));
-                        x.setTrangThai(rs.getInt("trangThai"));
-
-                        list.add(x);
-                    }
-                    return list;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     public boolean insert(SanPham x) {
         try {
             String sql = "INSERT INTO dbo.SanPham (ID,TenSanPham,GiaTien,TrangThai,HinhAnh,IDHang,IDXuatXu,IDMauSac,IDSize,MoTa) values (?,?,?,?,?,?,?,?,?,?)";
@@ -103,7 +77,7 @@ public class SanPhamService {
         }
     }
 
-    public List<SanPham> getAll2() {
+    public List<SanPham> getAll() {
         try {
             String sql = "SELECT ID,TenSanPham,GiaTien,TrangThai,HinhAnh,IDHang,IDXuatXu,IDMauSac,IDSize,MoTa FROM dbo.SanPham";
             try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
