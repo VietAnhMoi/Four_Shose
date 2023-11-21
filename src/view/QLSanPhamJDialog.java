@@ -442,7 +442,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
 
             },
             new String [] {
-                "ID", "Tên SP", "Hãng", "Giá Bán", "Trạng Thái"
+                "ID", "Tên SP", "Hãng", "Giá Bán", "Trạng Thái", "Xuất xứ", "Size", "Màu sắc"
             }
         ));
         tblQLSanPham.addMouseListener(new java.awt.event.MouseAdapter() {

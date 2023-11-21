@@ -56,26 +56,5 @@ public class HoaDonService {
         }
     }
     
-   public List<HoaDon> getMaDonHang (String ma){
-        try {
-            String sql = "SELECT * FROM Hoadon";
-            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
-                try (ResultSet rs = ps.executeQuery();) {
-                    List<HoaDon> list = new ArrayList<>();
-                    while (rs.next()) {
-                        HoaDon hd = new HoaDon();
-                        hd.setId(rs.getString("id"));
-                        hd.setIdDonHang(rs.getString("IDDonHang"));
-                        hd.setTongTien(rs.getLong("TongTien"));
-
-                        list.add(hd);
-                    }
-                    return list;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    } 
+   
 }
