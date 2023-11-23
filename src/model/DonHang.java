@@ -1,65 +1,61 @@
-package model;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
+package model;
 
 /**
  *
  * @author phung
  */
 public class DonHang {
-    private String iddonhang;
-    private String idsanpham;
-    private int soluong;
-    private String idkhuyenmai;
+    private String iddonhangdh;
+    private int soluongdh;
+    private int tonggiatridh;
+    private String idkhuyenmaidh;
 
     public DonHang() {
     }
 
-    public DonHang(String iddonhang, String idsanpham, int soluong, String idkhuyenmai) {
-        this.iddonhang = iddonhang;
-        this.idsanpham = idsanpham;
-        this.soluong = soluong;
-        this.idkhuyenmai = idkhuyenmai;
+    public DonHang(String iddonhangdh, int soluongdh, int tonggiatridh, String idkhuyenmaidh) {
+        this.iddonhangdh = iddonhangdh;
+        this.soluongdh = soluongdh;
+        this.tonggiatridh = tonggiatridh;
+        this.idkhuyenmaidh = idkhuyenmaidh;
     }
 
-    public String getIddonhang() {
-        return iddonhang;
+    public String getIddonhangdh() {
+        return iddonhangdh;
     }
 
-    public void setIddonhang(String iddonhang) {
-        this.iddonhang = iddonhang;
+    public void setIddonhangdh(String iddonhangdh) {
+        this.iddonhangdh = iddonhangdh;
     }
 
-    public String getIdsanpham() {
-        return idsanpham;
+    public int getSoluongdh() {
+        return soluongdh;
     }
 
-    public void setIdsanpham(String idsanpham) {
-        this.idsanpham = idsanpham;
+    public void setSoluongdh(int soluongdh) {
+        this.soluongdh = soluongdh;
     }
 
-    public int getSoluong() {
-        return soluong;
+    public int getTonggiatridh() {
+        return tonggiatridh;
     }
 
-    public void setSoluong(int soluong) {
-        this.soluong = soluong;
+    public void setTonggiatridh(int tonggiatridh) {
+        this.tonggiatridh = tonggiatridh;
     }
 
-    public String getIdkhuyenmai() {
-        return idkhuyenmai;
+    public String getIdkhuyenmaidh() {
+        return idkhuyenmaidh;
     }
 
-    public void setIdkhuyenmai(String idkhuyenmai) {
-        this.idkhuyenmai = idkhuyenmai;
+    public void setIdkhuyenmaidh(String idkhuyenmaidh) {
+        this.idkhuyenmaidh = idkhuyenmaidh;
     }
-    
-     public Object[] toDatarow() {
-        return new Object[] {this.iddonhang,this.idsanpham,this.soluong,this.idkhuyenmai};
+    public Object[] toDatata(){
+        return new Object[]{this.iddonhangdh,this.soluongdh,this.tonggiatridh,this.idkhuyenmaidh};
     }
-    
 }

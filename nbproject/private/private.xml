@@ -2,6 +2,7 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group>
             <file>file:/C:/Users/vieta/OneDrive/Desktop/DuAn1/Four_Shose/src/view/QLSanPhamJDialog.java</file>
             <file>file:/C:/Users/vieta/OneDrive/Desktop/DuAn1/Four_Shose/src/model/SanPham.java</file>
@@ -10,5 +11,8 @@
             <file>file:/C:/Users/vieta/OneDrive/Desktop/DuAn1/Four_Shose/src/service/DBConnect.java</file>
             <file>file:/C:/Users/vieta/OneDrive/Desktop/DuAn1/Four_Shose/src/service/SanPhamService.java</file>
         </group>
+=======
+        <group/>
+>>>>>>> 91b81dffb9b3334cd623391bd1dda66cc39d4345
     </open-files>
 </project-private>
