@@ -4,6 +4,7 @@
  */
 package service;
 
+import utils.DBConnect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import model.CTSanPham;
