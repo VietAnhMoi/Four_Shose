@@ -29,20 +29,6 @@
                   <Component id="jLabel2" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-<<<<<<< HEAD
-                          <Group type="102" attributes="0">
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jTextField1" min="-2" pref="229" max="-2" attributes="0"/>
-                                  <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jTextField2" alignment="0" min="-2" pref="229" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
-                              <Component id="jButton1" min="-2" pref="115" max="-2" attributes="0"/>
-=======
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
                               <Component id="btnDangNhap" min="-2" pref="115" max="-2" attributes="0"/>
@@ -59,7 +45,6 @@
                                   <Component id="txtTaiKhoan" pref="229" max="32767" attributes="0"/>
                                   <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
->>>>>>> 3e5bb589a7847eaf214d83a139fcd745d8af97f3
                           </Group>
                       </Group>
                       <EmptySpace pref="16" max="32767" attributes="0"/>
@@ -69,33 +54,17 @@
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
-<<<<<<< HEAD
-      <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="1" min="-2" max="-2" attributes="0"/>
-          <Group type="102" alignment="0" attributes="0">
-=======
       <Group type="103" groupAlignment="1" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
           </Group>
           <Group type="102" attributes="0">
->>>>>>> 3e5bb589a7847eaf214d83a139fcd745d8af97f3
               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-<<<<<<< HEAD
-              <Component id="jTextField1" min="-2" pref="34" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jTextField2" min="-2" pref="35" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jButton1" min="-2" pref="32" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-=======
               <Component id="txtTaiKhoan" min="-2" pref="34" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
@@ -106,7 +75,6 @@
               <EmptySpace max="32767" attributes="0"/>
               <Component id="btnDangNhap" min="-2" pref="32" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
->>>>>>> 3e5bb589a7847eaf214d83a139fcd745d8af97f3
           </Group>
       </Group>
     </DimensionLayout>
@@ -163,11 +131,7 @@
         <Property name="text" type="java.lang.String" value="T&#xe0;i kho&#x1ea3;n:"/>
       </Properties>
     </Component>
-<<<<<<< HEAD
-    <Component class="javax.swing.JTextField" name="jTextField1">
-=======
     <Component class="javax.swing.JTextField" name="txtTaiKhoan">
->>>>>>> 3e5bb589a7847eaf214d83a139fcd745d8af97f3
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
@@ -177,13 +141,7 @@
         <Property name="text" type="java.lang.String" value="M&#x1ead;t kh&#x1ea9;u:"/>
       </Properties>
     </Component>
-<<<<<<< HEAD
-    <Component class="javax.swing.JTextField" name="jTextField2">
-    </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
-=======
     <Component class="javax.swing.JButton" name="btnDangNhap">
->>>>>>> 3e5bb589a7847eaf214d83a139fcd745d8af97f3
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="6e" green="6e" id="Actions.Grey" palette="3" red="6e" type="palette"/>
@@ -196,8 +154,6 @@
         </Property>
         <Property name="text" type="java.lang.String" value="&#x110;&#x103;ng Nh&#x1ead;p"/>
       </Properties>
-<<<<<<< HEAD
-=======
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDangNhapActionPerformed"/>
       </Events>
@@ -211,7 +167,6 @@
       </Events>
     </Component>
     <Component class="javax.swing.JPasswordField" name="txtMatKhau">
->>>>>>> 3e5bb589a7847eaf214d83a139fcd745d8af97f3
     </Component>
   </SubComponents>
 </Form>

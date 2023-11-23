@@ -24,6 +24,8 @@ public class HoaDonService {
                     while (rs.next()) {
                         HoaDon hd = new HoaDon();
                         hd.setId(rs.getString("id"));
+                        hd.setNgayLap(rs.getString("NgayLap"));
+                        hd.setTrangThai(rs.getInt("TrangThai"));
                         hd.setIdDonHang(rs.getString("IDDonHang"));
                         hd.setTongTien(rs.getLong("TongTien"));
 
@@ -39,14 +41,15 @@ public class HoaDonService {
     }
 
     public boolean insert(HoaDon hd) {
-        try {   
+        try {
             String sql = "INSERT INTO HOADON\n"
-                    + "                  (ID, IDDonHang, TongTien)\n"
-                    + "VALUES (?, ?, ?)";
+                    + "                  (ID, IDDonHang, TongTien, TrangThai, NgayLap)\n"
+                    + "VALUES (?, ?, ?, ?, getdate())";
             try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 ps.setString(1, hd.getId());
                 ps.setString(2, hd.getIdDonHang());
                 ps.setLong(3, hd.getTongTien());
+                ps.setInt(4, hd.getTrangThai());
 
                 return ps.executeUpdate() > 0;
             }
@@ -55,6 +58,42 @@ public class HoaDonService {
             return false;
         }
     }
-    
-   
+
+    public boolean getIdHoaDon(String idHD) {
+        String sql = "select id from hoadon where id = ?";
+        try {
+            Connection con = DBConnect.getConnection();
+            PreparedStatement ps = con.prepareCall(sql);
+            ps.setObject(1, idHD);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean getMaDonHang(String idDonHang) {
+        String sql = "select iddonhang from hoadon where iddonhang = ?";
+        try {
+            Connection con = DBConnect.getConnection();
+            PreparedStatement ps = con.prepareCall(sql);
+            ps.setObject(1, idDonHang);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    public boolean checkDonHang(String id) {
+        String sql = "select id from donhang where id = ?";
+        try {
+            Connection con = DBConnect.getConnection();
+            PreparedStatement ps = con.prepareCall(sql);
+            ps.setObject(1, id);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

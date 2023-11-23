@@ -10,17 +10,38 @@ package model;
  */
 public class HoaDon {
     private String id;
+    private int trangThai;
+    private String ngayLap;
     private String idDonHang;
     private long tongTien;
 
     public HoaDon() {
     }
 
-    public HoaDon(String id, String idDonHang, long tongTien) {
+    public HoaDon(String id, int trangThai, String ngayLap, String idDonHang, long tongTien) {
         this.id = id;
+        this.trangThai = trangThai;
+        this.ngayLap = ngayLap;
         this.idDonHang = idDonHang;
         this.tongTien = tongTien;
     }
+
+    public int getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
+    }
+
+    public String getNgayLap() {
+        return ngayLap;
+    }
+
+    public void setNgayLap(String ngayLap) {
+        this.ngayLap = ngayLap;
+    }
+
 
     public String getId() {
         return id;
@@ -48,10 +69,12 @@ public class HoaDon {
 
     @Override
     public String toString() {
-        return "HoaDon{" + "id=" + id + ", idDonHang=" + idDonHang + ", tongTien=" + tongTien + '}';
+        return "HoaDon{" + "id=" + id + ", trangThai=" + trangThai + ", ngayLap=" + ngayLap + ", idDonHang=" + idDonHang + ", tongTien=" + tongTien + '}';
     }
     
+    
+    
     public Object[] toDatata(){
-        return new Object[]{this.id,this.idDonHang,this.tongTien};
+        return new Object[]{this.id,this.idDonHang,this.trangThai==1?"Đã thanh toán":"Chưa thanh toán",this.ngayLap,this.tongTien};
     }
 }

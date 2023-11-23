@@ -15,6 +15,7 @@ import utils.Auth;
  */
 public class DangNhap extends javax.swing.JFrame {
     NhanVienService dao = new NhanVienService();
+    public static String manv;
     /**
      * Creates new form DangNhap
      */
@@ -24,8 +25,10 @@ public class DangNhap extends javax.swing.JFrame {
         setTitle("Đăng Nhập");
     }
     
+    
     void login() {
         String mamv = txtTaiKhoan.getText();
+        manv =txtTaiKhoan.getText();
         String password = new String(txtMatKhau.getPassword());
         NhanVien nhanVien = dao.getByID(mamv);
         if (nhanVien == null) {
