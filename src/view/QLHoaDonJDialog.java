@@ -283,6 +283,11 @@ public class QLHoaDonJDialog extends javax.swing.JDialog {
         jLabel3.setText("Chi Tiết Hóa Đơn");
 
         btnTimKiemHD.setText("Tìm Kiếm");
+        btnTimKiemHD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemHDActionPerformed(evt);
+            }
+        });
 
         btnTimKiemHDCT.setText("Tìm Kiếm");
 
@@ -589,6 +594,10 @@ public class QLHoaDonJDialog extends javax.swing.JDialog {
     private void txtMaHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaHDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMaHDActionPerformed
+
+    private void btnTimKiemHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemHDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTimKiemHDActionPerformed
 
     /**
      * @param args the command line arguments

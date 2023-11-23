@@ -4,6 +4,7 @@
  */
 package service;
 
+import utils.DBConnect;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
