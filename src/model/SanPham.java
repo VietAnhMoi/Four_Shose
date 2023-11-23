@@ -12,6 +12,7 @@ public class SanPham {
     private String idSP;
     private String tenSP;
     private double giaTien;
+    private int soLuong;
     private int trangThai;
     private String hinhAnh;
     private String hang;
@@ -19,15 +20,15 @@ public class SanPham {
     private String mauSac;
     private int size;
     private String moTa;
-    
 
     public SanPham() {
     }
 
-    public SanPham(String idSP, String tenSP, double giaTien, int trangThai, String hinhAnh, String hang, String xuatXu, String mauSac, int size, String moTa) {
+    public SanPham(String idSP, String tenSP, double giaTien, int soLuong, int trangThai, String hinhAnh, String hang, String xuatXu, String mauSac, int size, String moTa) {
         this.idSP = idSP;
         this.tenSP = tenSP;
         this.giaTien = giaTien;
+        this.soLuong = soLuong;
         this.trangThai = trangThai;
         this.hinhAnh = hinhAnh;
         this.hang = hang;
@@ -59,6 +60,14 @@ public class SanPham {
 
     public void setGiaTien(double giaTien) {
         this.giaTien = giaTien;
+    }
+
+    public int getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
     }
 
     public int getTrangThai() {
@@ -116,13 +125,7 @@ public class SanPham {
     public void setMoTa(String moTa) {
         this.moTa = moTa;
     }
-
-    public boolean isTrangThai() {
-        if (trangThai == 0) {
-            return false;
-        }
-        return true;
-    }
+    
     
     public String isHang() {
         if (trangThai == 0) {
@@ -132,6 +135,6 @@ public class SanPham {
     }
     
     public Object[] toData() {
-        return new Object[] {idSP, tenSP, hang,giaTien, isHang()};
+        return new Object[] {idSP, tenSP, hang,giaTien, soLuong, isHang()};
     }
 }

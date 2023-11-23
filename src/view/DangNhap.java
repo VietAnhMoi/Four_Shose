@@ -34,7 +34,9 @@ public class DangNhap extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Sai mật khẩu");
         } else {
             Auth.user = nhanVien;
-            this.dispose();
+            TrangChu main = new TrangChu();
+            main.setVisible(true);
+            dispose();
         }
     }
 

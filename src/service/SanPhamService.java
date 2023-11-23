@@ -79,7 +79,7 @@ public class SanPhamService {
 
     public List<SanPham> getAll() {
         try {
-            String sql = "SELECT ID,TenSanPham,GiaTien,TrangThai,HinhAnh,IDHang,IDXuatXu,IDMauSac,IDSize,MoTa FROM dbo.SanPham";
+            String sql = "SELECT SanPham.*, SIZE.TenSize FROM SanPham INNER JOIN SIZE ON SanPham.IDSize = SIZE.ID";
             try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 try (ResultSet rs = ps.executeQuery();) {
                     List<SanPham> list = new ArrayList<>();
@@ -87,15 +87,15 @@ public class SanPhamService {
                         SanPham x = new SanPham();
                         x.setIdSP(rs.getString("id"));
                         x.setTenSP(rs.getString("TENSANPHAM"));
-                        x.setHang(rs.getString("IDHang"));
                         x.setGiaTien(rs.getDouble("GiaTien"));
+                        x.setSoLuong(rs.getInt("soLuong"));
                         x.setTrangThai(rs.getInt("trangThai"));
                         x.setHinhAnh(rs.getString("HinhAnh"));
                         x.setHang(rs.getString("IDHang"));
                         x.setXuatXu(rs.getString("IDXuatXu"));
                         x.setMauSac(rs.getString("IDMauSac"));
-                        x.setSize(rs.getInt("IDSize"));
                         x.setMoTa(rs.getString("MoTa"));
+                        x.setSize(rs.getInt("TenSize"));
 
                         list.add(x);
                     }
