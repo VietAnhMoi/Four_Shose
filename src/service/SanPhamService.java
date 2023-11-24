@@ -80,7 +80,7 @@ public class SanPhamService {
 
     public List<SanPham> getAll() {
         try {
-            String sql = "SELECT SanPham.*, SIZE.TenSize FROM SanPham INNER JOIN SIZE ON SanPham.IDSize = SIZE.ID";
+            String sql = "SELECT * from SanPham";
             try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 try (ResultSet rs = ps.executeQuery();) {
                     List<SanPham> list = new ArrayList<>();
@@ -94,9 +94,9 @@ public class SanPhamService {
                         x.setHinhAnh(rs.getString("HinhAnh"));
                         x.setHang(rs.getString("IDHang"));
                         x.setXuatXu(rs.getString("IDXuatXu"));
+                        x.setSize(rs.getInt("IDSize"));
                         x.setMauSac(rs.getString("IDMauSac"));
                         x.setMoTa(rs.getString("MoTa"));
-                        x.setSize(rs.getInt("TenSize"));
 
                         list.add(x);
                     }
