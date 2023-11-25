@@ -18,7 +18,7 @@ public class HoaDonService {
 
     public List<HoaDon> getAll() {
         try {
-            String sql = "SELECT * FROM Hoadon";
+            String sql = "SELECT * FROM Hoadon where trangthai = 1";
             try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 try (ResultSet rs = ps.executeQuery();) {
                     List<HoaDon> list = new ArrayList<>();
@@ -85,6 +85,7 @@ public class HoaDonService {
             return false;
         }
     }
+
     public boolean checkDonHang(String id) {
         String sql = "select id from donhang where id = ?";
         try {
@@ -95,6 +96,46 @@ public class HoaDonService {
             return rs.next();
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    public boolean deleteHoaDon(String maHD) {
+        try {
+            String sql = "exec SP_deleteHoaDon ?";
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                ps.setString(1, maHD);
+
+                return ps.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public List<HoaDon> searchHD(String idHoaDon) {
+        try {
+            List<HoaDon> list = new ArrayList<>();
+            String sql = "SELECT * FROM Hoadon where id = ?";
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                ps.setString(1, idHoaDon);
+                try (ResultSet rs = ps.executeQuery();) {
+                    while (rs.next()) {
+                        HoaDon hd = new HoaDon();
+                        hd.setId(rs.getString("id"));
+                        hd.setNgayLap(rs.getString("NgayLap"));
+                        hd.setTrangThai(rs.getInt("TrangThai"));
+                        hd.setIdDonHang(rs.getString("IDDonHang"));
+                        hd.setTongTien(rs.getLong("TongTien"));
+
+                        list.add(hd);
+                    }
+                    return list;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

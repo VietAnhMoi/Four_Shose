@@ -120,7 +120,8 @@ CREATE TABLE CHITIETHOADON
 	IDNHanVien varchar(10) NOT NULL FOREIGN KEY REFERENCES NHANVIEN(ID),
 	SoLuong INT NOT NULL,
 	IDKhuyenMai varchar(10) NULL FOREIGN KEY REFERENCES KHUYENMAI(ID),
-	TongTien FLOAT NOT NULL
+	TongTien FLOAT NOT NULL,
+	IDCTDonHang varchar(10) NULL FOREIGN KEY REFERENCES ChiTietDonHang(ID)
 )
 
 go
@@ -206,9 +207,6 @@ VALUES ( 'HD1', 'SP1', 'KH1', 'NV1', 10, 'KM1', 10000000),
 	( 'HD2', 'SP1', 'KH2', 'NV1', 2, 'KM2', 2000000),
 	( 'HD3', 'SP3',null, 'NV2', 5, 'KM1', 5000000)
 
-	drop table CHITIETHOADON
-	alter table nhanvien
-	add Luong float not null
 	
 	select * from DONHANG
 	select * from HOADON
@@ -236,6 +234,9 @@ begin
 			delete from HOADON where  @maHD = id
 		end
 end
+
+select * from NHANVIEN
+
 
 
 

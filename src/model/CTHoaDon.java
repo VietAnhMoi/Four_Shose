@@ -9,6 +9,7 @@ package model;
  * @author nguye
  */
 public class CTHoaDon {
+
     private String id;
     private String idHoaDon;
     private String idSanPham;
@@ -17,8 +18,17 @@ public class CTHoaDon {
     private int soLuong;
     private String idKhuyenMai;
     private long thanhTien;
+    private String idCTDonHang;
 
     public CTHoaDon() {
+    }
+
+    public String getIdCTDonHang() {
+        return idCTDonHang;
+    }
+
+    public void setIdCTDonHang(String idCTDonHang) {
+        this.idCTDonHang = idCTDonHang;
     }
 
     public String getId() {
@@ -89,9 +99,9 @@ public class CTHoaDon {
     public String toString() {
         return "CTHoaDon{" + "id=" + id + ", idHoaDon=" + idHoaDon + ", idSanPham=" + idSanPham + ", idKhachHang=" + idKhachHang + ", idNhanVien=" + idNhanVien + ", soLuong=" + soLuong + ", idKhuyenMai=" + idKhuyenMai + ", thanhTien=" + thanhTien + '}';
     }
-    
-    public Object[] toDatata(){
-        return new Object[]{this.id,this.idHoaDon,this.idSanPham,this.idNhanVien,this.soLuong,this.idKhuyenMai,this.thanhTien};
+
+    public Object[] toDatata() {
+        return new Object[]{this.id, this.idHoaDon, this.idSanPham, this.idNhanVien, this.soLuong, this.idKhuyenMai, this.thanhTien};
     }
-    
+
 }
