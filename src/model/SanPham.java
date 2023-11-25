@@ -125,6 +125,13 @@ public class SanPham {
     public void setMoTa(String moTa) {
         this.moTa = moTa;
     }
+
+    public boolean isTrangThai() {
+        if (trangThai == 0) {
+            return false;
+        }
+        return true;
+    }
     
     
     public String isHang() {
@@ -135,6 +142,6 @@ public class SanPham {
     }
     
     public Object[] toData() {
-        return new Object[] {idSP, tenSP, hang,giaTien, soLuong, isHang()};
+        return new Object[] {idSP, tenSP, hang,giaTien,isHang(),  xuatXu, size, mauSac, soLuong};
     }
 }
