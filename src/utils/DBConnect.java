@@ -21,7 +21,7 @@ public class DBConnect {
     private static final String PASSWORD = "123";
     private static final String SERVER = "localhost";
     private static final String PORT = "1433";
-    private static final String DATABASE_NAME = "DA1_FOURSHOES#1";
+    private static final String DATABASE_NAME = "DA1_FOURSHOES";
     private static final boolean USING_SSL = false;
 
     private static String CONNECT_STRING;
