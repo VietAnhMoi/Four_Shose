@@ -676,7 +676,6 @@ public class QLHoaDonJDialog extends javax.swing.JDialog {
             fillTableHD(service.searchHD(idHoaDon));
         } else {
             JOptionPane.showMessageDialog(this, "Không có mã hóa đơn là " + idHoaDon);
-
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTimKiemHDActionPerformed
