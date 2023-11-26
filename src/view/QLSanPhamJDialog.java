@@ -95,47 +95,96 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         }
     }
 
-//    public SanPham readFormSP() {
-//        SanPham x = new SanPham();
-//        String id = txtIDSanPham.getText();
-//        String tenSP = txtTenSP.getText();
-//        double giaTien = Double.parseDouble(txtGiaTien.getText());
-//        int trangThai = Integer.parseInt(rdoHoatDong.isSelected() ? 1 : 0);
-//        
-//    }
+    public boolean validateForm() {
+        if (txtIDSanPham.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "Chưa nhập mã sản shẩm");
+            return false;
+        }
+
+        if (txtTenSP.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "Chưa nhập tên sản shẩm");
+            return false;
+        }
+
+        if (txtGiaTien.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "Chưa nhập giá tiền sản phẩm");
+            return false;
+        }
+
+        try {
+            Double.parseDouble(txtGiaTien.getText());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Giá tiền phải là số");
+            return false;
+        }
+
+        if (Double.parseDouble(txtGiaTien.getText()) < 0) {
+            JOptionPane.showMessageDialog(this, "Giá tiền phải lớn hơn 0");
+            return false;
+        }
+
+        if (txtSoLuong.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "Chưa nhập số lượng sản phẩm");
+            return false;
+        }
+
+        try {
+            Integer.parseInt(txtSoLuong.getText());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Số lượng phải là số");
+            return false;
+        }
+
+        if (Integer.parseInt(txtSoLuong.getText()) < 0) {
+            JOptionPane.showMessageDialog(this, "Số lượng phải lớn hơn 0");
+            return false;
+        }
+
+        if (txtMoTa.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "Chưa nhập mô tả sản phẩm");
+            return false;
+        }
+
+        return true;
+    }
+
     public SanPham readForm() {
-//        return new SanPham(txtIDSanPham.getText(), txtTenSP.getText(), Double.parseDouble(txtGiaTien.getText()), rdoHoatDong.isSelected() ? 1 : 0, lblHinhSP.getToolTipText(), cboHang.getSelectedItem() + "", cboXuatXu.getSelectedItem() + "", cboMauSac.getSelectedItem() + "", Integer.parseInt(cboSize.getSelectedItem() + ""), txtMoTa.getText());
         SanPham x = new SanPham();
         x.setIdSP(txtIDSanPham.getText());
         x.setTenSP(txtTenSP.getText());
         x.setGiaTien(Double.parseDouble(txtGiaTien.getText()));
+        x.setSoLuong(Integer.parseInt(txtSoLuong.getText()));
         x.setTrangThai(rdoHoatDong.isSelected() ? 1 : 0);
         x.setHinhAnh(lblHinhSP.getToolTipText());
-        x.setHang(cboHang.getSelectedItem()+"");
-        x.setXuatXu(cboXuatXu.getSelectedItem()+"");
-        x.setMauSac(cboMauSac.getSelectedItem()+"");
-        x.setSize(Integer.parseInt(cboSize.getSelectedItem() + ""));
+        x.setHang(new Hang(cboHang.getSelectedItem()+""));
+        x.setXuatXu(new XuatXu(cboXuatXu.getSelectedItem()+""));
+        x.setMauSac(new MauSac(cboMauSac.getSelectedItem()+""));
+        x.setSize(new Size(Integer.parseInt(cboSize.getSelectedItem()+"")));
         x.setMoTa(txtMoTa.getText());
-        
+
         return x;
     }
 
     public void insert() {
-        if (SPDao.findByName(txtIDSanPham.getText()) != null) {
-            if (SPDao.insert(readForm())) {
-                JOptionPane.showMessageDialog(this, "Thêm thành công");
-                fillTable(SPDao.getAll());
+        if (validateForm()) {
+            if (SPDao.findByName(txtIDSanPham.getText()) != null) {
+                if (SPDao.insert(readForm())) {
+                    JOptionPane.showMessageDialog(this, "Thêm thành công");
+                    fillTable(SPDao.getAll());
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Trùng ID");
+                return;
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Trùng ID");
-            return;
         }
     }
 
     public void update() {
-        if (SPDao.update(readForm())) {
-            JOptionPane.showMessageDialog(this, "Cập nhập thành công");
-            fillTable(SPDao.getAll());
+        if (validateForm()) {
+            if (SPDao.update(readForm())) {
+                JOptionPane.showMessageDialog(this, "Cập nhập thành công");
+                fillTable(SPDao.getAll());
+            }
         }
     }
 
@@ -164,7 +213,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         txtTenSP.setText(x.getTenSP());
         cboHang.setSelectedItem(x.getHang() + "");
         cboMauSac.setSelectedItem(x.getMauSac() + "");
-        cboSize.setSelectedItem(x.getSize() + "");
+        cboSize.setSelectedItem(String.valueOf(x.getSize() + ""));
         cboXuatXu.setSelectedItem(x.getXuatXu() + "");
         txtIDSanPham.setText(x.getIdSP());
         txtGiaTien.setText(String.valueOf(x.getGiaTien()));

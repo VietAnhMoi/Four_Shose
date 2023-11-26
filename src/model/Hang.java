@@ -20,6 +20,15 @@ public class Hang {
         this.tenHang = tenHang;
     }
 
+    public Hang(String tenHang) {
+        this.tenHang = tenHang;
+    }
+
+    @Override
+    public String toString() {
+        return tenHang;
+    }
+    
     public String getId() {
         return id;
     }
