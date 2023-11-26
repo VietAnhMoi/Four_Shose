@@ -15,6 +15,7 @@ import utils.Auth;
  */
 public class DangNhap extends javax.swing.JFrame {
     NhanVienService dao = new NhanVienService();
+    public static String manv;
     /**
      * Creates new form DangNhap
      */
@@ -24,8 +25,10 @@ public class DangNhap extends javax.swing.JFrame {
         setTitle("Đăng Nhập");
     }
     
+    
     void login() {
         String mamv = txtTaiKhoan.getText();
+        manv =txtTaiKhoan.getText();
         String password = new String(txtMatKhau.getPassword());
         NhanVien nhanVien = dao.getByID(mamv);
         if (nhanVien == null) {
@@ -61,8 +64,9 @@ public class DangNhap extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Grey"));
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
 
+        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
         jLabel1.setFont(new java.awt.Font("Cambria", 3, 30)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -89,7 +93,7 @@ public class DangNhap extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setText("Mật khẩu:");
 
-        btnDangNhap.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Grey"));
+        btnDangNhap.setBackground(new java.awt.Color(0, 0, 0));
         btnDangNhap.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnDangNhap.setForeground(new java.awt.Color(255, 255, 255));
         btnDangNhap.setText("Đăng Nhập");

@@ -113,14 +113,15 @@ GO
 
 CREATE TABLE CHITIETHOADON
 (
-	ID varchar(10) PRIMARY KEY NOT NULL,
+	ID int identity(1,1) PRIMARY KEY NOT NULL,
 	IDHoaDon varchar(10) NOT NULL FOREIGN KEY REFERENCES HOADON(ID),
 	IDSanPham varchar(10) NOT NULL FOREIGN KEY REFERENCES SanPham(ID),
 	IDKhachHang varchar(10) NULL FOREIGN KEY REFERENCES KHACHHANG(ID),
 	IDNHanVien varchar(10) NOT NULL FOREIGN KEY REFERENCES NHANVIEN(ID),
 	SoLuong INT NOT NULL,
 	IDKhuyenMai varchar(10) NULL FOREIGN KEY REFERENCES KHUYENMAI(ID),
-	TongTien FLOAT NOT NULL
+	TongTien FLOAT NOT NULL,
+	IDCTDonHang varchar(10) NULL FOREIGN KEY REFERENCES ChiTietDonHang(ID)
 )
 
 go
@@ -201,11 +202,10 @@ VALUES ('CTDH1', 'DH1', 10, 1000000, 10000000, 'SP1', 'KM2'),
 	('CTDH3', 'DH1', 2, 1000000, 2000000, 'SP1', 'KM2')
 
 INSERT INTO CHITIETHOADON
-                  (ID, IDHoaDon, IDSanPham, IDKhachHang, IDNHanVien, SoLuong, IDKhuyenMai, TongTien)
-VALUES ('CTHD1', 'HD1', 'SP1', 'KH1', 'NV1', 10, 'KM1', 10000000),
-	('CTHD2', 'HD2', 'SP1', 'KH2', 'NV1', 2, 'KM2', 2000000),
-	('CTHD3', 'HD3', 'SP3',null, 'NV2', 5, 'KM1', 5000000)
-
+                  ( IDHoaDon, IDSanPham, IDKhachHang, IDNHanVien, SoLuong, IDKhuyenMai, TongTien)
+VALUES ( 'HD1', 'SP1', 'KH1', 'NV1', 10, 'KM1', 10000000),
+	( 'HD2', 'SP1', 'KH2', 'NV1', 2, 'KM2', 2000000),
+	( 'HD3', 'SP3',null, 'NV2', 5, 'KM1', 5000000)
 
 	
 	select * from DONHANG
@@ -221,6 +221,21 @@ VALUES ('CTHD1', 'HD1', 'SP1', 'KH1', 'NV1', 10, 'KM1', 10000000),
 	select *from CHITIETHOADON
 
 
+create proc SP_deleteHoaDon
+@maHD varchar(10)
+as
+begin 
+	if	exists (select IDHoaDon from CHITIETHOADON where @maHD = IDHoaDon)
+		begin 
+			delete from CHITIETHOADON where @maHD = IDHoaDon
+		end
+	if exists (select id from HOADON where @maHD = id)
+		begin 
+			delete from HOADON where  @maHD = id
+		end
+end
+
+select * from NHANVIEN
 
 
 
