@@ -20,6 +20,15 @@ public class MauSac {
         this.mauSac = mauSac;
     }
 
+    public MauSac(String mauSac) {
+        this.mauSac = mauSac;
+    }
+
+    @Override
+    public String toString() {
+        return mauSac;
+    }
+
     public String getId() {
         return id;
     }

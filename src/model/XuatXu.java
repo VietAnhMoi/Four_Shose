@@ -20,6 +20,15 @@ public class XuatXu {
         this.xuatXu = xuatXu;
     }
 
+    public XuatXu(String xuatXu) {
+        this.xuatXu = xuatXu;
+    }
+    
+    @Override
+    public String toString() {
+        return xuatXu;
+    }
+
     public String getId() {
         return id;
     }

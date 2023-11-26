@@ -15,16 +15,16 @@ public class SanPham {
     private int soLuong;
     private int trangThai;
     private String hinhAnh;
-    private String hang;
-    private String xuatXu;
-    private String mauSac;
-    private int size;
+    private Hang hang;
+    private XuatXu xuatXu;
+    private MauSac mauSac;
+    private Size size;
     private String moTa;
 
     public SanPham() {
     }
 
-    public SanPham(String idSP, String tenSP, double giaTien, int soLuong, int trangThai, String hinhAnh, String hang, String xuatXu, String mauSac, int size, String moTa) {
+    public SanPham(String idSP, String tenSP, double giaTien, int soLuong, int trangThai, String hinhAnh, Hang hang, XuatXu xuatXu, MauSac mauSac, Size size, String moTa) {
         this.idSP = idSP;
         this.tenSP = tenSP;
         this.giaTien = giaTien;
@@ -86,35 +86,35 @@ public class SanPham {
         this.hinhAnh = hinhAnh;
     }
 
-    public String getHang() {
+    public Hang getHang() {
         return hang;
     }
 
-    public void setHang(String hang) {
+    public void setHang(Hang hang) {
         this.hang = hang;
     }
 
-    public String getXuatXu() {
+    public XuatXu getXuatXu() {
         return xuatXu;
     }
 
-    public void setXuatXu(String xuatXu) {
+    public void setXuatXu(XuatXu xuatXu) {
         this.xuatXu = xuatXu;
     }
 
-    public String getMauSac() {
+    public MauSac getMauSac() {
         return mauSac;
     }
 
-    public void setMauSac(String mauSac) {
+    public void setMauSac(MauSac mauSac) {
         this.mauSac = mauSac;
     }
 
-    public int getSize() {
+    public Size getSize() {
         return size;
     }
 
-    public void setSize(int size) {
+    public void setSize(Size size) {
         this.size = size;
     }
 
@@ -125,6 +125,8 @@ public class SanPham {
     public void setMoTa(String moTa) {
         this.moTa = moTa;
     }
+
+    
 
     public boolean isTrangThai() {
         if (trangThai == 0) {

@@ -36,6 +36,10 @@ public class QLDonHang extends javax.swing.JFrame {
         showDetailDH(index);
         showDetailDHCT(index);
     }
+
+    QLDonHang(TrangChu aThis, boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     public void FillToTableDH(List<DonHang> lstdh){
         model =(DefaultTableModel) tblDonHang.getModel();
         model.setRowCount(0);

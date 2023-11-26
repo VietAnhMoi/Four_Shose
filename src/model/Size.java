@@ -20,6 +20,17 @@ public class Size {
         this.size = size;
     }
 
+    public Size(int size) {
+        this.size = size;
+    }
+
+    @Override
+    public String toString() {
+        return "" + size + "";
+    }
+
+    
+
     public String getId() {
         return id;
     }
