@@ -37,9 +37,7 @@ public class QLDonHang extends javax.swing.JFrame {
         showDetailDHCT(index);
     }
 
-    QLDonHang(TrangChu aThis, boolean b) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+   
     public void FillToTableDH(List<DonHang> lstdh){
         model =(DefaultTableModel) tblDonHang.getModel();
         model.setRowCount(0);
@@ -209,6 +207,7 @@ public class QLDonHang extends javax.swing.JFrame {
         tblDonHangChiTiet = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jLabel1.setFont(new java.awt.Font("Cambria", 3, 24)); // NOI18N
         jLabel1.setText("Quản Lý Đơn Hàng");
@@ -346,8 +345,6 @@ public class QLDonHang extends javax.swing.JFrame {
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtIdDonHangDH, txtIdKhuyenMaiDH, txtSoLuongDH, txtTongTienDH});
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnMoiDH, btnThemDH, btnXoaDH, txtSuaDH});
-
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -378,8 +375,6 @@ public class QLDonHang extends javax.swing.JFrame {
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtIdDonHangDH, txtIdKhuyenMaiDH, txtSoLuongDH, txtTongTienDH});
-
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnMoiDH, btnThemDH, btnXoaDH, txtSuaDH});
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
