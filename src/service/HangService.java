@@ -20,13 +20,12 @@ import model.MauSac;
 public class HangService {
     public List<Hang> getAll() {
         try {
-            String sql = "select id, tenHang from Hang";
+            String sql = "select tenHang from Hang";
             try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 try(ResultSet rs = ps.executeQuery();) {
                     List<Hang> list = new ArrayList<>();
                     while (rs.next()) {                        
                         Hang x = new Hang();
-                        x.setId(rs.getString("ID"));
                         x.setTenHang(rs.getString("tenHang"));
                         list.add(x);
                     }

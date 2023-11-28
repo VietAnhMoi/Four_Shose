@@ -9,16 +9,17 @@ package model;
  * @author Viet Anh
  */
 public class MauSac {
-    private String id;
+    private String idMauSac;
     private String mauSac;
 
     public MauSac() {
     }
 
-    public MauSac(String id, String mauSac) {
-        this.id = id;
+    public MauSac(String idMauSac, String mauSac) {
+        this.idMauSac = idMauSac;
         this.mauSac = mauSac;
     }
+    
 
     public MauSac(String mauSac) {
         this.mauSac = mauSac;
@@ -29,14 +30,14 @@ public class MauSac {
         return mauSac;
     }
 
-    public String getId() {
-        return id;
+    public String getIdMauSac() {
+        return idMauSac;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdMauSac(String idMauSac) {
+        this.idMauSac = idMauSac;
     }
-
+    
     public String getMauSac() {
         return mauSac;
     }

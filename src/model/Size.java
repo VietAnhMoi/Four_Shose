@@ -9,14 +9,14 @@ package model;
  * @author Viet Anh
  */
 public class Size {
-    private String id;
+    private String idSize;
     private int size;
 
     public Size() {
     }
 
-    public Size(String id, int size) {
-        this.id = id;
+    public Size(String idSize, int size) {
+        this.idSize = idSize;
         this.size = size;
     }
 
@@ -29,14 +29,12 @@ public class Size {
         return "" + size + "";
     }
 
-    
-
-    public String getId() {
-        return id;
+    public String getIdSize() {
+        return idSize;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdSize(String idSize) {
+        this.idSize = idSize;
     }
 
     public int getSize() {

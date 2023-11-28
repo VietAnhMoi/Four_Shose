@@ -20,13 +20,12 @@ import model.Size;
 public class SizeService {
     public List<Size> getAll() {
         try {
-            String sql = "select id, tensize from size";
+            String sql = "select tensize from size";
             try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 try(ResultSet rs = ps.executeQuery();) {
                     List<Size> list = new ArrayList<>();
                     while (rs.next()) {                        
                         Size x = new Size();
-                        x.setId(rs.getString("ID"));
                         x.setSize(rs.getInt("tensize"));
                         list.add(x);
                     }

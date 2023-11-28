@@ -64,7 +64,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         model.removeAllElements();
         List<MauSac> list = mauSacDao.getAll();
         for (MauSac x : list) {
-            model.addElement(x.getMauSac() + "");
+            model.addElement(x);
         }
     }
 
@@ -73,7 +73,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         model.removeAllElements();
         List<Size> list = sizeDao.getAll();
         for (Size x : list) {
-            model.addElement(x.getSize());
+            model.addElement(x);
         }
     }
 
@@ -82,7 +82,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         model.removeAllElements();
         List<Hang> list = hangService.getAll();
         for (Hang x : list) {
-            model.addElement(x.getTenHang());
+            model.addElement(x);
         }
     }
 
@@ -91,7 +91,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         model.removeAllElements();
         List<XuatXu> list = xuatXuDao.getAll();
         for (XuatXu x : list) {
-            model.addElement(x.getXuatXu());
+            model.addElement(x);
         }
     }
 
@@ -149,25 +149,23 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
     }
 
     public SanPham readForm() {
-        SanPham x = new SanPham();
-        x.setIdSP(txtIDSanPham.getText());
-        x.setTenSP(txtTenSP.getText());
-        x.setGiaTien(Double.parseDouble(txtGiaTien.getText()));
-        x.setSoLuong(Integer.parseInt(txtSoLuong.getText()));
-        x.setTrangThai(rdoHoatDong.isSelected() ? 1 : 0);
-        x.setHinhAnh(lblHinhSP.getToolTipText());
-        x.setHang(new Hang(cboHang.getSelectedItem()+""));
-        x.setXuatXu(new XuatXu(cboXuatXu.getSelectedItem()+""));
-        x.setMauSac(new MauSac(cboMauSac.getSelectedItem()+""));
-        x.setSize(new Size(Integer.parseInt(cboSize.getSelectedItem()+"")));
-        x.setMoTa(txtMoTa.getText());
+        String id = txtIDSanPham.getText();
+        String ten = txtTenSP.getText();
+        double gia = Double.parseDouble(txtGiaTien.getText());
+        int sl = Integer.parseInt(txtSoLuong.getText());
+        String hinh = lblHinhSP.getToolTipText();
+        Hang hang = new Hang(cboHang.getSelectedItem().toString(), cboHang.getSelectedItem().toString());
+        XuatXu xuatXu = new XuatXu(cboXuatXu.getSelectedItem().toString(), cboXuatXu.getSelectedItem().toString());
+        MauSac mauSac = new MauSac(cboMauSac.getSelectedItem().toString(), cboMauSac.getSelectedItem().toString());
+        Size size = new Size(cboHang.getSelectedItem().toString(), Integer.parseInt(cboSize.getSelectedItem().toString()));
+        String moTa = txtMoTa.getText();
 
-        return x;
+        return new SanPham(id, ten, gia, sl, rdoHoatDong.isSelected() ? 1 : 0, hinh, hang, xuatXu, mauSac, size, moTa);
     }
 
     public void insert() {
         if (validateForm()) {
-            if (SPDao.findByName(txtIDSanPham.getText()) != null) {
+            if (SPDao.getByID(txtIDSanPham.getText()) == null) {
                 if (SPDao.insert(readForm())) {
                     JOptionPane.showMessageDialog(this, "Thêm thành công");
                     fillTable(SPDao.getAll());
@@ -181,9 +179,11 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
 
     public void update() {
         if (validateForm()) {
-            if (SPDao.update(readForm())) {
-                JOptionPane.showMessageDialog(this, "Cập nhập thành công");
-                fillTable(SPDao.getAll());
+            if (SPDao.getByID(txtIDSanPham.getText()) == null) {
+                if (SPDao.update(readForm())) {
+                    JOptionPane.showMessageDialog(this, "Cập nhập thành công");
+                    fillTable(SPDao.getAll());
+                }
             }
         }
     }
