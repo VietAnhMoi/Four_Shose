@@ -24,6 +24,11 @@ public class XuatXu {
         this.xuatXu = xuatXu;
     }
     
+//    @Override
+//    public String toString() {
+//        return xuatXu;
+//    }
+
     @Override
     public String toString() {
         return xuatXu;

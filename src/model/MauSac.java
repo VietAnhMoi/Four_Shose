@@ -19,16 +19,6 @@ public class MauSac {
         this.idMauSac = idMauSac;
         this.mauSac = mauSac;
     }
-    
-
-    public MauSac(String mauSac) {
-        this.mauSac = mauSac;
-    }
-
-    @Override
-    public String toString() {
-        return mauSac;
-    }
 
     public String getIdMauSac() {
         return idMauSac;
@@ -37,7 +27,7 @@ public class MauSac {
     public void setIdMauSac(String idMauSac) {
         this.idMauSac = idMauSac;
     }
-    
+
     public String getMauSac() {
         return mauSac;
     }
@@ -45,6 +35,4 @@ public class MauSac {
     public void setMauSac(String mauSac) {
         this.mauSac = mauSac;
     }
-
-    
 }

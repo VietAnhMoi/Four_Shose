@@ -19,12 +19,13 @@ import model.XuatXu;
 public class XuatXuService {
     public List<XuatXu> getAll() {
         try {
-            String sql = "select TENXUATXU from XuatXu";
+            String sql = "select id, TENXUATXU from XuatXu";
             try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 try(ResultSet rs = ps.executeQuery();) {
                     List<XuatXu> list = new ArrayList<>();
                     while (rs.next()) {                        
                         XuatXu x = new XuatXu();
+                        x.setIdXuatXu(rs.getString("ID"));
                         x.setXuatXu(rs.getString("TENXUATXU"));
                         list.add(x);
                     }

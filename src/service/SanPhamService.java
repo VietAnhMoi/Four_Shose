@@ -22,6 +22,7 @@ import model.XuatXu;
  * @author Viet Anh
  */
 public class SanPhamService {
+
     public boolean insert(SanPham x) {
         try {
             String sql = "INSERT INTO [dbo].[SanPham] ([ID],[TenSanPham],[GiaTien],[SoLuong],[TrangThai],[HinhAnh],[IDHang],[IDXuatXu],[IDMauSac],[IDSize],[MoTa]) values (?,?,?,?,?,?,?,?,?,?,?)";
@@ -32,10 +33,10 @@ public class SanPhamService {
                 ps.setObject(4, x.getSoLuong());
                 ps.setObject(5, x.getTrangThai());
                 ps.setObject(6, x.getHinhAnh());
-                ps.setObject(7, x.getHang().getIdHang());
-                ps.setObject(8, x.getXuatXu().getIdXuatXu());
-                ps.setObject(9, x.getMauSac().getIdMauSac());
-                ps.setObject(10, x.getSize().getIdSize());
+                ps.setObject(7, x.getHang());
+                ps.setObject(8, x.getXuatXu());
+                ps.setObject(9, x.getMauSac());
+                ps.setObject(10, x.getSize());
                 ps.setObject(11, x.getMoTa());
 
                 return ps.executeUpdate() > 0;
@@ -48,7 +49,9 @@ public class SanPhamService {
 
     public boolean update(SanPham x) {
         try {
-            String sql = "UPDATE SanPham SET TenSanPham = ?,GiaTien = ?, SoLuong = ?,TrangThai = ?,HinhAnh = ?,IDHang = ?,IDXuatXu = ?,IDMauSac = ?,IDSize = ?,MoTa = ? from sanpham where id = ?";
+            String sql = "UPDATE [dbo].[SanPham] SET [TenSanPham] = ?,[GiaTien] = ?,[SoLuong] = ?\n" +
+"      ,[TrangThai] = ?,[HinhAnh] = ?,[IDHang] = ?,[IDXuatXu] = ?,[IDMauSac] = ?\n" +
+"      ,[IDSize] = ?,[MoTa] = ? where id = ?";
             try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 ps.setObject(11, x.getIdSP());
                 ps.setObject(1, x.getTenSP());
@@ -56,10 +59,10 @@ public class SanPhamService {
                 ps.setObject(3, x.getSoLuong());
                 ps.setObject(4, x.getTrangThai());
                 ps.setObject(5, x.getHinhAnh());
-                ps.setObject(6, x.getHang().getIdHang());
-                ps.setObject(7, x.getXuatXu().getIdXuatXu());
-                ps.setObject(8, x.getMauSac().getIdMauSac());
-                ps.setObject(9, x.getSize().getIdSize());
+                ps.setObject(6, x.getHang());
+                ps.setObject(7, x.getXuatXu());
+                ps.setObject(8, x.getMauSac());
+                ps.setObject(9, x.getSize());
                 ps.setObject(10, x.getMoTa());
 
                 return ps.executeUpdate() > 0;
@@ -86,11 +89,11 @@ public class SanPhamService {
 
     public List<SanPham> getAll() {
         try {
-            String sql = "SELECT SanPham.ID, SanPham.TenSanPham, SanPham.GiaTien, SanPham.SoLuong, SanPham.TrangThai, SanPham.HinhAnh, Hang.TenHang, XUATXU.TenXuatXu, MAUSAC.TenMau, SIZE.TenSize, SanPham.MoTa\n" +
-                            " FROM     SanPham  JOIN Hang ON Hang.ID = SanPham.IDHang\n" +
-                            " JOIN XUATXU ON XUATXU.ID = SanPham.IDXuatXu\n" +
-                            " JOIN MAUSAC ON MAUSAC.ID = SanPham.IDMauSac\n" +
-                            " JOIN SIZE ON SIZE.ID = SanPham.IDSIZE";
+            String sql = "SELECT SanPham.ID, SanPham.TenSanPham, SanPham.GiaTien, SanPham.SoLuong, SanPham.TrangThai, SanPham.HinhAnh, Hang.TenHang, XUATXU.TenXuatXu, MAUSAC.TenMau, SIZE.TenSize, SanPham.MoTa\n"
+                    + "                            FROM     Hang  Inner JOIN SanPham ON Hang.ID = SanPham.IDHang\n"
+                    + "                            Inner JOIN XUATXU ON XUATXU.ID = SanPham.IDXuatXu\n"
+                    + "                            Inner JOIN MAUSAC ON MAUSAC.ID = SanPham.IDMauSac\n"
+                    + "                             Inner JOIN SIZE ON SIZE.ID = SanPham.IDSIZE";
             try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 try (ResultSet rs = ps.executeQuery();) {
                     List<SanPham> list = new ArrayList<>();
@@ -102,10 +105,10 @@ public class SanPhamService {
                         x.setSoLuong(rs.getInt("soLuong"));
                         x.setTrangThai(rs.getInt("trangThai"));
                         x.setHinhAnh(rs.getString("HinhAnh"));
-                        x.setHang(new Hang(rs.getString("tenHang")));
-                        x.setXuatXu(new XuatXu( rs.getString("TenXuatXu")));
-                        x.setSize(new Size(rs.getInt("TenSize")));
-                        x.setMauSac(new MauSac( rs.getString("TenMau")));
+                        x.setHang(rs.getString("TenHang"));
+                        x.setXuatXu(rs.getString("TenXuatXu"));
+                        x.setSize(rs.getString("TenSize"));
+                        x.setMauSac(rs.getString("TenMau"));
                         x.setMoTa(rs.getString("MoTa"));
 
                         list.add(x);
@@ -121,16 +124,16 @@ public class SanPhamService {
 
     public List<SanPham> findByName(String id) {
         try {
-            String sql = "SELECT SanPham.ID, SanPham.TenSanPham, SanPham.GiaTien, SanPham.SoLuong, SanPham.TrangThai, SanPham.HinhAnh, Hang.TenHang, XUATXU.TenXuatXu, MAUSAC.TenMau, SIZE.TenSize, SanPham.MoTa\n" +
-                            " FROM     SanPham  JOIN Hang ON Hang.ID = SanPham.IDHang\n" +
-                            " JOIN XUATXU ON XUATXU.ID = SanPham.IDXuatXu\n" +
-                            " JOIN MAUSAC ON MAUSAC.ID = SanPham.IDMauSac\n" +
-                            " JOIN SIZE ON SIZE.ID = SanPham.IDSIZE where sanpham.id like ?";
-            try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+            String sql = "SELECT SanPham.ID, SanPham.TenSanPham, SanPham.GiaTien, SanPham.SoLuong, SanPham.TrangThai, SanPham.HinhAnh, Hang.TenHang, XUATXU.TenXuatXu, MAUSAC.TenMau, SIZE.TenSize, SanPham.MoTa\n"
+                    + " FROM     SanPham  JOIN Hang ON Hang.ID = SanPham.IDHang\n"
+                    + " JOIN XUATXU ON XUATXU.ID = SanPham.IDXuatXu\n"
+                    + " JOIN MAUSAC ON MAUSAC.ID = SanPham.IDMauSac\n"
+                    + " JOIN SIZE ON SIZE.ID = SanPham.IDSIZE where sanpham.id like ?";
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 ps.setObject(1, "%" + id + "%");
-                try(ResultSet rs = ps.executeQuery();) {
+                try (ResultSet rs = ps.executeQuery();) {
                     List<SanPham> list = new ArrayList<>();
-                    while (rs.next()) {                        
+                    while (rs.next()) {
                         SanPham x = new SanPham();
                         x.setIdSP(rs.getString("id"));
                         x.setTenSP(rs.getString("TENSANPHAM"));
@@ -138,12 +141,12 @@ public class SanPhamService {
                         x.setSoLuong(rs.getInt("soLuong"));
                         x.setTrangThai(rs.getInt("trangThai"));
                         x.setHinhAnh(rs.getString("HinhAnh"));
-                        x.setHang(new Hang(rs.getString("ID"),rs.getString("TenHang")));
-                        x.setXuatXu(new XuatXu( rs.getString("ID"),rs.getString("TenXuatXu")));
-                        x.setSize(new Size(rs.getString("ID"),rs.getInt("TenSize")));
-                        x.setMauSac(new MauSac( rs.getString("ID"),rs.getString("TenMauSac")));
+                        x.setHang(rs.getString("TenHang"));
+                        x.setXuatXu(rs.getString("TenXuatXu"));
+                        x.setSize(rs.getString("TenSize"));
+                        x.setMauSac(rs.getString("TenMau"));
                         x.setMoTa(rs.getString("MoTa"));
-                        
+
                         list.add(x);
                     }
                     return list;
@@ -154,19 +157,19 @@ public class SanPhamService {
             return null;
         }
     }
-    
+
     public SanPham getByID(String id) {
         try {
-            String sql = "SELECT SanPham.ID, SanPham.TenSanPham, SanPham.GiaTien, SanPham.SoLuong, SanPham.TrangThai, SanPham.HinhAnh, Hang.TenHang, XUATXU.TenXuatXu, MAUSAC.TenMau, SIZE.TenSize, SanPham.MoTa\n" +
-                            " FROM     SanPham  JOIN Hang ON Hang.ID = SanPham.IDHang\n" +
-                            " JOIN XUATXU ON XUATXU.ID = SanPham.IDXuatXu\n" +
-                            " JOIN MAUSAC ON MAUSAC.ID = SanPham.IDMauSac\n" +
-                            " JOIN SIZE ON SIZE.ID = SanPham.IDSIZE where sanpham.id like ?";
-            try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
-                ps.setObject(1, "%"+id+"%");
-                try(ResultSet rs = ps.executeQuery();) {
+            String sql = "SELECT SanPham.ID, SanPham.TenSanPham, SanPham.GiaTien, SanPham.SoLuong, SanPham.TrangThai, SanPham.HinhAnh, Hang.TenHang, XUATXU.TenXuatXu, MAUSAC.TenMau, SIZE.TenSize, SanPham.MoTa\n"
+                    + " FROM     SanPham  JOIN Hang ON Hang.ID = SanPham.IDHang\n"
+                    + " JOIN XUATXU ON XUATXU.ID = SanPham.IDXuatXu\n"
+                    + " JOIN MAUSAC ON MAUSAC.ID = SanPham.IDMauSac\n"
+                    + " JOIN SIZE ON SIZE.ID = SanPham.IDSIZE where sanpham.id like ?";
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                ps.setObject(1, "%" + id + "%");
+                try (ResultSet rs = ps.executeQuery();) {
                     List<SanPham> list = new ArrayList<>();
-                    if (rs.next()) {                        
+                    if (rs.next()) {
                         SanPham x = new SanPham();
                         x.setIdSP(rs.getString("id"));
                         x.setTenSP(rs.getString("TENSANPHAM"));
@@ -174,12 +177,12 @@ public class SanPhamService {
                         x.setSoLuong(rs.getInt("soLuong"));
                         x.setTrangThai(rs.getInt("trangThai"));
                         x.setHinhAnh(rs.getString("HinhAnh"));
-                        x.setHang(new Hang(rs.getString("tenHang")));
-                        x.setXuatXu(new XuatXu( rs.getString("TenXuatXu")));
-                        x.setSize(new Size(rs.getInt("TenSize")));
-                        x.setMauSac(new MauSac( rs.getString("TenMau")));
+                        x.setHang(rs.getString("TenHang"));
+                        x.setXuatXu(rs.getString("TenXuatXu"));
+                        x.setSize(rs.getString("TenSize"));
+                        x.setMauSac(rs.getString("TenMau"));
                         x.setMoTa(rs.getString("MoTa"));
-                        
+
                         return x;
                     }
                 }

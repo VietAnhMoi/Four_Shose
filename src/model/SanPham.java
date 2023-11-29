@@ -15,16 +15,16 @@ public class SanPham {
     private int soLuong;
     private int trangThai;
     private String hinhAnh;
-    private Hang hang;
-    private XuatXu xuatXu;
-    private MauSac mauSac;
-    private Size size;
+    private String hang;
+    private String xuatXu;
+    private String mauSac;
+    private String size;
     private String moTa;
 
     public SanPham() {
     }
 
-    public SanPham(String idSP, String tenSP, double giaTien, int soLuong, int trangThai, String hinhAnh, Hang hang, XuatXu xuatXu, MauSac mauSac, Size size, String moTa) {
+    public SanPham(String idSP, String tenSP, double giaTien, int soLuong, int trangThai, String hinhAnh, String hang, String xuatXu, String mauSac, String size, String moTa) {
         this.idSP = idSP;
         this.tenSP = tenSP;
         this.giaTien = giaTien;
@@ -86,35 +86,35 @@ public class SanPham {
         this.hinhAnh = hinhAnh;
     }
 
-    public Hang getHang() {
+    public String getHang() {
         return hang;
     }
 
-    public void setHang(Hang hang) {
+    public void setHang(String hang) {
         this.hang = hang;
     }
 
-    public XuatXu getXuatXu() {
+    public String getXuatXu() {
         return xuatXu;
     }
 
-    public void setXuatXu(XuatXu xuatXu) {
+    public void setXuatXu(String xuatXu) {
         this.xuatXu = xuatXu;
     }
 
-    public MauSac getMauSac() {
+    public String getMauSac() {
         return mauSac;
     }
 
-    public void setMauSac(MauSac mauSac) {
+    public void setMauSac(String mauSac) {
         this.mauSac = mauSac;
     }
 
-    public Size getSize() {
+    public String getSize() {
         return size;
     }
 
-    public void setSize(Size size) {
+    public void setSize(String size) {
         this.size = size;
     }
 
@@ -129,10 +129,10 @@ public class SanPham {
     
 
     public boolean isTrangThai() {
-        if (trangThai == 0) {
-            return false;
+        if (trangThai == 1) {
+            return true;
         }
-        return true;
+        return false;
     }
     
     

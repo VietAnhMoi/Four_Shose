@@ -10,23 +10,23 @@ package model;
  */
 public class Size {
     private String idSize;
-    private int size;
+    private String size;
 
     public Size() {
     }
 
-    public Size(String idSize, int size) {
+    public Size(String idSize, String size) {
         this.idSize = idSize;
         this.size = size;
     }
 
-    public Size(int size) {
+    public Size(String size) {
         this.size = size;
     }
 
     @Override
     public String toString() {
-        return "" + size + "";
+        return size;
     }
 
     public String getIdSize() {
@@ -37,13 +37,14 @@ public class Size {
         this.idSize = idSize;
     }
 
-    public int getSize() {
+    public String getSize() {
         return size;
     }
 
-    public void setSize(int size) {
+    public void setSize(String size) {
         this.size = size;
     }
+
     
     
     
