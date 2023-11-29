@@ -92,5 +92,29 @@ public class CTDonHangService {
                 return 0;
             }
         }
-        
+          public List<CTDonHang> findidDHCT(String id){
+        List<CTDonHang> lstctdh = new ArrayList<>();
+        sql = "select ID,IDDonHang,SoLuong,GiaBan,ThanhTien,IDSanPham,IDKhuyenMai from CHITIETDONHANG where id Like ?";
+        try {
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, "%" + id + "%");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                CTDonHang dhct = new CTDonHang(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getString(7));
+                lstctdh.add(dhct);
+            }
+            return lstctdh;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }        
 }
