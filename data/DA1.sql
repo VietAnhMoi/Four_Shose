@@ -83,30 +83,30 @@ GO
 
 CREATE TABLE DONHANG
 (
-	ID varchar(10) PRIMARY KEY NOT NULL,
+	ID int identity(1,1) PRIMARY KEY NOT NULL,
 	SoLuong INT NOT NULL,
 	TongGiaTri float not null,
-	IDKhuyenMai varchar(10) NOT NULL FOREIGN KEY REFERENCES KHUYENMAI(ID),	
+	IDKhuyenMai varchar(10) null FOREIGN KEY REFERENCES Khuyenmai(ID),
 )
+
 GO
 
 CREATE TABLE CHITIETDONHANG
 (
-	ID varchar(10) primary key not null,
-	IDDonHang varchar(10) not null FOREIGN KEY REFERENCES DonHang(ID),
+	ID int identity(1,1) primary key not null,
+	IDDonHang int null FOREIGN KEY REFERENCES DonHang(ID),
 	SoLuong int not null,
 	GiaBan float not null,
 	ThanhTien float not null,
-	IDSanPham varchar(10) NOT NULL FOREIGN KEY REFERENCES SanPham(ID),
-	IDKhuyenMai varchar(10) null FOREIGN KEY REFERENCES KHUYENMAI(ID),	
+	IDSanPham varchar(10) NOT NULL FOREIGN KEY REFERENCES SanPham(ID),	
 )
 
 CREATE TABLE HOADON 
 (
-	ID varchar(10) PRIMARY KEY NOT NULL,
+	ID int identity(1,1) PRIMARY KEY NOT NULL,
 	TrangThai bit not null,
 	NgayLap date not null,
-	IDDonHang varchar(10) NOT NULL FOREIGN KEY REFERENCES DONHANG(ID),
+	IDDonHang int NOT NULL FOREIGN KEY REFERENCES DONHANG(ID),
 	TongTien FLOAT NOT NULL
 )
 GO 
@@ -114,14 +114,13 @@ GO
 CREATE TABLE CHITIETHOADON
 (
 	ID int identity(1,1) PRIMARY KEY NOT NULL,
-	IDHoaDon varchar(10) NOT NULL FOREIGN KEY REFERENCES HOADON(ID),
+	IDHoaDon int NOT NULL FOREIGN KEY REFERENCES HOADON(ID),
 	IDSanPham varchar(10) NOT NULL FOREIGN KEY REFERENCES SanPham(ID),
 	IDKhachHang varchar(10) NULL FOREIGN KEY REFERENCES KHACHHANG(ID),
 	IDNHanVien varchar(10) NOT NULL FOREIGN KEY REFERENCES NHANVIEN(ID),
 	SoLuong INT NOT NULL,
-	IDKhuyenMai varchar(10) NULL FOREIGN KEY REFERENCES KHUYENMAI(ID),
 	TongTien FLOAT NOT NULL,
-	IDCTDonHang varchar(10) NULL FOREIGN KEY REFERENCES ChiTietDonHang(ID)
+	IDCTDonHang int NULL FOREIGN KEY REFERENCES ChiTietDonHang(ID)
 )
 
 go
@@ -160,17 +159,6 @@ values ('H1','Gucci'),
 ('H3','Adidas'),
 ('H4','Jordan')
 
-INSERT INTO NHANVIEN
-                  (ID, HoTenNV, Email, TinhTrang, Matkhau, vaitro)
-VALUES ('NV1', N'Nguyễn Tiến Bảo', N'baont@fpt.edu.vn', 1, '123', 1),
-('NV2', N'Phùng Bá Kiên', N'kienpb@fpt.edu.vn', 0, '123456', 1),
-('NV3', N'Nguyễn Tiến Bảo', N'baont@fpt.edu.vn', 1, '1230', 1)
-
-INSERT INTO KHUYENMAI
-                  (ID, KMPhanTram, KMTheoGia, NgayTao, NguoiTao)
-VALUES ('KM1', 0.15, 0, GETDATE(), 'NV1'),
-	('KM2', 0, 70000, GETDATE(), 'NV1'),
-	('KM3', 0.2, 0, GETDATE(), 'NV1')
 
 INSERT INTO SANPHAM
                   (ID, TenSanPham, GiaTien, TrangThai, HinhAnh, IDHang, IDXuatXu, IDMauSac, IDSize, MoTa,soluong)
@@ -178,34 +166,10 @@ VALUES ('SP1', N'Yordan nike', 500000, 1, N'abc.png', 'H1', 'XX2', 'M5', 'SZ4', 
 	('SP2', N'Gucci bẩn', 4500000, 1, N'abc1.png', 'H2', 'XX2', 'M7', 'SZ5', N'dep trai',7),
 	('SP3', N'Adidas thể thao', 600000, 1, N'abc2.png', 'H3', 'XX1', 'M5', 'SZ4', N'dep trai',2)
 
-INSERT INTO DONHANG
-                  (ID, SoLuong, TongGiaTri, IDKhuyenMai)
-	VALUES ('DH1', 10, 10000000, 'KM1'),
-	('DH2', 7, 7000000, 'KM1'),
-	('DH3', 5, 5000000, 'KM2')
 
-INSERT INTO HOADON
-                  (ID, TrangThai, NgayLap, IDDonHang, TongTien)
-VALUES ('HD1', 1, CONVERT(DATETIME, '2023-11-19 00:00:00', 102), 'DH1',9124124),
-	('HD2', 0, CONVERT(DATETIME, '2023-11-12 00:00:00', 102), 'DH2',1284124),
-	('HD3', 0, CONVERT(DATETIME, '2023-10-16 00:00:00', 102), 'DH3',1241244)
 
-INSERT INTO KHACHHANG
-                  (ID, TenKhachHang, SDT, DiaChi)
-VALUES ('KH1', N'Trần Văn Hải', '0987123645', N'12 kiều mai'),
-	('KH2', N'Nguyễn Thị Nhài', '0325235221', N'69 Cầu diễn')
 
-INSERT INTO CHITIETDONHANG
-                  (ID, IDDonHang, SoLuong, GiaBan, ThanhTien, IDSanPham, IDKhuyenMai)
-VALUES ('CTDH1', 'DH1', 10, 1000000, 10000000, 'SP1', 'KM2'),
-	('CTDH2', 'DH2', 5, 1000000, 5000000, 'SP2', 'KM2'),
-	('CTDH3', 'DH1', 2, 1000000, 2000000, 'SP1', 'KM2')
 
-INSERT INTO CHITIETHOADON
-                  ( IDHoaDon, IDSanPham, IDKhachHang, IDNHanVien, SoLuong, IDKhuyenMai, TongTien)
-VALUES ( 'HD1', 'SP1', 'KH1', 'NV1', 10, 'KM1', 10000000),
-	( 'HD2', 'SP1', 'KH2', 'NV1', 2, 'KM2', 2000000),
-	( 'HD3', 'SP3',null, 'NV2', 5, 'KM1', 5000000)
 
 	
 	select * from DONHANG
@@ -220,9 +184,10 @@ VALUES ( 'HD1', 'SP1', 'KH1', 'NV1', 10, 'KM1', 10000000),
 	select * from XUATXU
 	select *from CHITIETHOADON
 
+-- lệnh xóa hóa đơn
 
 create proc SP_deleteHoaDon
-@maHD varchar(10)
+@maHD int
 as
 begin 
 	if	exists (select IDHoaDon from CHITIETHOADON where @maHD = IDHoaDon)
@@ -235,9 +200,36 @@ begin
 		end
 end
 
-select * from NHANVIEN
+-- lệnh xóa đơn hàng 
+create proc SP_deleteDonHang
+ @maDH int
+as
+ begin
+	if exists (select IDDonHang from HOADON where @maDH = IDDonHang )
+		begin
+			delete from HOADON where IDDonHang = @maDH
+		end
+	if exists (select IDDonHang from CHITIETDONHANG where @maDH = IDDonHang )
+		begin 
+			delete from CHITIETDONHANG where IDDonHang = @maDH
+		end
+	if exists (select id from DONHANG where @maDH = id )
+		begin 
+			delete from DONHANG where id = @maDH
+		end
+ end
+-- sửa
+/*
+delete  from CHITIETHOADON
+delete  from chitietdonhang
+delete from HOADON
+delete from donhang
 
-
+drop table CHITIETHOADON
+drop table CHITIETDONHANG
+drop table HOADON
+drop table DONHANG 
+*/
 
 
 

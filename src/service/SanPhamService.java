@@ -182,4 +182,29 @@ public class SanPhamService {
             return null;
         }
     }
+    
+    public SanPham getSoLuong(String id) {
+        try {
+            String sql = "SELECT ID ,TenSanPham,SoLuong,GiaTien,TrangThai FROM dbo.SANPHAM where id = ?";
+            try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                ps.setObject(1, id);
+                try(ResultSet rs = ps.executeQuery();) {
+                    List<SanPham> list = new ArrayList<>();
+                    if (rs.next()) {                        
+                        SanPham x = new SanPham();
+                        x.setIdSP(rs.getString("id"));
+                        x.setTenSP(rs.getString("TENSANPHAM"));
+                        x.setGiaTien(rs.getDouble("GiaTien"));
+                        x.setSoLuong(rs.getInt("SoLuong"));
+                        x.setTrangThai(rs.getInt("trangThai"));   
+                        return x;
+                    }
+                }
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

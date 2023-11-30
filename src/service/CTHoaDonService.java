@@ -32,7 +32,6 @@ public class CTHoaDonService {
                         cthd.setIdKhachHang(rs.getString("idkhachHang"));
                         cthd.setIdNhanVien(rs.getString("idnhanvien"));
                         cthd.setSoLuong(rs.getInt("soluong"));
-                        cthd.setIdKhuyenMai(rs.getString("idKhuyenMai"));
                         cthd.setThanhTien(rs.getLong("TongTien"));
                         cthd.setIdCTDonHang(rs.getString("idCTDonHang"));
                         list.add(cthd);
@@ -46,7 +45,7 @@ public class CTHoaDonService {
         }
     }
 
-    public List<CTHoaDon> getAllCTDH(String maDH) {
+    public List<CTHoaDon> getAllCTDH(int maDH) {
         try {
             String sql = "select hdct.* from chitiethoadon hdct join HOADON  hd on hdct.IDHoaDon = hd.ID\n"
                     + "                    where hd.idDonHang = ?";
@@ -62,7 +61,6 @@ public class CTHoaDonService {
                         cthd.setIdKhachHang(rs.getString("idkhachHang"));
                         cthd.setIdNhanVien(rs.getString("idnhanvien"));
                         cthd.setSoLuong(rs.getInt("soluong"));
-                        cthd.setIdKhuyenMai(rs.getString("idKhuyenMai"));
                         cthd.setThanhTien(rs.getLong("TongTien"));
 
                         list.add(cthd);
@@ -76,7 +74,7 @@ public class CTHoaDonService {
         }
     }
 
-    public List<CTDonHangJoinHoaDon> selectCTDonHang(String maHD) {
+    public List<CTDonHangJoinHoaDon> selectCTDonHang(int maHD) {
         try {
             String sql = "SELECT CHITIETDONHANG.*, HOADON.ID AS 'idhoadon'\n"
                     + "FROM     CHITIETDONHANG INNER JOIN\n"
@@ -94,7 +92,6 @@ public class CTHoaDonService {
                         ctDH.setSoLuong(rs.getInt("soluong"));
                         ctDH.setGiaBan(rs.getLong("giaban"));
                         ctDH.setThanhTien(rs.getLong("thanhtien"));
-                        ctDH.setIdKhuyenMai(rs.getString("idKhuyenMai"));
                         ctDH.setIdHoaDon(rs.getString("idhoadon"));
 
                         list.add(ctDH);
@@ -112,8 +109,8 @@ public class CTHoaDonService {
         QLHoaDonJDialog ql = new QLHoaDonJDialog();
         try {
             String sql = "INSERT INTO CHITIETHOADON\n"
-                    + "                  ( IDHoaDon, IDSanPham, IDKhachHang, IDNHanVien, SoLuong, IDKhuyenMai, TongTien,idCTDonHang)\n"
-                    + "VALUES ( ?, ?, ?, ?, ?,?, ?,?)";
+                    + "                  ( IDHoaDon, IDSanPham, IDKhachHang, IDNHanVien, SoLuong, TongTien,idCTDonHang)\n"
+                    + "VALUES ( ?, ?, ?, ?, ?, ?,?)";
             try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
 
                 ps.setString(1, ctHd.getIdHoaDon());
@@ -123,9 +120,8 @@ public class CTHoaDonService {
 
                 ps.setString(4, ctHd.getIdNhanVien());
                 ps.setInt(5, ctHd.getSoLuong());
-                ps.setString(6, ctHd.getIdKhuyenMai());
-                ps.setLong(7, ctHd.getThanhTien());
-                ps.setString(8, ctHd.getIdCTDonHang());
+                ps.setLong(6, ctHd.getThanhTien());
+                ps.setString(7, ctHd.getIdCTDonHang());
                 return ps.executeUpdate();
             }
         } catch (Exception e) {

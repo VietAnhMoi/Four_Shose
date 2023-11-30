@@ -24,10 +24,10 @@ public class HoaDonService {
                     List<HoaDon> list = new ArrayList<>();
                     while (rs.next()) {
                         HoaDon hd = new HoaDon();
-                        hd.setId(rs.getString("id"));
+                        hd.setId(rs.getInt("id"));
                         hd.setNgayLap(rs.getString("NgayLap"));
                         hd.setTrangThai(rs.getInt("TrangThai"));
-                        hd.setIdDonHang(rs.getString("IDDonHang"));
+                        hd.setIdDonHang(rs.getInt("IDDonHang"));
                         hd.setTongTien(rs.getLong("TongTien"));
 
                         list.add(hd);
@@ -41,16 +41,11 @@ public class HoaDonService {
         }
     }
 
-    public boolean insert(HoaDon hd) {
+    public boolean updateTrangThai(int maHD) {
         try {
-            String sql = "INSERT INTO HOADON\n"
-                    + "                  (ID, IDDonHang, TongTien, TrangThai, NgayLap)\n"
-                    + "VALUES (?, ?, ?, ?, getdate())";
+            String sql = "update HOADON set TrangThai = 0 where id = ?";
             try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
-                ps.setString(1, hd.getId());
-                ps.setString(2, hd.getIdDonHang());
-                ps.setLong(3, hd.getTongTien());
-                ps.setInt(4, hd.getTrangThai());
+                ps.setInt(1, maHD);
 
                 return ps.executeUpdate() > 0;
             }
@@ -59,8 +54,7 @@ public class HoaDonService {
             return false;
         }
     }
-
-    public boolean getIdHoaDon(String idHD) {
+    public boolean getIdHoaDon(int idHD) {
         String sql = "select id from hoadon where id = ?";
         try {
             Connection con = DBConnect.getConnection();
@@ -73,7 +67,7 @@ public class HoaDonService {
         }
     }
 
-    public boolean getMaDonHang(String idDonHang) {
+    public boolean getMaDonHang(int idDonHang) {
         String sql = "select iddonhang from hoadon where iddonhang = ?";
         try {
             Connection con = DBConnect.getConnection();
@@ -99,11 +93,11 @@ public class HoaDonService {
         }
     }
 
-    public boolean deleteHoaDon(String maHD) {
+    public boolean deleteHoaDon(int maHD) {
         try {
             String sql = "exec SP_deleteHoaDon ?";
             try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
-                ps.setString(1, maHD);
+                ps.setInt(1, maHD);
 
                 return ps.executeUpdate() > 0;
             }
@@ -122,10 +116,10 @@ public class HoaDonService {
                 try (ResultSet rs = ps.executeQuery();) {
                     while (rs.next()) {
                         HoaDon hd = new HoaDon();
-                        hd.setId(rs.getString("id"));
+                        hd.setId(rs.getInt("id"));
                         hd.setNgayLap(rs.getString("NgayLap"));
                         hd.setTrangThai(rs.getInt("TrangThai"));
-                        hd.setIdDonHang(rs.getString("IDDonHang"));
+                        hd.setIdDonHang(rs.getInt("IDDonHang"));
                         hd.setTongTien(rs.getLong("TongTien"));
 
                         list.add(hd);
@@ -138,4 +132,63 @@ public class HoaDonService {
             return null;
         }
     }
+
+    public List<HoaDon> getAllHDCho() {
+        try {
+            String sql = "SELECT * FROM Hoadon where trangthai = 0";
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                try (ResultSet rs = ps.executeQuery();) {
+                    List<HoaDon> list = new ArrayList<>();
+                    while (rs.next()) {
+                        HoaDon hd = new HoaDon();
+                        hd.setId(rs.getInt("id"));
+                        hd.setNgayLap(rs.getString("NgayLap"));
+                        hd.setTrangThai(rs.getInt("TrangThai"));
+                        hd.setIdDonHang(rs.getInt("IDDonHang"));
+                        hd.setTongTien(rs.getLong("TongTien"));
+
+                        list.add(hd);
+                    }
+                    return list;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean insertHDcho(HoaDon hd) {
+        try {
+            String sql = "INSERT INTO HOADON\n"
+                    + "                  ( IDDonHang, TongTien, TrangThai, NgayLap)\n"
+                    + "VALUES (?, ?, ?, getdate())";
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                ps.setInt(1, hd.getIdDonHang());
+                ps.setLong(2, hd.getTongTien());
+                ps.setInt(3, hd.getTrangThai());
+
+                return ps.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updatePay(int maHd) {
+        try {
+            String sql = "update HOADON set TrangThai = 1 where id = ?";
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                ps.setInt(1, maHd);
+                
+                return ps.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    
 }

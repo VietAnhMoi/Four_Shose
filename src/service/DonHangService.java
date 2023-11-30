@@ -3,36 +3,39 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package service;
+
 import utils.DBConnect;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import model.DonHang;
+
 /**
  *
  * @author phung
  */
 public class DonHangService {
+
     Connection con = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
     String sql = null;
-    
-    public List<DonHang> getAllDH(){
-        sql ="select ID,SoLuong,TongGiaTri,IDKhuyenMai from DONHANG";
-        List<DonHang> lst= new ArrayList<>();
+
+    public List<DonHang> getIDDonHang() {
+        sql = "select top 1* from DONHANG order by id desc ";
+        List<DonHang> lst = new ArrayList<>();
         try {
             con = DBConnect.getConnection();
-            ps=con.prepareStatement(sql);
-            rs=ps.executeQuery();
-            while(rs.next()){
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
                 DonHang dh;
-                dh = new DonHang(rs.getString(1),
+                dh = new DonHang(rs.getInt(1),
                         rs.getInt(2),
                         rs.getInt(3),
                         rs.getString(4)
                 );
-               lst.add(dh);
+                lst.add(dh);
             }
             return lst;
         } catch (Exception e) {
@@ -40,47 +43,65 @@ public class DonHangService {
             return null;
         }
     }
-        public int DeleteDH(String id){
-        sql="delete  from DONHANG where id =? ";
+
+//    public int DeleteDH(String id) {
+//        sql = "delete  from DONHANG where id =? ";
+//        try {
+//            con = DBConnect.getConnection();
+//            ps = con.prepareStatement(sql);
+//            ps.setObject(1, id);
+//            return ps.executeUpdate();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return 0;
+//        }
+//    }
+//
+    public int AddDH(DonHang dh) {
+        sql = "INSERT INTO DONHANG\n"
+                + "                  ( SoLuong, TongGiaTri,IDKhuyenMai)\n"
+                + "	VALUES ( ?, ?,?)";
         try {
-            con=DBConnect.getConnection();
-            ps=con.prepareStatement(sql);
-            ps.setObject(1, id);
-            return ps.executeUpdate();            
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, dh.getSoluongdh());
+            ps.setObject(2, dh.getTonggiatridh());
+            ps.setObject(3, dh.getIdkhuyenmaidh());
+
+            return ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
-        }       
+        }
     }
-        public int AddDH(DonHang dh){
-        sql="insert into DONHANG(ID,SoLuong,TongGiaTri,IDKhuyenMai) values(?,?,?,?)";
+//
+//    public int UpdateDH(DonHang dh, String id) {
+//        sql = "update DONHANG set ID=?,SoLuong=?,TongGiaTri=?,IDKhuyenMai=? where  id = ?";
+//        try {
+//            con = DBConnect.getConnection();
+//            ps = con.prepareStatement(sql);
+//            ps.setString(1, dh.getIddonhangdh());
+//            ps.setInt(2, dh.getSoluongdh());
+//            ps.setInt(3, dh.getTonggiatridh());
+//            ps.setString(4, dh.getIdkhuyenmaidh());
+//            ps.setObject(5, id);
+//            return ps.executeUpdate();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return 0;
+//        }
+//    }
+    
+     public boolean deleteHDcho(int maDH) {
         try {
-            con=DBConnect.getConnection();
-                ps=con.prepareStatement(sql);
-                ps.setString(1, dh.getIddonhangdh());
-                ps.setInt(2, dh.getSoluongdh());
-                ps.setInt(3, dh.getTonggiatridh());
-                ps.setString(4, dh.getIdkhuyenmaidh());
-            return ps.executeUpdate();           
+            String sql = "exec SP_deleteDonHang ?";
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                ps.setInt(1, maDH);
+                return ps.executeUpdate() > 0;
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            return 0;
+            return false;
         }
-        }
-        public int UpdateDH(DonHang dh,String id){
-            sql= "update DONHANG set ID=?,SoLuong=?,TongGiaTri=?,IDKhuyenMai=? where  id = ?";
-            try {
-                con= DBConnect.getConnection();
-                ps=con.prepareStatement(sql);
-                ps.setString(1, dh.getIddonhangdh());
-                ps.setInt(2, dh.getSoluongdh());
-                ps.setInt(3, dh.getTonggiatridh());
-                ps.setString(4, dh.getIdkhuyenmaidh());
-                ps.setObject(5, id);
-                return ps.executeUpdate();
-            } catch (Exception e) {
-                e.printStackTrace();
-                return 0;
-            }
-        }
+    }
 }

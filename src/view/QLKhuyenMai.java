@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import model.KhuyenMai;
 
 import service.KhuyenMaiService;
+import utils.Auth;
 
 /**
  *
@@ -33,6 +34,7 @@ public class QLKhuyenMai extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         fillTable(service.getAll());
+//        txtNguoiTao.setText(Auth.user.getId());
 //        showData(index);
     }
 
@@ -64,31 +66,52 @@ public class QLKhuyenMai extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "KMPhanTram Không được để tên trống");
             txtKMPhanTram.requestFocus();
             return false;
+        } else {
+            try {
+                if (Double.parseDouble(txtKMPhanTram.getText()) < 0) {
+                    JOptionPane.showMessageDialog(this, "KMPhanTram phải lớn hơn 0");
+                    return false;
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Sai định đạng khuyến mãi theo phần trăm");
+                return false;
+            }
         }
         if (txtKMTheoGia.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "KHTheoGia Không được để mật khẩu trống");
+            JOptionPane.showMessageDialog(this, "KMTheoGia Không được để trống");
             txtKMTheoGia.requestFocus();
             return false;
+        } else {
+            try {
+                if (Integer.parseInt(txtKMTheoGia.getText()) < 0) {
+                    JOptionPane.showMessageDialog(this, "KMTheoGia phải lớn hơn 0");
+                    return false;
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Sai định đạng khuyến mãi theo giá");
+                return false;
+            }
         }
-        if (txtNgayTao.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "NgayTao Không được để mật khẩu trống");
-            txtNgayTao.requestFocus();
-            return false;
-        }
-        if (txtNguoiTao.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "NguoiTao Không được để mật khẩu trống");
-            txtNguoiTao.requestFocus();
+
+        if (Double.parseDouble(txtKMPhanTram.getText()) > 0 && Integer.parseInt(txtKMTheoGia.getText()) > 0) {
+            JOptionPane.showMessageDialog(this, "Bạn chỉ được nhập 1 loại khuyến mãi");
             return false;
         }
         return true;
     }
-     public KhuyenMai readform(){
+
+    public KhuyenMai readform() {
         String ID = txtID.getText();
-        double KMPhanTram = Double.parseDouble(txtKMPhanTram.getText()) ;
-        int KMTheoGia = Integer.parseInt(txtKMTheoGia.getText()) ;
-        String NgayTao = txtNgayTao.getText();
-        String NguoiTao = txtNguoiTao.getText();
-        return new KhuyenMai(ID, KMPhanTram, KMTheoGia, NgayTao, NguoiTao);
+        double KMPhanTram = 0;
+        int KMTheoGia = 0;
+        if (Double.parseDouble(txtKMPhanTram.getText()) != 0) {
+            KMPhanTram = Double.parseDouble(txtKMPhanTram.getText());
+        } else {
+            KMTheoGia = Integer.parseInt(txtKMTheoGia.getText());
+        }
+//        String NgayTao = txtNgayTao.getText();
+        String NguoiTao = Auth.user.getId();
+        return new KhuyenMai(ID, KMPhanTram, KMTheoGia, NguoiTao);
     }
 
     @SuppressWarnings("unchecked")
@@ -143,6 +166,10 @@ public class QLKhuyenMai extends javax.swing.JDialog {
                 txtKMTheoGiaActionPerformed(evt);
             }
         });
+
+        txtNgayTao.setEnabled(false);
+
+        txtNguoiTao.setEnabled(false);
 
         tblKhuyenMai.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -305,6 +332,7 @@ public class QLKhuyenMai extends javax.swing.JDialog {
     }//GEN-LAST:event_txtTimKiemKMActionPerformed
 
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
+
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTimKiemActionPerformed
 
@@ -316,41 +344,56 @@ public class QLKhuyenMai extends javax.swing.JDialog {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
- if(checkrong()){
+        if (checkrong()) {
             KhuyenMai KM = readform();
-            if(service.Add(KM)!=0){
-                JOptionPane.showMessageDialog(this, "Thêm thành công");
-                fillTable(service.getAll());
-        }else{
-           JOptionPane.showMessageDialog(this, "Thêm không thành công"); 
-        }       }
+            if (!service.checkMa(KM.getIdKM())) {
+                JOptionPane.showMessageDialog(this, "Mã này đã được tạo");
+            } else {
+                if (service.Add(KM) != 0) {
+                    JOptionPane.showMessageDialog(this, "Thêm thành công");
+                    fillTable(service.getAll());
+                } else {
+                    JOptionPane.showMessageDialog(this, "Thêm không thành công");
+                }
+            }
+        }
 
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
-          if(checkrong()){
-            index = tblKhuyenMai.getSelectedRow();
-            KhuyenMai KM = readform();
-            String id =tblKhuyenMai.getValueAt(index, 0).toString();
-          if(service.Update(KM, id)>0){
-            JOptionPane.showMessageDialog(this, "Update thành công");
-            fillTable(service.getAll());
-        }else{
-            JOptionPane.showMessageDialog(this, "Update không thành công");
-        }        }
+        index = tblKhuyenMai.getSelectedRow();
+        if (index < 0 || index > tblKhuyenMai.getRowCount() - 1) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn giá trị để Sửa");
+        } else {
+            if (checkrong()) {
+                KhuyenMai KM = readform();
+                String id = tblKhuyenMai.getValueAt(index, 0).toString();
+                if (service.Update(KM, id) > 0) {
+                    JOptionPane.showMessageDialog(this, "Update thành công");
+                    fillTable(service.getAll());
+                    tblKhuyenMai.setRowSelectionInterval(index, index);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Update không thành công");
+                }
+            }
+        }
 
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         // TODO add your handling code here:
         index = tblKhuyenMai.getSelectedRow();
-        String km = tblKhuyenMai.getValueAt(index, 0).toString();
-        if (service.Delete(km) != 0) {
-            JOptionPane.showMessageDialog(this, "Xóa thành công");
-            fillTable(service.getAll());
+        if (index < 0 || index > tblKhuyenMai.getRowCount() - 1) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn giá trị để Xóa");
         } else {
-            JOptionPane.showMessageDialog(this, "Xóa thất bại");
+            String km = tblKhuyenMai.getValueAt(index, 0).toString();
+            if (service.Delete(km) != 0) {
+                JOptionPane.showMessageDialog(this, "Xóa thành công");
+                fillTable(service.getAll());
+            } else {
+                JOptionPane.showMessageDialog(this, "Xóa thất bại");
+            }
         }
 
     }//GEN-LAST:event_btnXoaActionPerformed

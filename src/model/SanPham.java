@@ -9,6 +9,7 @@ package model;
  * @author Viet Anh
  */
 public class SanPham {
+
     private String idSP;
     private String tenSP;
     private double giaTien;
@@ -126,24 +127,25 @@ public class SanPham {
         this.moTa = moTa;
     }
 
-    
-
     public boolean isTrangThai() {
         if (trangThai == 0) {
             return false;
         }
         return true;
     }
-    
-    
+
     public String isHang() {
         if (trangThai == 0) {
             return "Không Hoạt Động";
         }
         return "Hoạt Động";
     }
-    
+
     public Object[] toData() {
-        return new Object[] {idSP, tenSP, hang,giaTien,isHang(),  xuatXu, size, mauSac, soLuong};
+        return new Object[]{idSP, tenSP, hang, giaTien, isHang(), xuatXu, size, mauSac, soLuong};
+    }
+
+    public Object[] toData1() {
+        return new Object[]{this.idSP, this.tenSP,  this.giaTien, this.soLuong, this.trangThai==1?"Còn hàng":"Hết hàng",this.hang,this.xuatXu,this.mauSac, this.size};
     }
 }

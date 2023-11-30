@@ -26,9 +26,9 @@ public class KhuyenMaiService {
     public List<KhuyenMai> getAll() {
         try {
             String sql = "SELECT ID,KMPHANTRAM,KMTHEOGIA,NGAYTAO,NGUOITAO FROM dbo.KHUYENMAI";
-            Connection con = DBConnect.getConnection();
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
             List<KhuyenMai> list = new ArrayList<>();
             while (rs.next()) {
                 KhuyenMai km = new KhuyenMai();
@@ -48,24 +48,22 @@ public class KhuyenMaiService {
         }
     }
 
-
     public int Add(KhuyenMai km) {
-        String sql = "INSERT INTO KHUYENMAI(ID,KMPHANTRAM,KMTHEOGIA,NGAYTAO,NGUOITAO) values (?,?,?,?,?)";
+        String sql = "INSERT INTO KHUYENMAI(ID,KMPHANTRAM,KMTHEOGIA,NGAYTAO,NGUOITAO) values (?,?,?,GETDATE(),?)";
         try {
             con = DBConnect.getConnection();
             ps = con.prepareStatement(sql);
             ps.setString(1, km.getIdKM());
             ps.setDouble(2, km.getKMPhanTram());
             ps.setInt(3, km.getKMTheoGia());
-            ps.setString(4, km.getNgayTao());
-            ps.setString(5, km.getNguoiTao());
+//            ps.setString(4, km.getNgayTao());
+            ps.setString(4, km.getNguoiTao());
             return ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
     }
-
 
     public int Update(KhuyenMai km, String id) {
         String sql = "UPDATE dbo.KHUYENMAI SET KMPHANTRAM=?, KMTHEOGIA=? WHERE ID=?";
@@ -95,4 +93,17 @@ public class KhuyenMaiService {
         }
     }
 
+    public boolean checkMa(String ma) {
+        String sql = "select id from khuyenmai where id =?";
+        try {
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, ma);
+            
+            return ps.executeUpdate() >0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

@@ -9,40 +9,41 @@ package model;
  * @author phung
  */
 public class CTDonHang {
-    private String iddonhangct;
-    private String iddonhangdhct;
+    private int iddonhangct;
+    private int iddonhangdhct;
     private int soluongdhct;
     private int giabandhct;
     private int thanhtiendhct;
     private String idsanphamdhct;
-    private String idkhuyenmai;
-
+    private String tenSanPham;
     public CTDonHang() {
     }
 
-    public CTDonHang(String iddonhangct, String iddonhangdhct, int soluongdhct, int giabandhct, int thanhtiendhct, String idsanphamdhct, String idkhuyenmai) {
+    public CTDonHang(int iddonhangct, int iddonhangdhct, int soluongdhct, int giabandhct, int thanhtiendhct, String idsanphamdhct, String tenSanPham) {
         this.iddonhangct = iddonhangct;
         this.iddonhangdhct = iddonhangdhct;
         this.soluongdhct = soluongdhct;
         this.giabandhct = giabandhct;
         this.thanhtiendhct = thanhtiendhct;
         this.idsanphamdhct = idsanphamdhct;
-        this.idkhuyenmai = idkhuyenmai;
+        this.tenSanPham = tenSanPham;
     }
 
-    public String getIddonhangct() {
+   
+
+    public int getIddonhangct() {
         return iddonhangct;
     }
 
-    public void setIddonhangct(String iddonhangct) {
+    public void setIddonhangct(int iddonhangct) {
         this.iddonhangct = iddonhangct;
     }
 
-    public String getIddonhangdhct() {
+    public int getIddonhangdhct() {
         return iddonhangdhct;
     }
 
-    public void setIddonhangdhct(String iddonhangdhct) {
+    public void setIddonhangdhct(int iddonhangdhct) {
         this.iddonhangdhct = iddonhangdhct;
     }
 
@@ -78,15 +79,18 @@ public class CTDonHang {
         this.idsanphamdhct = idsanphamdhct;
     }
 
-    public String getIdkhuyenmai() {
-        return idkhuyenmai;
+    public String getTenSanPham() {
+        return tenSanPham;
     }
 
-    public void setIdkhuyenmai(String idkhuyenmai) {
-        this.idkhuyenmai = idkhuyenmai;
+    public void setTenSanPham(String tenSanPham) {
+        this.tenSanPham = tenSanPham;
     }
+
+   
+    
     public Object[] toDatatadhct(){
-        return new Object[]{iddonhangct,iddonhangdhct,soluongdhct,giabandhct,thanhtiendhct,idsanphamdhct,idkhuyenmai};
+        return new Object[]{this.idsanphamdhct,this.tenSanPham,this.soluongdhct,this.giabandhct,this.thanhtiendhct};
     }
     
 }

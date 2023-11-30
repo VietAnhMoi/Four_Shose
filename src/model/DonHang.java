@@ -9,26 +9,27 @@ package model;
  * @author phung
  */
 public class DonHang {
-    private String iddonhangdh;
+
+    private int iddonhangdh;
     private int soluongdh;
     private int tonggiatridh;
     private String idkhuyenmaidh;
-
+    
     public DonHang() {
     }
 
-    public DonHang(String iddonhangdh, int soluongdh, int tonggiatridh, String idkhuyenmaidh) {
+    public DonHang(int iddonhangdh, int soluongdh, int tonggiatridh, String idkhuyenmaidh) {
         this.iddonhangdh = iddonhangdh;
         this.soluongdh = soluongdh;
         this.tonggiatridh = tonggiatridh;
         this.idkhuyenmaidh = idkhuyenmaidh;
     }
 
-    public String getIddonhangdh() {
+    public int getIddonhangdh() {
         return iddonhangdh;
     }
 
-    public void setIddonhangdh(String iddonhangdh) {
+    public void setIddonhangdh(int iddonhangdh) {
         this.iddonhangdh = iddonhangdh;
     }
 
@@ -55,7 +56,8 @@ public class DonHang {
     public void setIdkhuyenmaidh(String idkhuyenmaidh) {
         this.idkhuyenmaidh = idkhuyenmaidh;
     }
-    public Object[] toDatata(){
-        return new Object[]{this.iddonhangdh,this.soluongdh,this.tonggiatridh,this.idkhuyenmaidh};
+
+    public Object[] toDatata() {
+        return new Object[]{this.iddonhangdh, this.soluongdh, this.tonggiatridh, this.idkhuyenmaidh};
     }
 }
