@@ -18,13 +18,13 @@ public class SanPham {
     private String hang;
     private String xuatXu;
     private String mauSac;
-    private int size;
+    private String size;
     private String moTa;
 
     public SanPham() {
     }
 
-    public SanPham(String idSP, String tenSP, double giaTien, int soLuong, int trangThai, String hinhAnh, String hang, String xuatXu, String mauSac, int size, String moTa) {
+    public SanPham(String idSP, String tenSP, double giaTien, int soLuong, int trangThai, String hinhAnh, String hang, String xuatXu, String mauSac, String size, String moTa) {
         this.idSP = idSP;
         this.tenSP = tenSP;
         this.giaTien = giaTien;
@@ -110,11 +110,11 @@ public class SanPham {
         this.mauSac = mauSac;
     }
 
-    public int getSize() {
+    public String getSize() {
         return size;
     }
 
-    public void setSize(int size) {
+    public void setSize(String size) {
         this.size = size;
     }
 
@@ -126,11 +126,13 @@ public class SanPham {
         this.moTa = moTa;
     }
 
+    
+
     public boolean isTrangThai() {
-        if (trangThai == 0) {
-            return false;
+        if (trangThai == 1) {
+            return true;
         }
-        return true;
+        return false;
     }
     
     

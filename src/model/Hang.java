@@ -9,23 +9,32 @@ package model;
  * @author Viet Anh
  */
 public class Hang {
-    private String id;
+    private String idHang;
     private String tenHang;
 
     public Hang() {
     }
 
-    public Hang(String id, String tenHang) {
-        this.id = id;
+    public Hang(String idHang, String tenHang) {
+        this.idHang = idHang;
         this.tenHang = tenHang;
     }
 
-    public String getId() {
-        return id;
+    public Hang(String tenHang) {
+        this.tenHang = tenHang;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    @Override
+    public String toString() {
+        return tenHang;
+    }
+
+    public String getIdHang() {
+        return idHang;
+    }
+
+    public void setIdHang(String idHang) {
+        this.idHang = idHang;
     }
 
     public String getTenHang() {
@@ -35,6 +44,7 @@ public class Hang {
     public void setTenHang(String tenHang) {
         this.tenHang = tenHang;
     }
+    
     
     
 }

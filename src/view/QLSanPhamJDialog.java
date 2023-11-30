@@ -39,6 +39,10 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
     private XuatXuService xuatXuDao = new XuatXuService();
     private HangService hangService = new HangService();
     private int index = -1;
+    public static String a1;
+    public static String a2;
+    public static String a3;
+    public static String a4;
 
     /**
      * Creates new form QLSanPhamJDialog
@@ -48,6 +52,10 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         fillTable(SPDao.getAll());
+        fillMauSac();
+        fillSize();
+        fillHang();
+        fillXuatXu();
     }
 
     public void fillTable(List<SanPham> list) {
@@ -64,7 +72,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         model.removeAllElements();
         List<MauSac> list = mauSacDao.getAll();
         for (MauSac x : list) {
-            model.addElement(x.getMauSac() + "");
+            model.addElement(x.getMauSac());
         }
     }
 
@@ -94,55 +102,148 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
             model.addElement(x.getXuatXu());
         }
     }
-
-//    public SanPham readFormSP() {
-//        SanPham x = new SanPham();
-//        String id = txtIDSanPham.getText();
-//        String tenSP = txtTenSP.getText();
-//        double giaTien = Double.parseDouble(txtGiaTien.getText());
-//        int trangThai = Integer.parseInt(rdoHoatDong.isSelected() ? 1 : 0);
-//        
-//    }
+    
     public SanPham readForm() {
-//        return new SanPham(txtIDSanPham.getText(), txtTenSP.getText(), Double.parseDouble(txtGiaTien.getText()), rdoHoatDong.isSelected() ? 1 : 0, lblHinhSP.getToolTipText(), cboHang.getSelectedItem() + "", cboXuatXu.getSelectedItem() + "", cboMauSac.getSelectedItem() + "", Integer.parseInt(cboSize.getSelectedItem() + ""), txtMoTa.getText());
-        SanPham x = new SanPham();
-        x.setIdSP(txtIDSanPham.getText());
-        x.setTenSP(txtTenSP.getText());
-        x.setGiaTien(Double.parseDouble(txtGiaTien.getText()));
-        x.setTrangThai(rdoHoatDong.isSelected() ? 1 : 0);
-        x.setHinhAnh(lblHinhSP.getToolTipText());
-        x.setHang(cboHang.getSelectedItem()+"");
-        x.setXuatXu(cboXuatXu.getSelectedItem()+"");
-        x.setMauSac(cboMauSac.getSelectedItem()+"");
-        x.setSize(Integer.parseInt(cboSize.getSelectedItem() + ""));
-        x.setMoTa(txtMoTa.getText());
-        
-        return x;
+        String id = txtIDSanPham.getText();
+        String ten = txtTenSP.getText();
+        double gia = Double.parseDouble(txtGiaTien.getText());
+        int sl = Integer.parseInt(txtSoLuong.getText());
+        String hinh = lblHinhSP.getToolTipText();
+//        Hang hang = new Hang(cboHang.getSelectedItem().toString(), cboHang.getSelectedItem().toString());
+//        XuatXu xuatXu = new XuatXu(cboXuatXu.getSelectedItem()+"", cboXuatXu.getSelectedItem().toString());
+//        MauSac mauSac = new MauSac(cboMauSac.getSelectedItem()+"", cboMauSac.getSelectedItem().toString());
+//        Size size = new Size(cboHang.getSelectedItem()+"", cboSize.getSelectedItem().toString());
+
+//        String hang = cboHang.getSelectedItem().toString();
+//        String xuatXu = cboXuatXu.getSelectedItem().toString();
+//        String mauSac = cboMauSac.getSelectedItem().toString();
+//        String size = cboSize.getSelectedItem().toString();
+        String moTa = txtMoTa.getText();
+
+        index = cboHang.getSelectedIndex();
+        List<Hang> list = hangService.getAll();
+        for (int i = 0; i < list.size(); i++) {
+            if (i == index) {
+                a1 = list.get(i).getIdHang();
+            }
+        }
+
+        index = cboXuatXu.getSelectedIndex();
+        List<XuatXu> list2 = xuatXuDao.getAll();
+        for (int i = 0; i < list2.size(); i++) {
+            if (i == index) {
+                a2 = list2.get(i).getIdXuatXu();
+            }
+        }
+
+        index = cboMauSac.getSelectedIndex();
+        List<MauSac> list3 = mauSacDao.getAll();
+        for (int i = 0; i < list3.size(); i++) {
+            if (i == index) {
+                a3 = list3.get(i).getIdMauSac();
+            }
+        }
+
+        index = cboSize.getSelectedIndex();
+        List<Size> list4 = sizeDao.getAll();
+        for (int i = 0; i < list4.size(); i++) {
+            if (i == index) {
+                a4 = list4.get(i).getIdSize();
+            }
+        }
+
+        return new SanPham(id, ten, gia, sl, rdoHoatDong.isSelected() ? 1 : 0, hinh, a1, a2, a3, a4, moTa);
+//        return new SanPham(txtIDSanPham.getText(), txtTenSP.getText(), Double.parseDouble(txtGiaTien.getText()), Integer.parseInt(txtSoLuong.getText()), rdoHoatDong.isSelected() ? 1 : 0, lblHinhSP.getToolTipText(), cboHang.getSelectedItem() + "", cboXuatXu.getSelectedItem() + "", cboMauSac.getSelectedItem() + "", Integer.parseInt(cboSize.getSelectedIndex()+""), txtMoTa.getText());
+    }
+
+    public boolean validateForm() {
+        if (txtIDSanPham.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "Chưa nhập mã sản shẩm");
+            return false;
+        }
+
+        if (txtTenSP.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "Chưa nhập tên sản shẩm");
+            return false;
+        }
+
+        if (txtGiaTien.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "Chưa nhập giá tiền sản phẩm");
+            return false;
+        }
+
+        try {
+            Double.parseDouble(txtGiaTien.getText());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Giá tiền phải là số");
+            return false;
+        }
+
+        if (Double.parseDouble(txtGiaTien.getText()) < 0) {
+            JOptionPane.showMessageDialog(this, "Giá tiền phải lớn hơn 0");
+            return false;
+        }
+
+        if (txtSoLuong.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "Chưa nhập số lượng sản phẩm");
+            return false;
+        }
+
+        try {
+            Integer.parseInt(txtSoLuong.getText());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Số lượng phải là số");
+            return false;
+        }
+
+        if (Integer.parseInt(txtSoLuong.getText()) < 0) {
+            JOptionPane.showMessageDialog(this, "Số lượng phải lớn hơn 0");
+            return false;
+        }
+
+        if (txtMoTa.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "Chưa nhập mô tả sản phẩm");
+            return false;
+        }
+
+        return true;
     }
 
     public void insert() {
-        if (SPDao.findByName(txtIDSanPham.getText()) != null) {
-            if (SPDao.insert(readForm())) {
-                JOptionPane.showMessageDialog(this, "Thêm thành công");
-                fillTable(SPDao.getAll());
+        if (validateForm()) {
+            if (SPDao.getByID(txtIDSanPham.getText()) == null) { // check mã
+                if (SPDao.insert(readForm())) {
+                    JOptionPane.showMessageDialog(this, "Thêm thành công");
+                    fillTable(SPDao.getAll());
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Trùng ID");
+                return;
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Trùng ID");
-            return;
         }
     }
 
     public void update() {
-        if (SPDao.update(readForm())) {
-            JOptionPane.showMessageDialog(this, "Cập nhập thành công");
-            fillTable(SPDao.getAll());
+        if (validateForm()) {
+            if (SPDao.getByID(txtIDSanPham.getText()) == null) {
+                if (SPDao.update(readForm())) {
+                    JOptionPane.showMessageDialog(this, "Cập nhập thành công");
+                    fillTable(SPDao.getAll());
+                } else {
+                    JOptionPane.showMessageDialog(this, "Cập nhập thất bại");
+                }
+            }
         }
     }
 
     public void delete() {
-        if (SPDao.delete(txtIDSanPham.getText())) {
-            JOptionPane.showMessageDialog(this, "Xóa thành công");
-            fillTable(SPDao.getAll());
+        try {
+            if (SPDao.delete(txtIDSanPham.getText())) {
+                JOptionPane.showMessageDialog(this, "Xóa thành công");
+                fillTable(SPDao.getAll());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Không được phép xóa sản phẩm");
         }
     }
 
@@ -164,7 +265,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         txtTenSP.setText(x.getTenSP());
         cboHang.setSelectedItem(x.getHang() + "");
         cboMauSac.setSelectedItem(x.getMauSac() + "");
-        cboSize.setSelectedItem(x.getSize() + "");
+        cboSize.setSelectedItem(String.valueOf(x.getSize() + ""));
         cboXuatXu.setSelectedItem(x.getXuatXu() + "");
         txtIDSanPham.setText(x.getIdSP());
         txtGiaTien.setText(String.valueOf(x.getGiaTien()));
@@ -190,6 +291,19 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         }
     }
 
+    
+    public void clear() {
+        txtGiaTien.setText("");
+        txtIDSanPham.setText("");
+        txtMoTa.setText("");
+        txtSoLuong.setText("");
+        txtTenSP.setText("");
+        cboHang.setSelectedIndex(0);
+        cboMauSac.setSelectedIndex(0);
+        cboSize.setSelectedIndex(0);
+        cboXuatXu.setSelectedIndex(0);
+        lblHinhSP.setIcon(null);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -224,11 +338,11 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         btnThem = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         txtIDSanPham = new javax.swing.JTextField();
-        btnSua = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         txtSoLuong = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
@@ -236,8 +350,10 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblQLSanPham = new javax.swing.JTable();
+        jLabel14 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setUndecorated(true);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -291,13 +407,6 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
 
         jLabel7.setText("IDSanPham");
 
-        btnSua.setText("Sửa");
-        btnSua.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSuaActionPerformed(evt);
-            }
-        });
-
         btnXoa.setText("Xóa");
         btnXoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -306,8 +415,20 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         });
 
         jButton4.setText("Mới");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jLabel13.setText("Số Lượng");
+
+        jButton2.setText("Sửa");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -368,8 +489,8 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(7, 7, 7)
                         .addComponent(btnThem)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSua)
+                        .addGap(3, 3, 3)
+                        .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnXoa)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -378,6 +499,9 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnXoa, jButton2});
+
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -397,9 +521,9 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnThem)
-                            .addComponent(btnSua)
                             .addComponent(btnXoa)
-                            .addComponent(jButton4)))
+                            .addComponent(jButton4)
+                            .addComponent(jButton2)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(11, 11, 11)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -435,6 +559,8 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnXoa, jButton2});
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel1.setText("QUẢN LÝ SẢN PHẨM");
@@ -495,6 +621,14 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel14.setText("x");
+        jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel14MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -502,11 +636,13 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 288, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addGap(344, 344, 344))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 786, Short.MAX_VALUE))
@@ -515,9 +651,12 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1))
+                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -528,25 +667,37 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        fillMauSac();
-        fillSize();
-        fillHang();
-        fillXuatXu();
+
     }//GEN-LAST:event_formWindowOpened
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         insert();
+        System.out.println(a3);
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void tblQLSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblQLSanPhamMouseClicked
-        index = tblQLSanPham.getSelectedRow();
-        fillForm(index);
-//        edit();
+        int id = tblQLSanPham.rowAtPoint(evt.getPoint());
+        String ma = tblQLSanPham.getValueAt(id, 0).toString();
+        SanPham x = SPDao.getByID(ma);
+        txtGiaTien.setText(String.valueOf(x.getGiaTien()));
+        txtMoTa.setText(x.getMoTa());
+        txtTenSP.setText(x.getTenSP());
+        cboHang.setSelectedItem(x.getHang() + "");
+        cboMauSac.setSelectedItem(x.getMauSac() + "");
+        cboSize.setSelectedItem(String.valueOf(x.getSize() + ""));
+        cboXuatXu.setSelectedItem(x.getXuatXu() + "");
+        txtIDSanPham.setText(x.getIdSP());
+        txtGiaTien.setText(String.valueOf(x.getGiaTien()));
+        rdoHoatDong.setSelected(x.isTrangThai());
+        rdoKhongHD.setSelected(!x.isTrangThai());
+        txtSoLuong.setText(String.valueOf(x.getSoLuong()));
+        if (x.getHinhAnh() != null) {
+            lblHinhSP.setToolTipText(x.getHinhAnh());
+            lblHinhSP.setIcon(XImage.read(x.getHinhAnh()));
+        } else {
+            lblHinhSP.setIcon(null);
+        }
     }//GEN-LAST:event_tblQLSanPhamMouseClicked
-
-    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        update();
-    }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         delete();
@@ -559,6 +710,18 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
     private void lblHinhSPMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHinhSPMousePressed
         choosePicture();
     }//GEN-LAST:event_lblHinhSPMousePressed
+
+    private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
+        dispose();
+    }//GEN-LAST:event_jLabel14MouseClicked
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        clear();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        update();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -603,7 +766,6 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnXoa;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -612,12 +774,14 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> cboSize;
     private javax.swing.JComboBox<String> cboXuatXu;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -641,4 +805,16 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
     private javax.swing.JTextField txtTenSP;
     private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
+
+    
+
+//    public void getIDHang() {
+//        index = cboHang.getSelectedIndex();
+//        List<Hang> list = hangService.getAll();
+//        for (int i = 0; i < list.size(); i++) {
+//            if (i == index) {
+//                a = list.get(i).getIdHang();
+//            }
+//        }
+//    }
 }

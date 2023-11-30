@@ -26,7 +26,7 @@ public class HangService {
                     List<Hang> list = new ArrayList<>();
                     while (rs.next()) {                        
                         Hang x = new Hang();
-                        x.setId(rs.getString("ID"));
+                        x.setIdHang(rs.getString("id"));
                         x.setTenHang(rs.getString("tenHang"));
                         list.add(x);
                     }

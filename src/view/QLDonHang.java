@@ -36,6 +36,10 @@ public class QLDonHang extends javax.swing.JFrame {
         showDetailDH(index);
         showDetailDHCT(index);
     }
+
+    QLDonHang(TrangChu aThis, boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     public void FillToTableDH(List<DonHang> lstdh){
         model =(DefaultTableModel) tblDonHang.getModel();
         model.setRowCount(0);
@@ -227,6 +231,11 @@ public class QLDonHang extends javax.swing.JFrame {
         jLabel7.setText("Tìm Kiếm:");
 
         btnTimDH.setText("Tìm");
+        btnTimDH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimDHActionPerformed(evt);
+            }
+        });
 
         tblDonHang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -342,8 +351,6 @@ public class QLDonHang extends javax.swing.JFrame {
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtIdDonHangDH, txtIdKhuyenMaiDH, txtSoLuongDH, txtTongTienDH});
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnMoiDH, btnThemDH, btnXoaDH, txtSuaDH});
-
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -374,8 +381,6 @@ public class QLDonHang extends javax.swing.JFrame {
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtIdDonHangDH, txtIdKhuyenMaiDH, txtSoLuongDH, txtTongTienDH});
-
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnMoiDH, btnThemDH, btnXoaDH, txtSuaDH});
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -433,6 +438,11 @@ public class QLDonHang extends javax.swing.JFrame {
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnTimDHCT.setText("Tìm");
+        btnTimDHCT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimDHCTActionPerformed(evt);
+            }
+        });
 
         jLabel16.setText("Tìm Kiếm:");
 
@@ -714,6 +724,28 @@ public class QLDonHang extends javax.swing.JFrame {
         txtIDSanPhamDHCT.setText("");
         txtIDKhuyenMaiDHCT.setText("");
     }//GEN-LAST:event_btnMoiDHCTActionPerformed
+
+    private void btnTimDHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimDHActionPerformed
+        // TODO add your handling code here:
+        String findid = txtTimKiemDH.getText();
+        if (!qldh.findidDH(findid).isEmpty()) {
+            FillToTableDH(qldh.findidDH(findid));
+            showDetailDH(index);
+        } else {
+            JOptionPane.showMessageDialog(this, "Không có mã đơn hàng là " + findid);
+        }
+    }//GEN-LAST:event_btnTimDHActionPerformed
+
+    private void btnTimDHCTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimDHCTActionPerformed
+        // TODO add your handling code here:
+        String findiddhct = txtTimKiemDHCT.getText();
+        if (!qldhct.findidDHCT(findiddhct).isEmpty()) {
+            FillToTableDHCT(qldhct.findidDHCT(findiddhct));
+            showDetailDHCT(index);
+        } else {
+            JOptionPane.showMessageDialog(this, "Không có mã đơn hàng chi tiết là " + findiddhct);
+        }
+    }//GEN-LAST:event_btnTimDHCTActionPerformed
 
     /**
      * @param args the command line arguments
