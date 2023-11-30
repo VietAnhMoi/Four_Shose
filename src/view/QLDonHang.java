@@ -153,7 +153,7 @@ public class QLDonHang extends javax.swing.JDialog {
         lblSoLuong.setText("");
         lblThanhtien.setText("");
         lblTongTien.setText("");
-        cboMaGiamGia.setSelectedIndex(0);
+//        cboMaGiamGia.setSelectedIndex(0);
         txtKMPhanTram.setText("");
         txtKhuyenMaiGia.setText("");
 
@@ -764,7 +764,7 @@ public class QLDonHang extends javax.swing.JDialog {
                 fillTableDHCT(serviceCTDH.getDHCTisNull());
             } else {
                 if (serviceCTDH.UpdateSoLuongDHCT(soLuong, ctDH.getIddonhangct())) {
-                    JOptionPane.showMessageDialog(this, "Dã sửa số lượng sản phẩm");
+                    JOptionPane.showMessageDialog(this, "Đã sửa số lượng sản phẩm");
                     this.fillTableDHCT(serviceCTDH.getDHCTisNull());
                 } else {
                     JOptionPane.showMessageDialog(this, "Sửa số lượng thất bại");

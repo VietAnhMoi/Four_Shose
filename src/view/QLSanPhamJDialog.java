@@ -622,7 +622,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         );
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel14.setText("x");
+        jLabel14.setText("<");
         jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel14MouseClicked(evt);

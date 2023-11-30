@@ -69,6 +69,8 @@ public class QLKhuyenMai extends javax.swing.JDialog {
                 if (Double.parseDouble(txtKMPhanTram.getText()) < 0) {
                     JOptionPane.showMessageDialog(this, "KMPhanTram phải lớn hơn 0");
                     return false;
+                } else if (Double.parseDouble(txtKMPhanTram.getText()) >= 1) {
+                    JOptionPane.showMessageDialog(this, "KMPhanTram phải bé hơn 1");
                 }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Sai định đạng khuyến mãi theo phần trăm");
@@ -110,6 +112,15 @@ public class QLKhuyenMai extends javax.swing.JDialog {
 //        String NgayTao = txtNgayTao.getText();
         String NguoiTao = Auth.user.getId();
         return new KhuyenMai(ID, KMPhanTram, KMTheoGia, NguoiTao);
+    }
+
+    void clearForm() {
+        txtID.setText("");
+        txtKMPhanTram.setText("");
+        txtKMTheoGia.setText("");
+        txtNgayTao.setText("");
+        txtTimKiemKM.setText("");
+
     }
 
     @SuppressWarnings("unchecked")
@@ -344,7 +355,7 @@ public class QLKhuyenMai extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (checkrong()) {
             KhuyenMai KM = readform();
-            if (!service.checkMa(KM.getIdKM())) {
+            if (service.checkMa(KM.getIdKM())) {
                 JOptionPane.showMessageDialog(this, "Mã này đã được tạo");
             } else {
                 if (service.Add(KM) != 0) {
@@ -389,6 +400,7 @@ public class QLKhuyenMai extends javax.swing.JDialog {
             if (service.Delete(km) != 0) {
                 JOptionPane.showMessageDialog(this, "Xóa thành công");
                 fillTable(service.getAll());
+                this.clearForm();
             } else {
                 JOptionPane.showMessageDialog(this, "Xóa thất bại");
             }

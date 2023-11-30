@@ -166,25 +166,8 @@ VALUES ('SP1', N'Yordan nike', 500000, 1, N'abc.png', 'H1', 'XX2', 'M5', 'SZ4', 
 	('SP2', N'Gucci bẩn', 4500000, 1, N'abc1.png', 'H2', 'XX2', 'M7', 'SZ5', N'dep trai',7),
 	('SP3', N'Adidas thể thao', 600000, 1, N'abc2.png', 'H3', 'XX1', 'M5', 'SZ4', N'dep trai',2)
 
-
-
-
-
-
-	
-	select * from DONHANG
-	select * from HOADON
-	select * from SanPham
-	select *from CHITIETDONHANG
-	select * from KHACHHANG
-	select * from KHUYENMAI
-	select * from MAUSAC
-	select * from NHANVIEN
-	select * from SIZE
-	select * from XUATXU
-	select *from CHITIETHOADON
-
--- lệnh xóa hóa đơn
+insert into nhanvien (id,hotennv,email,matkhau,tinhtrang,vaitro)
+	values ('admin','Người Quản Lý','quanly123@gmail.com','123',1,1)
 
 create proc SP_deleteHoaDon
 @maHD int
@@ -200,6 +183,7 @@ begin
 		end
 end
 
+go
 -- lệnh xóa đơn hàng 
 create proc SP_deleteDonHang
  @maDH int
@@ -218,6 +202,22 @@ as
 			delete from DONHANG where id = @maDH
 		end
  end
+ 
+	select * from DONHANG
+	select * from HOADON
+	select * from SanPham
+	select *from CHITIETDONHANG
+	select * from KHACHHANG
+	select * from KHUYENMAI
+	select * from MAUSAC
+	select * from NHANVIEN
+	select * from SIZE
+	select * from XUATXU
+	select *from CHITIETHOADON
+
+-- lệnh xóa hóa đơn
+
+
 -- sửa
 /*
 delete  from CHITIETHOADON

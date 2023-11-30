@@ -43,12 +43,27 @@ public class QLNhanVien extends javax.swing.JDialog {
 
     private void showData(int index) {
         NhanVien nv = service.getAll().get(index);
+        String tinhtrang = null;
+        String vaitro = null;
         txtID.setText(nv.getId());
         txtHoTen.setText(nv.getHoTen());
         txtEmail.setText(nv.getEmail());
         txtMatKhau.setText(nv.getMatKhau());
-        txtTinhTrang.setText(nv.getTinhTrang() + "");
-        txtVaiTro.setText(nv.getVaiTro() + "");
+
+        if (nv.getTinhTrang() == 1) {
+            tinhtrang = "Đang làm";
+            txtTinhTrang.setText(tinhtrang);
+        } else {
+            tinhtrang = "Đã nghỉ";
+            txtTinhTrang.setText(tinhtrang);
+        }
+        if (nv.getVaiTro()== 1) {
+            vaitro = "Quản Lý";
+            txtVaiTro.setText(vaitro);
+        } else {
+            vaitro = "Nhân Viên";
+            txtVaiTro.setText(vaitro);
+        }
 
         tblNhanVien.setRowSelectionInterval(index, index);
     }
@@ -118,7 +133,6 @@ public class QLNhanVien extends javax.swing.JDialog {
         txtHoTen = new javax.swing.JTextField();
         txtTinhTrang = new javax.swing.JTextField();
         txtVaiTro = new javax.swing.JTextField();
-        txtMatKhau = new javax.swing.JTextField();
         btnThem = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
@@ -127,6 +141,7 @@ public class QLNhanVien extends javax.swing.JDialog {
         btnTimKiem = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblNhanVien = new javax.swing.JTable();
+        txtMatKhau = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -163,12 +178,6 @@ public class QLNhanVien extends javax.swing.JDialog {
             }
         });
 
-        txtMatKhau.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMatKhauActionPerformed(evt);
-            }
-        });
-
         btnThem.setText("Thêm");
         btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -202,13 +211,10 @@ public class QLNhanVien extends javax.swing.JDialog {
 
         tblNhanVien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
-                "ID", "Họ Tên", "Email", "Mật Khẩu", "Tình Trạng ", "Vai Trò"
+                "ID", "Họ Tên", "Email", "Tình Trạng ", "Vai Trò"
             }
         ));
         tblNhanVien.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -256,19 +262,22 @@ public class QLNhanVien extends javax.swing.JDialog {
                                     .addComponent(btnSua, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(btnXoa, javax.swing.GroupLayout.Alignment.TRAILING)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnThem))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(121, 121, 121)
-                        .addComponent(jLabel8)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(121, 121, 121)
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(251, 251, 251)
+                                .addComponent(jLabel1)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnTimKiem))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(251, 251, 251)
-                        .addComponent(jLabel1)))
+                        .addComponent(btnTimKiem)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(52, 52, 52))
         );
         layout.setVerticalGroup(
@@ -280,8 +289,8 @@ public class QLNhanVien extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnThem)
-                        .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel5))
+                        .addComponent(jLabel5)
+                        .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(ID)
                         .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -325,10 +334,6 @@ public class QLNhanVien extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtVaiTroActionPerformed
 
-    private void txtMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatKhauActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMatKhauActionPerformed
-
     private void txtTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTimKiemActionPerformed
@@ -341,14 +346,15 @@ public class QLNhanVien extends javax.swing.JDialog {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
-        if(checkrong()){
+        if (checkrong()) {
             NhanVien nv = readform();
-            if(service.insert(nv)!=0){
+            if (service.insert(nv) != 0) {
                 JOptionPane.showMessageDialog(this, "Thêm thành công");
                 fillTable(service.getAll());
-        }else{
-           JOptionPane.showMessageDialog(this, "Thêm không thành công"); 
-        }       }
+            } else {
+                JOptionPane.showMessageDialog(this, "Thêm không thành công");
+            }
+        }
 
     }//GEN-LAST:event_btnThemActionPerformed
 
@@ -455,7 +461,7 @@ public class QLNhanVien extends javax.swing.JDialog {
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtHoTen;
     private javax.swing.JTextField txtID;
-    private javax.swing.JTextField txtMatKhau;
+    private javax.swing.JPasswordField txtMatKhau;
     private javax.swing.JTextField txtTimKiem;
     private javax.swing.JTextField txtTinhTrang;
     private javax.swing.JTextField txtVaiTro;

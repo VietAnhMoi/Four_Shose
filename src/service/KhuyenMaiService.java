@@ -100,7 +100,8 @@ public class KhuyenMaiService {
             ps = con.prepareStatement(sql);
             ps.setObject(1, ma);
             
-            return ps.executeUpdate() >0;
+            rs = ps.executeQuery();
+            return rs.next();
         } catch (Exception e) {
             e.printStackTrace();
             return false;
