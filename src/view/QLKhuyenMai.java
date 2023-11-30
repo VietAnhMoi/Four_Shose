@@ -7,11 +7,8 @@ package view;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-
 import javax.swing.table.DefaultTableModel;
-
 import model.KhuyenMai;
-
 import service.KhuyenMaiService;
 import utils.Auth;
 
@@ -33,8 +30,12 @@ public class QLKhuyenMai extends javax.swing.JDialog {
         super(parent, "Quản Lý Khuyến Mãi", true);
         initComponents();
         setLocationRelativeTo(null);
+<<<<<<< HEAD
         fillTable(service.getAll());
 //        txtNguoiTao.setText(Auth.user.getId());
+=======
+        
+>>>>>>> 4d9db29abff31a02a68596dd0a47a4f1bcbf3d82
 //        showData(index);
     }
 

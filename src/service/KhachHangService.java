@@ -60,7 +60,7 @@ public class KhachHangService {
     }
 
     public int Add(KhachHang dh) {
-        sql = "insert into KHACHHANG(ID, IDTenKhachHang,SDT,IDDiaChi ) values(?,?,?,?)";
+        sql = "insert into KHACHHANG(ID,TenKhachHang,SDT,DiaChi ) values(?,?,?,?)";
         try {
             con = DBConnect.getConnection();
             ps = con.prepareStatement(sql);
@@ -75,15 +75,16 @@ public class KhachHangService {
         }
     }
 
-    public int Update(KhachHang dh, String id) {
-        sql = "update KHACHHANG set ID=?, IDTenKhachHang=?,SDT=?,IDDiaChi=? where  id = ?";
+    public int Update(KhachHang kh, String id) {
+        sql = "update KHACHHANG set ID=?, TenKhachHang=?,SDT=?,DiaChi=? where  id = ?";
         try {
             con = DBConnect.getConnection();
             ps = con.prepareStatement(sql);
-            ps.setString(1, dh.getID());
-            ps.setString(2, dh.getTen());
-            ps.setString(3, dh.getSDT());
-            ps.setString(4, dh.getDiaChi());
+            ps.setString(1, kh.getID());
+            ps.setString(2, kh.getTen());
+            ps.setString(3, kh.getSDT());
+            ps.setString(4, kh.getDiaChi());
+            ps.setString(5, id);
             return ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -91,9 +92,7 @@ public class KhachHangService {
         }
     }
 
-    public Object getALL() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
     
     public List<KhachHang> getByTen(String ten) {
         sql = "select ID, TenKhachHang,SDT,DiaChi from KHACHHANG where id like ? or TenKhachHang like ?";

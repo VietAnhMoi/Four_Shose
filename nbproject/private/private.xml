@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/D:/Kì%204/Block2/Du_an1/DA1/Four_Shose/src/view/ViewBanHang.java</file>
             <file>file:/D:/Kì%204/Block2/Du_an1/DA1/Four_Shose/src/view/QLDonHang.java</file>
             <file>file:/D:/Kì%204/Block2/Du_an1/DA1/Four_Shose/src/view/QLHoaDonJDialog.java</file>
@@ -16,6 +17,17 @@
             <file>file:/D:/Kì%204/Block2/Du_an1/DA1/Four_Shose/src/service/DonHangService.java</file>
             <file>file:/D:/Kì%204/Block2/Du_an1/DA1/Four_Shose/src/view/QLKhuyenMai.java</file>
             <file>file:/D:/Kì%204/Block2/Du_an1/DA1/Four_Shose/src/service/CTDonHangService.java</file>
+=======
+<<<<<<< HEAD
+            <file>file:/D:/DUAN1/Four_Shose/src/view/QLkhachhang.java</file>
+=======
+            <file>file:/C:/Users/vieta/OneDrive/Desktop/DuAn1/Four_Shose/src/view/QLSanPhamJDialog.java</file>
+            <file>file:/C:/Users/vieta/OneDrive/Desktop/DuAn1/Four_Shose/src/model/SanPham.java</file>
+            <file>file:/C:/Users/vieta/OneDrive/Desktop/DuAn1/Four_Shose/src/model/MauSac.java</file>
+            <file>file:/C:/Users/vieta/OneDrive/Desktop/DuAn1/Four_Shose/src/service/SanPhamService.java</file>
+            <file>file:/C:/Users/vieta/OneDrive/Desktop/DuAn1/Four_Shose/src/service/MauSacService.java</file>
+>>>>>>> 07ab63f86a56c045f2bd617e746da5bf157ec66b
+>>>>>>> 4d9db29abff31a02a68596dd0a47a4f1bcbf3d82
         </group>
     </open-files>
 </project-private>
