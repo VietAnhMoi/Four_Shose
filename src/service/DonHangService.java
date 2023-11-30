@@ -103,5 +103,29 @@ public class DonHangService {
             e.printStackTrace();
             return false;
         }
+<<<<<<< HEAD
+=======
+          public List<DonHang> findidDH(String id){
+        List<DonHang> lst = new ArrayList<>();
+        sql = "select ID,SoLuong,TongGiaTri,IDKhuyenMai from DonHang where id Like ?";
+        try {
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, "%" + id + "%");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                DonHang dh = new DonHang(
+                         rs.getString(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getString(4));
+                lst.add(dh);
+            }
+            return lst;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+>>>>>>> 07ab63f86a56c045f2bd617e746da5bf157ec66b
     }
 }

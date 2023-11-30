@@ -4,14 +4,12 @@
  */
 package service;
 
-import utils.DBConnect;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
-import model.CTSanPham;
+import java.sql.*;
+import java.util.ArrayList;
 import model.MauSac;
+import utils.DBConnect;
+
 
 /**
  *
@@ -20,14 +18,14 @@ import model.MauSac;
 public class MauSacService {
     public List<MauSac> getAll() {
         try {
-            String sql = "select id, tenmau from mauSac";
+            String sql = "select id, tenMau from MauSac";
             try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 try(ResultSet rs = ps.executeQuery();) {
                     List<MauSac> list = new ArrayList<>();
                     while (rs.next()) {                        
                         MauSac x = new MauSac();
-                        x.setId(rs.getString("ID"));
-                        x.setMauSac(rs.getString("tenmau"));
+                        x.setIdMauSac(rs.getString("ID"));
+                        x.setMauSac(rs.getString("TenMau"));
                         list.add(x);
                     }
                     return list;

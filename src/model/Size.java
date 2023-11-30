@@ -9,43 +9,42 @@ package model;
  * @author Viet Anh
  */
 public class Size {
-    private String id;
-    private int size;
+    private String idSize;
+    private String size;
 
     public Size() {
     }
 
-    public Size(String id, int size) {
-        this.id = id;
+    public Size(String idSize, String size) {
+        this.idSize = idSize;
         this.size = size;
     }
 
-    public Size(int size) {
+    public Size(String size) {
         this.size = size;
     }
 
     @Override
     public String toString() {
-        return "" + size + "";
-    }
-
-    
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public int getSize() {
         return size;
     }
 
-    public void setSize(int size) {
+    public String getIdSize() {
+        return idSize;
+    }
+
+    public void setIdSize(String idSize) {
+        this.idSize = idSize;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
         this.size = size;
     }
+
     
     
     

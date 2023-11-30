@@ -9,32 +9,23 @@ package model;
  * @author Viet Anh
  */
 public class MauSac {
-    private String id;
+    private String idMauSac;
     private String mauSac;
 
     public MauSac() {
     }
 
-    public MauSac(String id, String mauSac) {
-        this.id = id;
+    public MauSac(String idMauSac, String mauSac) {
+        this.idMauSac = idMauSac;
         this.mauSac = mauSac;
     }
 
-    public MauSac(String mauSac) {
-        this.mauSac = mauSac;
+    public String getIdMauSac() {
+        return idMauSac;
     }
 
-    @Override
-    public String toString() {
-        return mauSac;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public void setIdMauSac(String idMauSac) {
+        this.idMauSac = idMauSac;
     }
 
     public String getMauSac() {
@@ -44,6 +35,4 @@ public class MauSac {
     public void setMauSac(String mauSac) {
         this.mauSac = mauSac;
     }
-
-    
 }

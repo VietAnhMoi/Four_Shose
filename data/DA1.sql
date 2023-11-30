@@ -139,9 +139,9 @@ VALUES ('M1',N'Xanh lam'),
 	('M2',N'Đỏ'),
 	('M3',N'Tím'),
 	('M4',N'Vàng'),
-	('M5',N'Xanh da trời'),
-	('M6',N'đen'),
-	('M7',N'trắng')
+	('M5',N'Xanh'),
+	('M6',N'Đen'),
+	('M7',N'Trắng')
 
 INSERT INTO SIZE
                   (id,TENSIZE)
