@@ -4,7 +4,7 @@
  */
 package model;
 
-import java.util.List;
+
 
 /**
  *
@@ -57,21 +57,9 @@ public class KhachHang {
     public void setDiaChi(String DiaChi) {
         this.DiaChi = DiaChi;
     }
-public Object[] toDatarow() {
-        return new Object[] {this.ID,this.Ten,this.SDT,this.DiaChi};
+
+    public Object[] toDatarow() {
+        return new Object[]{this.ID, this.Ten, this.SDT, this.DiaChi};
     }
 
-    public Object getALL() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public List<KhachHang> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public int Add(KhachHang kh) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-   
-    
 }
