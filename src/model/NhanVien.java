@@ -82,4 +82,7 @@ public class NhanVien {
         }
         return true;
     }
+    public Object[] toData() {
+        return new Object[]{this.id, this.hoTen, this.email, this.matKhau, this.tinhTrang,this.vaiTro};
+    }
 }
