@@ -457,7 +457,7 @@ public class TrangChu extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        QLDonHang1 qlDH = new QLDonHang1(this, true);
+        QLDonHang qlDH = new QLDonHang(this, true);
         qlDH.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
