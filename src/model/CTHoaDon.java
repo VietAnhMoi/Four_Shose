@@ -101,7 +101,7 @@ public class CTHoaDon {
     }
 
     public Object[] toDatata() {
-        return new Object[]{this.id, this.idHoaDon, this.idSanPham, this.idNhanVien, this.soLuong, this.idKhuyenMai, this.thanhTien};
+        return new Object[]{this.id, this.idHoaDon, this.idSanPham, this.idNhanVien, this.soLuong, this.thanhTien};
     }
 
 }

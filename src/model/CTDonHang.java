@@ -9,6 +9,7 @@ package model;
  * @author phung
  */
 public class CTDonHang {
+
     private int iddonhangct;
     private int iddonhangdhct;
     private int soluongdhct;
@@ -16,6 +17,7 @@ public class CTDonHang {
     private int thanhtiendhct;
     private String idsanphamdhct;
     private String tenSanPham;
+
     public CTDonHang() {
     }
 
@@ -28,8 +30,6 @@ public class CTDonHang {
         this.idsanphamdhct = idsanphamdhct;
         this.tenSanPham = tenSanPham;
     }
-
-   
 
     public int getIddonhangct() {
         return iddonhangct;
@@ -87,10 +87,8 @@ public class CTDonHang {
         this.tenSanPham = tenSanPham;
     }
 
-   
-    
-    public Object[] toDatatadhct(){
-        return new Object[]{this.idsanphamdhct,this.tenSanPham,this.soluongdhct,this.giabandhct,this.thanhtiendhct};
+    public Object[] toDatatadhct() {
+        return new Object[]{this.idsanphamdhct, this.tenSanPham, this.soluongdhct, this.giabandhct, this.thanhtiendhct};
     }
-    
+
 }

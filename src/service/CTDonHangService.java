@@ -61,14 +61,14 @@ public class CTDonHangService {
     }
 
     public int AddDHCT(CTDonHang dhct) {
-        QLDonHang ql = new QLDonHang();
+        String idDonHang = null;
         sql = "INSERT INTO CHITIETDONHANG\n"
                 + "                  ( IDDonHang, SoLuong, GiaBan, ThanhTien, IDSanPham)\n"
                 + "VALUES ( ?, ?,?,?,?)";
         try {
             con = DBConnect.getConnection();
             ps = con.prepareStatement(sql);
-            ps.setString(1, ql.idDonHang);
+            ps.setString(1, idDonHang);
             ps.setInt(2, dhct.getSoluongdhct());
             ps.setInt(3, dhct.getGiabandhct());
             ps.setInt(4, dhct.getThanhtiendhct());
@@ -120,11 +120,39 @@ public class CTDonHangService {
         }
     }
 
-    public int DeleteDHCTisNull() {
-        sql = "delete from CHITIETDONHANG where iddonhang is null ";
+    public List<CTDonHang> getHDCTisNotNull(int idDonHang) {
+        sql = "select ctDH.*, sp.TenSanPham from CHITIETDONHANG ctDH join SanPham sp on ctDH.IDSanPham = sp.ID where IDDonHang  = ?";
+        List<CTDonHang> lst = new ArrayList<>();
         try {
             con = DBConnect.getConnection();
             ps = con.prepareStatement(sql);
+            ps.setInt(1, idDonHang);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                CTDonHang dhct = new CTDonHang(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getString(7));
+                lst.add(dhct);
+            }
+            return lst;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public int DeleteDHCTisNull(String maSP, int soLuong) {
+        sql = "exec SP_LamMoiCTDonHang ? , ?";
+        try {
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, maSP);
+            ps.setInt(2, soLuong);
+
             return ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -132,13 +160,30 @@ public class CTDonHangService {
         }
     }
 
-    public boolean UpdateSoLuongDHCT(int soLuong, int idDHCT) {
-        sql = "update CHITIETDONHANG set soLuong = ? where id = ?";
+    public int DeleteDHCTisNotNull(String maSP, int soLuong, int idDonHang) {
+        sql = "exec SP_deleteHoaDonCho ? , ?, ?";
+        try {
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, maSP);
+            ps.setInt(2, soLuong);
+            ps.setInt(3, idDonHang);
+
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public boolean UpdateSoLuongDHCT(int soLuong, int thanhTien, int idDHCT) {
+        sql = "update CHITIETDONHANG set soLuong = ? ,thanhtien =?  where id = ?";
         try {
             con = DBConnect.getConnection();
             ps = con.prepareStatement(sql);
             ps.setInt(1, soLuong);
-            ps.setInt(2, idDHCT);
+            ps.setInt(2, thanhTien);
+            ps.setInt(3, idDHCT);
 
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
@@ -188,30 +233,32 @@ public class CTDonHangService {
         }
     }
 
-//          public List<CTDonHang> findidDHCT(String id){
-//        List<CTDonHang> lstctdh = new ArrayList<>();
-//        sql = "select ID,IDDonHang,SoLuong,GiaBan,ThanhTien,IDSanPham,IDKhuyenMai from CHITIETDONHANG where id Like ?";
-//        try {
-//            con = DBConnect.getConnection();
-//            ps = con.prepareStatement(sql);
-//            ps.setObject(1, "%" + id + "%");
-//            rs = ps.executeQuery();
-//            while (rs.next()) {
-//                CTDonHang dhct = new CTDonHang(
-//                        rs.getString(1),
-//                        rs.getString(2),
-//                        rs.getInt(3),
-//                        rs.getInt(4),
-//                        rs.getInt(5),
-//                        rs.getString(6),
-//                        rs.getString(7));
-//                lstctdh.add(dhct);
-//            }
-//            return lstctdh;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }        
+    public List<CTDonHang> selectHDjoinCTDH(int idDonHang) {
+        sql = "select ctDH.*,sp.tenSanPham from chitietdonhang ctDH join sanpham sp on ctDH.idSanPham = sp.id "
+                + "join HoaDon HD on HD.idDonHang = ctDH.idDonHang "
+                + "where Hd.idDonHang =? ";
+        List<CTDonHang> lst = new ArrayList<>();
+        try {
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idDonHang);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                CTDonHang dhct = new CTDonHang(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getString(7));
+
+                lst.add(dhct);
+            }
+            return lst;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 }

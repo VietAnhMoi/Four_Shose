@@ -309,11 +309,11 @@ public class QLHoaDonJDialog extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Mã HDCT", "Mã hóa đơn", "Mã sản phẩm", "Mã nhân viên", "Số lượng", "Mã giảm giá", "Thành tiền"
+                "Mã HDCT", "Mã hóa đơn", "Mã sản phẩm", "Mã nhân viên", "Số lượng", "Thành tiền"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

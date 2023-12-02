@@ -31,13 +31,15 @@ public class QLDonHang extends javax.swing.JDialog {
     private KhuyenMaiService serviceKM = new KhuyenMaiService();
     private HoaDonService serviceHD = new HoaDonService();
     private int index = 0;
-    public static String idDonHang = null;
+    private static int idDonHang = 0;
     public static String maKhuyenMai = null;
 
     public QLDonHang(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
+        this.updateTrangThaiSP();
+
         this.fillTableSanPham(serviceSP.getAll());
         this.setDonHang(serviceDH.getIDDonHang());
         this.fillComBoKM(serviceKM.getAll());
@@ -104,7 +106,7 @@ public class QLDonHang extends javax.swing.JDialog {
         int thanhTien = 0;
         int tongTien = 0;
 
-        for (int i = 0; i < tblDHChiTiet.getRowCount() - 1; i++) {
+        for (int i = 0; i < tblDHChiTiet.getRowCount(); i++) {
             soLuongDHCT = Integer.parseInt(tblDHChiTiet.getValueAt(i, 2).toString());
             soLuongDH += soLuongDHCT;
             thanhTien += Integer.parseInt(tblDHChiTiet.getValueAt(i, 4).toString());
@@ -129,11 +131,29 @@ public class QLDonHang extends javax.swing.JDialog {
         }
     }
 
+    void updateTrangThaiSP() {
+        List<SanPham> lst = serviceSP.getAll();
+        int trangThai = 0;
+        for (SanPham sp : lst) {
+            if (sp.getSoLuong() == 0) {
+                trangThai = 0;
+                if (serviceSP.updateTrangThai(trangThai)) {
+
+                }
+            } else if (sp.getTrangThai() > 0) {
+                trangThai = 1;
+                if (serviceSP.updateTrangThai(trangThai)) {
+
+                }
+            }
+        }
+    }
+
     DonHang addDonHang() {
         DonHang dh = new DonHang();
         dh.setSoluongdh(Integer.parseInt(lblSoLuong.getText()));
         dh.setTonggiatridh(Integer.parseInt(lblTongTien.getText()));
-        if (!txtKMPhanTram.getText().equals("") && !txtKhuyenMaiGia.equals("")) {
+        if (!txtKMPhanTram.getText().equals("") && !txtKhuyenMaiGia.getText().equals("")) {
             maKhuyenMai = cboMaGiamGia.getSelectedItem().toString();
         }
         return dh;
@@ -173,7 +193,7 @@ public class QLDonHang extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblHoaDonCho = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnXoaDH = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -192,6 +212,7 @@ public class QLDonHang extends javax.swing.JDialog {
         lblTongTien = new javax.swing.JLabel();
         txtKMPhanTram = new javax.swing.JTextField();
         txtKhuyenMaiGia = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblDHChiTiet = new javax.swing.JTable();
@@ -234,6 +255,11 @@ public class QLDonHang extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        tblHoaDonCho.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblHoaDonChoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblHoaDonCho);
 
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -244,10 +270,10 @@ public class QLDonHang extends javax.swing.JDialog {
             }
         });
 
-        jButton2.setText("Hủy đơn hàng");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnXoaDH.setText("Hủy đơn hàng");
+        btnXoaDH.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnXoaDHActionPerformed(evt);
             }
         });
 
@@ -259,7 +285,7 @@ public class QLDonHang extends javax.swing.JDialog {
                 .addContainerGap(15, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnXoaDH, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(75, 75, 75)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -275,7 +301,7 @@ public class QLDonHang extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnXoaDH, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -340,6 +366,13 @@ public class QLDonHang extends javax.swing.JDialog {
 
         jLabel9.setText("VND");
 
+        jButton2.setText("Bỏ khuyến mãi");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -360,8 +393,11 @@ public class QLDonHang extends javax.swing.JDialog {
                             .addComponent(txtKhuyenMaiGia, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
                             .addComponent(txtKMPhanTram))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -413,10 +449,15 @@ public class QLDonHang extends javax.swing.JDialog {
                         .addGap(33, 33, 33)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
-                            .addComponent(txtKhuyenMaiGia, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel9)
+                                    .addComponent(txtKhuyenMaiGia, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(16, 16, 16))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addComponent(lblTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -601,7 +642,12 @@ public class QLDonHang extends javax.swing.JDialog {
         String maSP = tblSanPham.getValueAt(index, 0).toString();
         CTDonHang ctDH = addCTDonHang();
         List<CTDonHang> lst = serviceCTDH.checkSPhaminHDCT(maSP);
-        if (serviceCTDH.AddDHCT(ctDH) != 0) {
+        int checkSoLuong = Integer.parseInt(tblSanPham.getValueAt(index, 3).toString());
+        int UpdateSoLuong = Integer.parseInt(tblSanPham.getValueAt(index, 3).toString()) - 1;
+        if (checkSoLuong <= 0) {
+            JOptionPane.showMessageDialog(this, "Sản phẩm này đã hết");
+        } else if (serviceCTDH.AddDHCT(ctDH) != 0) {
+            this.setSLDonHang();
             if (!lst.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Sản phẩm này đã có");
                 if (serviceCTDH.deleteSP()) {
@@ -609,8 +655,14 @@ public class QLDonHang extends javax.swing.JDialog {
                     this.setSLDonHang();
                 }
             } else {
-                this.fillTableDHCT(serviceCTDH.getDHCTisNull());
-                this.setSLDonHang();
+                if (serviceSP.updateSoLuongSP(maSP, UpdateSoLuong)) {
+                    this.updateTrangThaiSP();
+                    this.fillTableSanPham(serviceSP.getAll());
+                    this.fillTableDHCT(serviceCTDH.getDHCTisNull());
+                    this.setSLDonHang();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Lỗi thêm sản phẩm");
+                }
             }
         } else {
             JOptionPane.showMessageDialog(this, "Thêm sản phẩm thất bại");
@@ -648,17 +700,33 @@ public class QLDonHang extends javax.swing.JDialog {
     }//GEN-LAST:event_cboMaGiamGiaMousePressed
 
     private void cboMaGiamGiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboMaGiamGiaActionPerformed
+//        index = cboMaGiamGia.getSelectedIndex();
+//        KhuyenMai km = serviceKM.getAll().get(index);
+//        if (km.getKMPhanTram() != 0) {
+//            txtKMPhanTram.setText(String.valueOf(km.getKMPhanTram()));
+//            txtKhuyenMaiGia.setText("");
+//
+//        } else {
+//            txtKhuyenMaiGia.setText(String.valueOf(km.getKMTheoGia()));
+//            txtKMPhanTram.setText("");
+//        }
+//        this.setSLDonHang();  
         index = cboMaGiamGia.getSelectedIndex();
-        KhuyenMai km = serviceKM.getAll().get(index);
-        if (km.getKMPhanTram() != 0) {
-            txtKMPhanTram.setText(String.valueOf(km.getKMPhanTram()));
-            txtKhuyenMaiGia.setText("");
+        List<KhuyenMai> lst = serviceKM.getAll();
+        for (int i = 0; i < lst.size(); i++) {
+            if (index == i) {
+                if (lst.get(i).getKMPhanTram() != 0) {
+                    txtKMPhanTram.setText(String.valueOf(lst.get(i).getKMPhanTram()));
+                    txtKhuyenMaiGia.setText("0");
 
-        } else {
-            txtKhuyenMaiGia.setText(String.valueOf(km.getKMTheoGia()));
-            txtKMPhanTram.setText("");
+                } else {
+                    txtKhuyenMaiGia.setText(String.valueOf(lst.get(i).getKMTheoGia()));
+                    txtKMPhanTram.setText("0");
+                }
+                this.setSLDonHang();
+            }
         }
-        this.setSLDonHang();
+
         // TODO add your handling code here:
     }//GEN-LAST:event_cboMaGiamGiaActionPerformed
 
@@ -675,6 +743,8 @@ public class QLDonHang extends javax.swing.JDialog {
                         this.setDonHang(serviceDH.getIDDonHang());
                         this.fillTableHD(serviceHD.getAllHDCho());
                         this.fillTableDHCT(serviceCTDH.getDHCTisNull());
+                        this.updateTrangThaiSP();
+                        this.fillTableSanPham(serviceSP.getAll());
                         this.clearFormDH();
                     } else {
                         JOptionPane.showMessageDialog(this, "đơn hàng : true , hóa đơn : false");
@@ -698,11 +768,18 @@ public class QLDonHang extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Bạn chưa chọn sản phẩm để xóa");
         } else {
             CTDonHang ctDH = serviceCTDH.getDHCTisNull().get(index);
+            String maSP = tblDHChiTiet.getValueAt(index, 0).toString();
+            SanPham sp = serviceSP.getSoLuong(maSP);
             int maDH = ctDH.getIddonhangct();
+            int soLuongHDCT = Integer.parseInt(tblDHChiTiet.getValueAt(index, 2).toString());
+            int soLuongSP = sp.getSoLuong() + soLuongHDCT;
             if (serviceCTDH.DeleteDHCT(maDH) != 0) {
-                JOptionPane.showMessageDialog(this, "Đã xóa");
-                this.fillTableDHCT(serviceCTDH.getDHCTisNull());
-                this.setSLDonHang();
+                if (serviceSP.updateSoLuongSP(maSP, soLuongSP)) {
+                    JOptionPane.showMessageDialog(this, "Đã xóa");
+                    this.fillTableDHCT(serviceCTDH.getDHCTisNull());
+                    this.fillTableSanPham(serviceSP.getAll());
+                    this.setSLDonHang();
+                }
             } else {
                 JOptionPane.showMessageDialog(this, "Không xóa được");
             }
@@ -718,60 +795,119 @@ public class QLDonHang extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int hoi = JOptionPane.showConfirmDialog(this, "Bạn có muốn làm mới đơn hàng không?");
         if (hoi == JOptionPane.YES_OPTION) {
-            if (serviceCTDH.DeleteDHCTisNull() != 0) {
-                fillTableDHCT(serviceCTDH.getDHCTisNull());
+            try {
+                List<CTDonHang> lst = serviceCTDH.getDHCTisNull();
+                for (CTDonHang ctDH : lst) {
+                    if (serviceCTDH.DeleteDHCTisNull(ctDH.getIdsanphamdhct(), ctDH.getSoluongdhct()) != 0) {
+                    }
+                }
+                this.fillTableDHCT(serviceCTDH.getDHCTisNull());
+                this.fillTableSanPham(serviceSP.getAll());
                 JOptionPane.showMessageDialog(this, "Đã làm mới đơn hàng");
                 clearFormDH();
-            } else {
-                JOptionPane.showMessageDialog(this, "Đơn hàng đang trống");
+                idDonHang = 0;
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Lỗi làm mới đơn hàng");
             }
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnXoaDHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaDHActionPerformed
         int hoi = JOptionPane.showConfirmDialog(this, "Bạn có muốn xóa đơn hàng này không?");
         if (hoi == JOptionPane.YES_OPTION) {
             index = tblHoaDonCho.getSelectedRow();
             if (index < 0 || index > tblHoaDonCho.getRowCount() - 1) {
                 JOptionPane.showMessageDialog(this, "Bạn chưa chọn đơn hàng để hủy");
             } else {
-                int maDH = Integer.parseInt(tblHoaDonCho.getValueAt(index, 3).toString());
-                if (serviceDH.deleteHDcho(maDH)) {
-                    JOptionPane.showMessageDialog(this, "Đã hủy đơn hàng");
+                try {
+                    int maDH = Integer.parseInt(tblHoaDonCho.getValueAt(index, 3).toString());
+                    List<CTDonHang> lst = serviceCTDH.getHDCTisNotNull(maDH);
+                    for (CTDonHang ctDH : lst) {
+                        if (serviceCTDH.DeleteDHCTisNotNull(ctDH.getIdsanphamdhct(), ctDH.getSoluongdhct(), maDH) != 0) {
+                        }
+                    }
+                    this.fillTableSanPham(serviceSP.getAll());
                     this.fillTableHD(serviceHD.getAllHDCho());
                     this.setDonHang(serviceDH.getIDDonHang());
-                } else {
-                    JOptionPane.showMessageDialog(this, "Xóa đơn hàng thất bại");
+                    this.fillTableDHCT(serviceCTDH.selectHDjoinCTDH(idDonHang));
+                    this.updateTrangThaiSP();
+                    this.clearFormDH();
+                    JOptionPane.showMessageDialog(this, "Đã hủy đơn hàng");
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Lỗi hủy đơn hàng");
                 }
+
             }
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnXoaDHActionPerformed
 
     private void btnSuaSLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaSLActionPerformed
         index = tblDHChiTiet.getSelectedRow();
+
         if (index < 0 || index > tblDHChiTiet.getRowCount() - 1) {
             JOptionPane.showMessageDialog(this, "Bạn chưa chọn sản phẩm");
         } else {
-            int soLuong = Integer.parseInt(tblDHChiTiet.getValueAt(index, 2).toString());
-            String maSP = tblDHChiTiet.getValueAt(index, 0).toString();
-            CTDonHang ctDH = serviceCTDH.getDHCTisNull().get(index);
-            SanPham sp = serviceSP.getSoLuong(maSP);
-            tblDHChiTiet.setRowSelectionInterval(index, index);
-            if (soLuong > sp.getSoLuong()) {
-                JOptionPane.showMessageDialog(this, "Số lượng trong kho không đủ");
-                fillTableDHCT(serviceCTDH.getDHCTisNull());
-            } else {
-                if (serviceCTDH.UpdateSoLuongDHCT(soLuong, ctDH.getIddonhangct())) {
-                    JOptionPane.showMessageDialog(this, "Đã sửa số lượng sản phẩm");
-                    this.fillTableDHCT(serviceCTDH.getDHCTisNull());
+            List<CTDonHang> lst = serviceCTDH.selectHDjoinCTDH(idDonHang);
+            if (!lst.isEmpty()) {
+                int soLuong = Integer.parseInt(tblDHChiTiet.getValueAt(index, 2).toString());
+                String maSP = tblDHChiTiet.getValueAt(index, 0).toString();
+
+                CTDonHang ctDH = serviceCTDH.selectHDjoinCTDH(idDonHang).get(index);
+                SanPham sp = serviceSP.getSoLuong(maSP);
+                tblDHChiTiet.setRowSelectionInterval(index, index);
+                int thanhTien = (int) (soLuong * sp.getGiaTien());
+
+                if (soLuong > sp.getSoLuong()) {
+                    JOptionPane.showMessageDialog(this, "Số lượng trong kho không đủ");
+                    fillTableDHCT(serviceCTDH.selectHDjoinCTDH(idDonHang));
                 } else {
-                    JOptionPane.showMessageDialog(this, "Sửa số lượng thất bại");
+                    if (serviceCTDH.UpdateSoLuongDHCT(soLuong, thanhTien, ctDH.getIddonhangct())) {
+                        this.fillTableDHCT(serviceCTDH.selectHDjoinCTDH(idDonHang));
+                        int soLuongTon = sp.getSoLuong() - soLuong;
+                        if (serviceSP.updateSoLuongSP(maSP, soLuongTon)) {
+                            JOptionPane.showMessageDialog(this, "Đã sửa số lượng sản phẩm");
+                            this.updateTrangThaiSP();
+                            this.fillTableSanPham(serviceSP.getAll());
+                            this.setSLDonHang();
+//                            idDonHang = 0;
+                        }
+
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Sửa số lượng thất bại");
+                    }
+
+                }
+            } else {
+
+                int soLuong = Integer.parseInt(tblDHChiTiet.getValueAt(index, 2).toString());
+                String maSP = tblDHChiTiet.getValueAt(index, 0).toString();
+
+                CTDonHang ctDH = serviceCTDH.getDHCTisNull().get(index);
+                SanPham sp = serviceSP.getSoLuong(maSP);
+                tblDHChiTiet.setRowSelectionInterval(index, index);
+                int thanhTien = (int) (soLuong * sp.getGiaTien());
+
+                if (soLuong > sp.getSoLuong()) {
+                    JOptionPane.showMessageDialog(this, "Số lượng trong kho không đủ");
+                    fillTableDHCT(serviceCTDH.getDHCTisNull());
+                } else {
+                    if (serviceCTDH.UpdateSoLuongDHCT(soLuong, thanhTien, ctDH.getIddonhangct())) {
+                        this.fillTableDHCT(serviceCTDH.getDHCTisNull());
+                        int soLuongTon = sp.getSoLuong() - soLuong;
+                        if (serviceSP.updateSoLuongSP(maSP, soLuongTon)) {
+                            JOptionPane.showMessageDialog(this, "Đã sửa số lượng sản phẩm");
+                            this.updateTrangThaiSP();
+                            this.fillTableSanPham(serviceSP.getAll());
+                            this.setSLDonHang();
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Sửa số lượng thất bại");
+                    }
                 }
             }
         }
-
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSuaSLActionPerformed
 
@@ -790,6 +926,23 @@ public class QLDonHang extends javax.swing.JDialog {
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void tblHoaDonChoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonChoMouseClicked
+        index = tblHoaDonCho.getSelectedRow();
+        HoaDon HD = serviceHD.getAllHDCho().get(index);
+        idDonHang = Integer.parseInt(tblHoaDonCho.getValueAt(index, 3).toString());
+        fillTableDHCT(serviceCTDH.selectHDjoinCTDH(idDonHang));
+        this.setSLDonHang();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblHoaDonChoMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        txtKMPhanTram.setText("");
+        txtKhuyenMaiGia.setText("");
+        cboMaGiamGia.setSelectedItem(null);
+        this.setSLDonHang();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -845,6 +998,7 @@ public class QLDonHang extends javax.swing.JDialog {
     private javax.swing.JButton btnTaoDH;
     private javax.swing.JButton btnTimCTDonHang;
     private javax.swing.JButton btnTimSanPham;
+    private javax.swing.JButton btnXoaDH;
     private javax.swing.JButton btnXoaSanPham;
     private javax.swing.JComboBox<String> cboMaGiamGia;
     private javax.swing.JButton jButton1;

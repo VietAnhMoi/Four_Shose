@@ -49,9 +49,9 @@ public class SanPhamService {
 
     public boolean update(SanPham x) {
         try {
-            String sql = "UPDATE [dbo].[SanPham] SET [TenSanPham] = ?,[GiaTien] = ?,[SoLuong] = ?\n" +
-"      ,[TrangThai] = ?,[HinhAnh] = ?,[IDHang] = ?,[IDXuatXu] = ?,[IDMauSac] = ?\n" +
-"      ,[IDSize] = ?,[MoTa] = ? where id = ?";
+            String sql = "UPDATE [dbo].[SanPham] SET [TenSanPham] = ?,[GiaTien] = ?,[SoLuong] = ?\n"
+                    + "      ,[TrangThai] = ?,[HinhAnh] = ?,[IDHang] = ?,[IDXuatXu] = ?,[IDMauSac] = ?\n"
+                    + "      ,[IDSize] = ?,[MoTa] = ? where id = ?";
             try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 ps.setObject(11, x.getIdSP());
                 ps.setObject(1, x.getTenSP());
@@ -193,21 +193,21 @@ public class SanPhamService {
             return null;
         }
     }
-    
+
     public SanPham getSoLuong(String id) {
         try {
             String sql = "SELECT ID ,TenSanPham,SoLuong,GiaTien,TrangThai FROM dbo.SANPHAM where id = ?";
-            try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 ps.setObject(1, id);
-                try(ResultSet rs = ps.executeQuery();) {
+                try (ResultSet rs = ps.executeQuery();) {
                     List<SanPham> list = new ArrayList<>();
-                    if (rs.next()) {                        
+                    if (rs.next()) {
                         SanPham x = new SanPham();
                         x.setIdSP(rs.getString("id"));
                         x.setTenSP(rs.getString("TENSANPHAM"));
                         x.setGiaTien(rs.getDouble("GiaTien"));
                         x.setSoLuong(rs.getInt("SoLuong"));
-                        x.setTrangThai(rs.getInt("trangThai"));   
+                        x.setTrangThai(rs.getInt("trangThai"));
                         return x;
                     }
                 }
@@ -216,6 +216,49 @@ public class SanPhamService {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public boolean updateSoLuongSP(String id, int soLuong) {
+        try {
+            String sql = "update SanPham set soLuong =? where id = ?";
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                ps.setObject(1, soLuong);
+                ps.setObject(2, id);
+
+                return ps.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateLamMoiSL(String id, int soLuong) {
+        try {
+            String sql = "update SanPham set SoLuong += ? where id = 'sp1' ";
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                ps.setObject(1, soLuong);
+                ps.setObject(2, id);
+
+                return ps.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean updateTrangThai(int trangThai) {
+        try {
+            String sql = "update SanPham set trangthai = ?";
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                ps.setObject(1, trangThai);
+
+                return ps.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }
