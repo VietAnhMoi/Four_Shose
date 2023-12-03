@@ -60,7 +60,7 @@ public class CTDonHangService {
         }
     }
 
-    public int AddDHCT(CTDonHang dhct) {
+    public int AddDHCTisNull(CTDonHang dhct) {
         String idDonHang = null;
         sql = "INSERT INTO CHITIETDONHANG\n"
                 + "                  ( IDDonHang, SoLuong, GiaBan, ThanhTien, IDSanPham)\n"
@@ -69,6 +69,27 @@ public class CTDonHangService {
             con = DBConnect.getConnection();
             ps = con.prepareStatement(sql);
             ps.setString(1, idDonHang);
+            ps.setInt(2, dhct.getSoluongdhct());
+            ps.setInt(3, dhct.getGiabandhct());
+            ps.setInt(4, dhct.getThanhtiendhct());
+            ps.setString(5, dhct.getIdsanphamdhct());
+
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int AddDHCTisNotNull(CTDonHang dhct, int idDonHang) {
+//        String idDonHang = null;
+        sql = "INSERT INTO CHITIETDONHANG\n"
+                + "                  ( IDDonHang, SoLuong, GiaBan, ThanhTien, IDSanPham)\n"
+                + "VALUES ( ?, ?,?,?,?)";
+        try {
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idDonHang);
             ps.setInt(2, dhct.getSoluongdhct());
             ps.setInt(3, dhct.getGiabandhct());
             ps.setInt(4, dhct.getThanhtiendhct());
@@ -192,7 +213,7 @@ public class CTDonHangService {
         }
     }
 
-    public List<CTDonHang> checkSPhaminHDCT(String maSP) {
+    public List<CTDonHang> checkSPhaminHDCTisNull(String maSP) {
         sql = "select ctDH.*, sp.TenSanPham from CHITIETDONHANG ctDH join SanPham sp on ctDH.IDSanPham = sp.ID\n"
                 + "                where ctDH.IDDonHang is null and ctDH.idsanpham = ?";
         List<CTDonHang> lst = new ArrayList<>();
@@ -218,13 +239,72 @@ public class CTDonHangService {
         }
     }
 
-    public boolean deleteSP() {
+//    public boolean checkSPhaminHDCTisNull(String maSP) {
+//        try {
+//            String sql = "select ctDH.*, sp.TenSanPham from CHITIETDONHANG ctDH join SanPham sp on ctDH.IDSanPham = sp.ID\n"
+//                    + "                where ctDH.IDDonHang is null and ctDH.idsanpham = ?";
+//            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+//                ps.setString(1, maSP);
+//                rs = ps.executeQuery();
+//                
+//                return rs.next();
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
+
+    public List<CTDonHang> checkSPhaminHDCTisNotNull(String maSP, int idDonHang) {
+        sql = "select ctDH.*, sp.TenSanPham from CHITIETDONHANG ctDH join SanPham sp on ctDH.IDSanPham = sp.ID\n"
+                + "                where ctDH.IDDonHang =? and ctDH.idsanpham = ?";
+        List<CTDonHang> lst = new ArrayList<>();
+        try {
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idDonHang);
+            ps.setString(2, maSP);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                CTDonHang dhct = new CTDonHang(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getString(7));
+                lst.add(dhct);
+            }
+            return lst;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean deleteSPisNull() {
         sql = "delete from CHITIETDONHANG where id = (select  top 1 ctDH.ID from CHITIETDONHANG ctDH join SanPham sp on ctDH.IDSanPham = sp.ID\n"
                 + "                where ctDH.IDDonHang is null\n"
                 + "				order by ctDH.ID desc)";
         try {
             con = DBConnect.getConnection();
             ps = con.prepareStatement(sql);
+
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deleteSPisNotNull(int idDonHang) {
+        sql = "delete from CHITIETDONHANG where id = (select  top 1 ctDH.ID from CHITIETDONHANG ctDH join SanPham sp on ctDH.IDSanPham = sp.ID\n"
+                + "                             where ctDH.IDDonHang = ?\n"
+                + "              			order by ctDH.ID desc)";
+        try {
+            con = DBConnect.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idDonHang);
 
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
