@@ -963,6 +963,9 @@ public class QLDonHang extends javax.swing.JDialog {
             if (serviceHD.updatePay(maHD)) {
                 JOptionPane.showMessageDialog(this, "Đã thanh toán hóa đơn : " + maHD);
                 this.fillTableHD(serviceHD.getAllHDCho());
+                this.fillTableDHCT(serviceCTDH.getDHCTisNull());
+                idDonHang = 0;
+                
             } else {
                 JOptionPane.showMessageDialog(this, "Lỗi thanh toán hóa đơn : " + maHD);
             }

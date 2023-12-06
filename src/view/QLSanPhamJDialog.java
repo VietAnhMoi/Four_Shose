@@ -23,6 +23,7 @@ import service.MauSacService;
 import service.SanPhamService;
 import service.SizeService;
 import service.XuatXuService;
+import utils.Auth;
 import utils.XImage;
 
 /**
@@ -225,13 +226,17 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
 
     public void update() {
         if (validateForm()) {
-            if (SPDao.getByID(txtIDSanPham.getText()) == null) {
-                if (SPDao.update(readForm())) {
+            if (SPDao.getByID(txtIDSanPham.getText()) != null) {
+                index = tblQLSanPham.getSelectedRow();
+                String id = tblQLSanPham.getValueAt(index, 0).toString();
+                if (SPDao.update(readForm(), id)) {
                     JOptionPane.showMessageDialog(this, "Cập nhập thành công");
                     fillTable(SPDao.getAll());
                 } else {
                     JOptionPane.showMessageDialog(this, "Cập nhập thất bại");
                 }
+            }else{
+                JOptionPane.showMessageDialog(this, "upadte lỗi");
             }
         }
     }
@@ -298,10 +303,10 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         txtMoTa.setText("");
         txtSoLuong.setText("");
         txtTenSP.setText("");
-        cboHang.setSelectedIndex(0);
-        cboMauSac.setSelectedIndex(0);
-        cboSize.setSelectedIndex(0);
-        cboXuatXu.setSelectedIndex(0);
+        cboHang.setSelectedIndex(-1);
+        cboMauSac.setSelectedIndex(-1);
+        cboSize.setSelectedIndex(-1);
+        cboXuatXu.setSelectedIndex(-1);
         lblHinhSP.setIcon(null);
     }
     /**
@@ -671,8 +676,11 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowOpened
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        insert();
-        System.out.println(a3);
+        if (!Auth.isManager()) {
+            JOptionPane.showMessageDialog(this, "Lỗi");
+        } else {
+            insert();
+        }
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void tblQLSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblQLSanPhamMouseClicked

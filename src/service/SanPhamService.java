@@ -47,13 +47,14 @@ public class SanPhamService {
         }
     }
 
-    public boolean update(SanPham x) {
+    public boolean update(SanPham x, String id) {
         try {
             String sql = "UPDATE [dbo].[SanPham] SET [TenSanPham] = ?,[GiaTien] = ?,[SoLuong] = ?\n"
                     + "      ,[TrangThai] = ?,[HinhAnh] = ?,[IDHang] = ?,[IDXuatXu] = ?,[IDMauSac] = ?\n"
-                    + "      ,[IDSize] = ?,[MoTa] = ? where id = ?";
+                    + "      ,[IDSize] = ?,[MoTa] = ?,id = ? where id = ?";
             try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 ps.setObject(11, x.getIdSP());
+                ps.setObject(12, id);
                 ps.setObject(1, x.getTenSP());
                 ps.setObject(2, x.getGiaTien());
                 ps.setObject(3, x.getSoLuong());
