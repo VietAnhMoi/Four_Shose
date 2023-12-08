@@ -57,6 +57,15 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         fillSize();
         fillHang();
         fillXuatXu();
+        checkQuyen();
+    }
+    
+    public void checkQuyen() {
+        if (!Auth.isManager()) {
+            btnThem.setEnabled(false);
+            btnXoa.setEnabled(false);
+            btnSua.setEnabled(false);
+        }
     }
 
     public void fillTable(List<SanPham> list) {
@@ -103,7 +112,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
             model.addElement(x.getXuatXu());
         }
     }
-    
+
     public SanPham readForm() {
         String id = txtIDSanPham.getText();
         String ten = txtTenSP.getText();
@@ -235,7 +244,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
                 } else {
                     JOptionPane.showMessageDialog(this, "Cập nhập thất bại");
                 }
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(this, "upadte lỗi");
             }
         }
@@ -243,9 +252,11 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
 
     public void delete() {
         try {
-            if (SPDao.delete(txtIDSanPham.getText())) {
-                JOptionPane.showMessageDialog(this, "Xóa thành công");
-                fillTable(SPDao.getAll());
+            if (JOptionPane.showConfirmDialog(this, "Xóa sản phẩm sẽ ảnh hưởng đến doanh thu.\n Bạn chắc chắn muốn xóa chứ?") == JOptionPane.YES_NO_OPTION) {
+                if (SPDao.delete(txtIDSanPham.getText())) {
+                    JOptionPane.showMessageDialog(this, "Xóa thành công");
+                    fillTable(SPDao.getAll());
+                }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Không được phép xóa sản phẩm");
@@ -296,7 +307,6 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         }
     }
 
-    
     public void clear() {
         txtGiaTien.setText("");
         txtIDSanPham.setText("");
@@ -309,6 +319,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         cboXuatXu.setSelectedIndex(-1);
         lblHinhSP.setIcon(null);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -347,7 +358,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         jButton4 = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         txtSoLuong = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        btnSua = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
@@ -428,10 +439,10 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
 
         jLabel13.setText("Số Lượng");
 
-        jButton2.setText("Sửa");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnSua.setText("Sửa");
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnSuaActionPerformed(evt);
             }
         });
 
@@ -495,7 +506,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
                         .addGap(7, 7, 7)
                         .addComponent(btnThem)
                         .addGap(3, 3, 3)
-                        .addComponent(jButton2)
+                        .addComponent(btnSua)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnXoa)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -505,7 +516,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnXoa, jButton2});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnSua, btnXoa});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -528,7 +539,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
                             .addComponent(btnThem)
                             .addComponent(btnXoa)
                             .addComponent(jButton4)
-                            .addComponent(jButton2)))
+                            .addComponent(btnSua)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(11, 11, 11)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -565,7 +576,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnXoa, jButton2});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnSua, btnXoa});
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel1.setText("QUẢN LÝ SẢN PHẨM");
@@ -727,9 +738,9 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         clear();
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         update();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnSuaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -774,6 +785,7 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnXoa;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -782,7 +794,6 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> cboSize;
     private javax.swing.JComboBox<String> cboXuatXu;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -813,8 +824,6 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
     private javax.swing.JTextField txtTenSP;
     private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
-
-    
 
 //    public void getIDHang() {
 //        index = cboHang.getSelectedIndex();

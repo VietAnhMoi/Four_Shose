@@ -37,6 +37,14 @@ public class QLHoaDonJDialog extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(null);
         fillTableHD(service.getAll());
+        checkQuyen();
+    }
+    
+    public void checkQuyen() {
+        if (!Auth.isManager()) {
+            btnXoaHD.setEnabled(false);
+            btnXoaHDCT.setEnabled(false);
+        }
     }
     
     public QLHoaDonJDialog() {

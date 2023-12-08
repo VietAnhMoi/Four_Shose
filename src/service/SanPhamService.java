@@ -76,9 +76,13 @@ public class SanPhamService {
 
     public boolean delete(String id) {
         try {
-            String sql = " delete from sanpham where id like ?";
+            String sql = "delete from CHITIETHOADON where IDSanPham = ?\n"
+                    + " delete from CHITIETDONHANG where IDSanPham = ?\n"
+                    + " delete from SanPham where ID = ?";
             try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 ps.setObject(1, id);
+                ps.setObject(2, id);
+                ps.setObject(3, id);
 
                 return ps.executeUpdate() > 0;
             }
@@ -249,6 +253,7 @@ public class SanPhamService {
             return false;
         }
     }
+
     public boolean updateTrangThai(int trangThai) {
         try {
             String sql = "update SanPham set trangthai = ?";
