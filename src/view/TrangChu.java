@@ -271,7 +271,7 @@ public class TrangChu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed

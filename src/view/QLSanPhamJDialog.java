@@ -60,6 +60,8 @@ public class QLSanPhamJDialog extends javax.swing.JDialog {
         checkQuyen();
     }
     
+    
+    
     public void checkQuyen() {
         if (!Auth.isManager()) {
             btnThem.setEnabled(false);

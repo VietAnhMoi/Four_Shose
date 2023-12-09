@@ -82,6 +82,13 @@ public class NhanVien {
         }
         return true;
     }
+    
+    public boolean isTinhTrang() {
+        if (tinhTrang == 0) {
+            return false;
+        }
+        return true;
+    }
     public Object[] toData() {
         return new Object[]{this.id, this.hoTen, this.email, this.tinhTrang==1?"Đang làm":"Đã nghỉ",this.vaiTro==1?"Quản Lý":"Nhân viên"};
     }

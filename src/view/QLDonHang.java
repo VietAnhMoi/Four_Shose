@@ -17,6 +17,7 @@ import service.DonHangService;
 import service.HoaDonService;
 import service.KhuyenMaiService;
 import service.SanPhamService;
+import utils.Auth;
 
 /**
  *
@@ -46,6 +47,7 @@ public class QLDonHang extends javax.swing.JDialog {
         this.fillTableHD(serviceHD.getAllHDCho());
 //                this.fillTableDHCT(serviceCTDH.getDHCTisNull());
     }
+    
 
     public QLDonHang() {
 

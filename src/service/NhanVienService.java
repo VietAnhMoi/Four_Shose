@@ -17,22 +17,23 @@ import java.sql.*;
  * @author Viet Anh
  */
 public class NhanVienService {
+
     String INSERT_SQL = "INSERT INTO [dbo].[NHANVIEN] ([ID], MatKhau,[HoTenNV],[Email],[TinhTrang],[VaiTro]) VALUES(?,?,?,?,?,?)";
-    String UPDATE_SQL = "UPDATE [dbo].[NHANVIEN] SET MatKhau = ? [HoTenNV] = ?,[Email] = ?,[TinhTrang] = ?,[VaiTro] = ? where ID = ?";
+    String UPDATE_SQL = "UPDATE [dbo].[NHANVIEN] SET MatKhau = ?, [HoTenNV] = ?,[Email] = ?,[TinhTrang] = ?,[VaiTro] = ? where ID = ?";
     String DELETE_SQL = "DELETE FROM NhanVien WHERE ID=?";
     String SELECT_ALL_SQL = "SELECT * FROM NhanVien";
     String SELECT_BY_ID_SQL = "SELECT * FROM NhanVien WHERE ID=?";
 
     public int insert(NhanVien x) {
         try {
-            try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(INSERT_SQL);) {
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(INSERT_SQL);) {
                 ps.setObject(1, x.getId());
                 ps.setObject(2, x.getMatKhau());
                 ps.setObject(3, x.getHoTen());
                 ps.setObject(4, x.getEmail());
                 ps.setObject(5, x.getTinhTrang());
                 ps.setObject(6, x.getVaiTro());
-                
+
                 return ps.executeUpdate();
             }
         } catch (Exception e) {
@@ -43,14 +44,15 @@ public class NhanVienService {
 
     public int update(NhanVien x, String id) {
         try {
-            try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(UPDATE_SQL);) {
+            String sql = "UPDATE [dbo].[NHANVIEN] SET [HoTenNV] = ?,[Matkhau] = ?,[Email] = ?,[TinhTrang] = ?,[VaiTro] = ? where id = ?";
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(UPDATE_SQL);) {
                 ps.setObject(6, x.getId());
                 ps.setObject(1, x.getMatKhau());
                 ps.setObject(2, x.getHoTen());
                 ps.setObject(3, x.getEmail());
                 ps.setObject(4, x.getTinhTrang());
                 ps.setObject(5, x.getVaiTro());
-                
+
                 return ps.executeUpdate();
             }
         } catch (Exception e) {
@@ -61,9 +63,9 @@ public class NhanVienService {
 
     public int delete(String id) {
         try {
-            try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(DELETE_SQL);) {
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(DELETE_SQL);) {
                 ps.setObject(1, id);
-                
+
                 return ps.executeUpdate();
             }
         } catch (Exception e) {
@@ -74,10 +76,10 @@ public class NhanVienService {
 
     public List<NhanVien> getAll() {
         try {
-            try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(SELECT_ALL_SQL);) {
-                try(ResultSet rs = ps.executeQuery();) {
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(SELECT_ALL_SQL);) {
+                try (ResultSet rs = ps.executeQuery();) {
                     List<NhanVien> list = new ArrayList<>();
-                    while (rs.next()) {                        
+                    while (rs.next()) {
                         NhanVien x = new NhanVien();
                         x.setId(rs.getString("ID"));
                         x.setMatKhau(rs.getString("MatKhau"));
@@ -85,7 +87,7 @@ public class NhanVienService {
                         x.setEmail(rs.getString("Email"));
                         x.setTinhTrang(rs.getInt("TinhTrang"));
                         x.setVaiTro(rs.getInt("VaiTro"));
-                        
+
                         list.add(x);
                     }
                     return list;
@@ -96,14 +98,42 @@ public class NhanVienService {
             return null;
         }
     }
-    
+
+    public List<NhanVien> getByTen(String id) {
+        try {
+            String sql = "SELECT [ID],[HoTenNV],[Email],[Matkhau],[TinhTrang],[VaiTro] FROM [dbo].[NHANVIEN] where id like ? and HoTenNV like ?";
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                ps.setObject(1, "%" + id + "%");
+                ps.setObject(2, "%" + id + "%");
+                try (ResultSet rs = ps.executeQuery();) {
+                    List<NhanVien> list = new ArrayList<>();
+                    while (rs.next()) {
+                        NhanVien x = new NhanVien();
+                        x.setId(rs.getString("ID"));
+                        x.setHoTen(rs.getString("HoTenNV"));
+                        x.setEmail(rs.getString("Email"));
+                        x.setMatKhau(rs.getString("MatKhau"));
+                        x.setTinhTrang(rs.getInt("TinhTrang"));
+                        x.setVaiTro(rs.getInt("VaiTro"));
+
+                        list.add(x);
+                    }
+                    return list;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public NhanVien getByID(String id) {
         try {
-            try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(SELECT_BY_ID_SQL);) {
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(SELECT_BY_ID_SQL);) {
                 ps.setObject(1, id);
-                try(ResultSet rs = ps.executeQuery();) {
+                try (ResultSet rs = ps.executeQuery();) {
                     List<NhanVien> list = new ArrayList<>();
-                    while (rs.next()) {                        
+                    while (rs.next()) {
                         NhanVien x = new NhanVien();
                         x.setId(rs.getString("ID"));
                         x.setMatKhau(rs.getString("MatKhau"));
@@ -111,7 +141,7 @@ public class NhanVienService {
                         x.setEmail(rs.getString("Email"));
                         x.setTinhTrang(rs.getInt("TinhTrang"));
                         x.setVaiTro(rs.getInt("VaiTro"));
-                        
+
                         return x;
                     }
                 }

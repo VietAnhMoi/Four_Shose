@@ -22,16 +22,16 @@ import utils.Auth;
  * @author nguye
  */
 public class QLHoaDonJDialog extends javax.swing.JDialog {
-    
+
     private DefaultTableModel model = new DefaultTableModel();
     private HoaDonService service = new HoaDonService();
     private List<HoaDon> lst = new ArrayList();
     private int index = -1;
     private CTHoaDonService serviceCT = new CTHoaDonService();
-    
+
     public static int idDH;
     public static String idKHang;
-    
+
     public QLHoaDonJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -39,18 +39,18 @@ public class QLHoaDonJDialog extends javax.swing.JDialog {
         fillTableHD(service.getAll());
         checkQuyen();
     }
-    
+
     public void checkQuyen() {
         if (!Auth.isManager()) {
             btnXoaHD.setEnabled(false);
             btnXoaHDCT.setEnabled(false);
         }
     }
-    
+
     public QLHoaDonJDialog() {
-        
+
     }
-    
+
     void fillTableHD(List<HoaDon> list) {
         model = (DefaultTableModel) tblHoaDon.getModel();
         model.setRowCount(0);
@@ -58,16 +58,16 @@ public class QLHoaDonJDialog extends javax.swing.JDialog {
             model.addRow(hoaDon.toDatata());
         }
     }
-    
+
     void fillTableHDCT(List<CTHoaDon> lst) {
         model = (DefaultTableModel) tblHoaDonCT.getModel();
         model.setRowCount(0);
         for (CTHoaDon cthd : lst) {
             model.addRow(cthd.toDatata());
         }
-        
+
     }
-    
+
     CTHoaDon addHdCT(List<CTDonHangJoinHoaDon> lst) {
         CTHoaDon ctHD = new CTHoaDon();
         if (!txtMaKH.getText().equals("")) {
@@ -75,7 +75,7 @@ public class QLHoaDonJDialog extends javax.swing.JDialog {
         } else {
             idKHang = null;
         }
-        
+
         try {
             for (CTDonHangJoinHoaDon CTDH : lst) {
                 ctHD.setIdHoaDon(CTDH.getIdHoaDon());
@@ -92,19 +92,19 @@ public class QLHoaDonJDialog extends javax.swing.JDialog {
                 } else {
                     JOptionPane.showMessageDialog(this, "Thêm chi tiết hóa đơn thất bại1");
                 }
-                
+
             }
             JOptionPane.showMessageDialog(this, "Thêm chi tiết hóa đơn thành công");
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Thêm chi tiết hóa đơn thất bại");
-            
+
         }
         return ctHD;
-        
+
     }
-    
+
     CTHoaDon readHDCT(List<CTHoaDon> lst) {
         CTHoaDon ctHD = new CTHoaDon();
         for (CTHoaDon cthd : lst) {
@@ -119,7 +119,7 @@ public class QLHoaDonJDialog extends javax.swing.JDialog {
         }
         return ctHD;
     }
-    
+
     void showDataHoaDon(int index) {
         HoaDon hd = service.getAll().get(index);
         idDH = hd.getIdDonHang();
@@ -135,34 +135,34 @@ public class QLHoaDonJDialog extends javax.swing.JDialog {
         }
         txtMaDH.setText(String.valueOf(hd.getIdDonHang()));
         txtTongTien.setText(String.valueOf(tien));
-        
+
     }
-    
+
     void showDataHoaDonCT(int index) {
         CTHoaDon cthd = serviceCT.getAllCTDH(idDH).get(index);
         String phanNghin = "###.###";
         DecimalFormat formatPhanNghin = new DecimalFormat(phanNghin);
-        
+
         txtIDHoaDonCT.setText(cthd.getId());
         txtMaHDCT.setText(cthd.getIdHoaDon());
         txtMaSP.setText(cthd.getIdSanPham());
         txtMaNhanVien.setText(cthd.getIdNhanVien());
         txtSoLuong.setText(String.valueOf(cthd.getSoLuong()));
-        
+
         txtThanhTien.setText(formatPhanNghin.format(cthd.getThanhTien()));
         txtMaKH.setText(cthd.getIdKhachHang());
     }
-    
+
     void clearFormCTHD() {
         txtIDHoaDonCT.setText("");
         txtMaHDCT.setText("");
         txtMaSP.setText("");
         txtMaNhanVien.setText("");
         txtSoLuong.setText("");
-        
+
         txtThanhTien.setText("");
     }
-    
+
     HoaDon readFormHoaDon() {
         HoaDon hd = new HoaDon();
         hd.setId(Integer.parseInt(txtMaHD.getText()));
@@ -176,10 +176,10 @@ public class QLHoaDonJDialog extends javax.swing.JDialog {
 //        DecimalFormat formatPhanNghin = new DecimalFormat(phanNghin);
 //        long value = Long.parseLong(formatPhanNghin.format(txtTongTien.getText()));
         hd.setTongTien(Long.parseLong(txtTongTien.getText()));
-        
+
         return hd;
     }
-    
+
     boolean checkHoaDon() {
         HoaDon hd = this.readFormHoaDon();
         int maHD = hd.getId();
@@ -215,11 +215,11 @@ public class QLHoaDonJDialog extends javax.swing.JDialog {
         if (hd.getTrangThai() == 0) {
             JOptionPane.showMessageDialog(this, "Không thể thêm hóa đơn chưa thanh toán");
             return false;
-            
+
         }
         return true;
     }
-    
+
     boolean checkHDCT() {
         index = tblHoaDon.getSelectedRow();
         String idHD = tblHoaDon.getValueAt(index, 0).toString();
@@ -798,15 +798,14 @@ public class QLHoaDonJDialog extends javax.swing.JDialog {
         if (index < 0 || index > tblHoaDon.getRowCount() - 1) {
             JOptionPane.showMessageDialog(this, "Bạn chưa chọn hóa đơn");
         } else {
-            int idHD = Integer.parseInt(tblHoaDon.getValueAt(index, 0).toString());
-            if (service.deleteHoaDon(idHD)) {
-                JOptionPane.showMessageDialog(this, "xóa thành công");
-                fillTableHD(service.getAll());
-                fillTableHDCT(serviceCT.getAll());
+            if (JOptionPane.showConfirmDialog(this, "Bạn chắc chắc muốn xóa chứ?") == JOptionPane.YES_OPTION) {
+                int idHD = Integer.parseInt(tblHoaDon.getValueAt(index, 0).toString());
+                if (service.deleteHoaDon(idHD)) {
+                    JOptionPane.showMessageDialog(this, "xóa thành công");
+                    fillTableHD(service.getAll());
+                    fillTableHDCT(serviceCT.getAll());
 
-            } else {
-                JOptionPane.showMessageDialog(this, "Xóa thất bại");
-
+                }
             }
         }
         // TODO add your handling code here:
@@ -818,13 +817,15 @@ public class QLHoaDonJDialog extends javax.swing.JDialog {
         if (index < 0 || index > tblHoaDonCT.getRowCount() - 1) {
             JOptionPane.showMessageDialog(this, "Bạn chưa chọn sản phẩm để xóa");
         } else {
-            String idHDCT = tblHoaDonCT.getValueAt(index, 0).toString();
-            if (serviceCT.deleteCTHD(idHDCT)) {
-                JOptionPane.showMessageDialog(this, "Xóa thành công");
-                fillTableHDCT(serviceCT.getAllCTDH(idDH));
-                index = -1;
-            } else {
-                JOptionPane.showMessageDialog(this, "Xóa thất bại");
+            if (JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa hóa đơn chi tiết?") == JOptionPane.YES_OPTION) {
+                String idHDCT = tblHoaDonCT.getValueAt(index, 0).toString();
+                if (serviceCT.deleteCTHD(idHDCT)) {
+                    JOptionPane.showMessageDialog(this, "Xóa thành công");
+                    fillTableHDCT(serviceCT.getAllCTDH(idDH));
+                    index = -1;
+                } else {
+                    JOptionPane.showMessageDialog(this, "Xóa thất bại");
+                }
             }
         }
         // TODO add your handling code here:
