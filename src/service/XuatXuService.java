@@ -41,10 +41,9 @@ public class XuatXuService {
     
     public List<XuatXu> getByID(String id) {
         try {
-            String sql = "select id, TENXUATXU from XUatXu where id like ? and TENXUATXU like = ?";
+            String sql = "select id, TENXUATXU from XUatXu where id like ?";
             try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 ps.setObject(1, "%" + id + "%");
-                ps.setObject(2, "%" + id + "%");
                 try(ResultSet rs = ps.executeQuery();) {
                     List<XuatXu> list = new ArrayList<>();
                     while (rs.next()) {                        

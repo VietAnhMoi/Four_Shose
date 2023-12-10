@@ -40,10 +40,9 @@ public class MauSacService {
     
     public List<MauSac> getByID(String id) {
         try {
-            String sql = "select id, tenMau from MauSac where id like ? and tenMau like = ?";
+            String sql = "select id, tenMau from MauSac where id like ?";
             try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 ps.setObject(1, "%" + id + "%");
-                ps.setObject(2, "%" + id + "%");
                 try(ResultSet rs = ps.executeQuery();) {
                     List<MauSac> list = new ArrayList<>();
                     while (rs.next()) {                        

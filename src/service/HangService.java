@@ -41,10 +41,9 @@ public class HangService {
     
     public List<Hang> getByID(String id) {
         try {
-            String sql = "select * from Hang where id like ? and tenHang like ?";
+            String sql = "select * from Hang where id like ?";
             try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 ps.setObject(1, "%" + id + "%");
-                ps.setObject(2, "%" + id + "%");
                 try(ResultSet rs = ps.executeQuery();) {
                     List<Hang> list = new ArrayList<>();
                     while (rs.next()) {                        

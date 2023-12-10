@@ -41,10 +41,9 @@ public class SizeService {
     
     public List<Size> getByID(String id) {
         try {
-            String sql = "select id, tensize from MauSac where id like ? and tensize like = ?";
+            String sql = "select id, tensize from Size where id like ?";
             try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
                 ps.setObject(1, "%" + id + "%");
-                ps.setObject(2, "%" + id + "%");
                 try(ResultSet rs = ps.executeQuery();) {
                     List<Size> list = new ArrayList<>();
                     while (rs.next()) {                        
