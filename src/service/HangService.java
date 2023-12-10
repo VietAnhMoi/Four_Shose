@@ -38,4 +38,95 @@ public class HangService {
             return null;
         }
     }
+    
+    public List<Hang> getByID(String id) {
+        try {
+            String sql = "select * from Hang where id like ? and tenHang like ?";
+            try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                ps.setObject(1, "%" + id + "%");
+                ps.setObject(2, "%" + id + "%");
+                try(ResultSet rs = ps.executeQuery();) {
+                    List<Hang> list = new ArrayList<>();
+                    while (rs.next()) {                        
+                        Hang x = new Hang();
+                        x.setIdHang(rs.getString("id"));
+                        x.setTenHang(rs.getString("tenHang"));
+                        list.add(x);
+                    }
+                    return list;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public Hang getByID2(String id) {
+        try {
+            String sql = "select id, tenHang from Hang where id like ?";
+            try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                ps.setObject(1, id);
+                try(ResultSet rs = ps.executeQuery();) {
+                    while (rs.next()) {                        
+                        Hang x = new Hang();
+                        x.setIdHang(rs.getString("id"));
+                        x.setTenHang(rs.getString("tenHang"));
+                        return x;
+                    }
+                }
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public boolean insert(Hang x) {
+        try {
+            String sql = "insert into hang (id, tenHang) values (?,?)";
+            try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                ps.setObject(1, x.getIdHang());
+                ps.setObject(2, x.getTenHang());
+                
+                return ps.executeUpdate() > 0;
+                
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean update(Hang x) {
+        try {
+            String sql = "update hang set tenhang = ? where id = ?";
+            try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                ps.setObject(2, x.getIdHang());
+                ps.setObject(1, x.getTenHang());
+                
+                return ps.executeUpdate() > 0;
+                
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean delete(String ma) {
+        try {
+            String sql = "delete from hang where id = ?";
+            try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                ps.setObject(1, ma);
+                
+                return ps.executeUpdate() > 0;
+                
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
