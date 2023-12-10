@@ -89,6 +89,8 @@ public class DangNhap extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("Tài khoản:");
 
+        txtTaiKhoan.setText("admin");
+
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setText("Mật khẩu:");
 
@@ -108,6 +110,8 @@ public class DangNhap extends javax.swing.JFrame {
                 showMKActionPerformed(evt);
             }
         });
+
+        txtMatKhau.setText("123");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
