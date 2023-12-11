@@ -34,6 +34,15 @@ public class QLKhuyenMai extends javax.swing.JDialog {
         txtNguoiTao.setText(Auth.user.getId());
 
 //        showData(index);
+        checkQuyen();
+    }
+    
+    public void checkQuyen() {
+        if (!Auth.isManager()) {
+            btnSua.setEnabled(false);
+            btnThem.setEnabled(false);
+            btnXoa.setEnabled(false);
+        }
     }
 
     private void fillTable(List<KhuyenMai> all) {
