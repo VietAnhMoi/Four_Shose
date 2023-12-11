@@ -152,6 +152,7 @@ public class QLKhuyenMai extends javax.swing.JDialog {
         jButton10 = new javax.swing.JButton();
         lblNguoiDung = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
+        jButton11 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
 
@@ -296,7 +297,7 @@ public class QLKhuyenMai extends javax.swing.JDialog {
         jButton10.setBackground(new java.awt.Color(153, 153, 153));
         jButton10.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
         jButton10.setForeground(new java.awt.Color(255, 255, 255));
-        jButton10.setText("Thoát");
+        jButton10.setText("Thuộc Tính");
         jButton10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton10ActionPerformed(evt);
@@ -308,6 +309,16 @@ public class QLKhuyenMai extends javax.swing.JDialog {
         lblNguoiDung.setText("Người dùng ");
 
         jLabel14.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+
+        jButton11.setBackground(new java.awt.Color(153, 153, 153));
+        jButton11.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
+        jButton11.setForeground(new java.awt.Color(255, 255, 255));
+        jButton11.setText("Thoát");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -324,12 +335,18 @@ public class QLKhuyenMai extends javax.swing.JDialog {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel14))
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel14))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addComponent(lblNguoiDung)))
+                        .addGap(0, 47, Short.MAX_VALUE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(lblNguoiDung)))
-                .addContainerGap(53, Short.MAX_VALUE))
+                        .addGap(0, 0, 0)
+                        .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(0, 0, 0))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -350,7 +367,9 @@ public class QLKhuyenMai extends javax.swing.JDialog {
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
+                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblNguoiDung, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -577,6 +596,10 @@ public class QLKhuyenMai extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton10ActionPerformed
 
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton11ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -688,6 +711,7 @@ public class QLKhuyenMai extends javax.swing.JDialog {
     private javax.swing.JButton btnXoa;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
