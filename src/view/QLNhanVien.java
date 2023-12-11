@@ -33,9 +33,19 @@ public class QLNhanVien extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         fillTable(service.getAll());
         checkQuyen();
+        this.vaiTro();
     }
-    
-    
+
+    void vaiTro() {
+        String vaitro = null;
+        if (Auth.user.isVaiTro()) {
+            vaitro = "Quản Lý";
+        } else {
+            vaitro = "Nhân Viên";
+        }
+        lblNguoiDung.setText(vaitro);
+    }
+
     public void checkQuyen() {
         if (!Auth.isManager()) {
             btnThem.setEnabled(false);
@@ -62,7 +72,7 @@ public class QLNhanVien extends javax.swing.JDialog {
         txtMatKhau.setText(nv.getMatKhau());
         rdoQuanLy.setSelected(nv.isVaiTro());
         rdoNhanVien.setSelected(!nv.isVaiTro());
-        
+
         rdoNghi.setSelected(!nv.isTinhTrang());
         rdoDangLam.setSelected(nv.isTinhTrang());
 
@@ -101,13 +111,13 @@ public class QLNhanVien extends javax.swing.JDialog {
         rdoDangLam.setSelected(true);
         rdoQuanLy.setSelected(true);
     }
-    
+
     public NhanVien readform() {
         String ID = txtID.getText();
         String HoTen = txtHoTen.getText();
         String Email = txtEmail.getText();
         String MatKhau = txtMatKhau.getText();
-        return new NhanVien(ID, MatKhau,HoTen, Email, rdoDangLam.isSelected() ? 1 : 0, rdoQuanLy.isSelected() ? 1 : 0);
+        return new NhanVien(ID, MatKhau, HoTen, Email, rdoDangLam.isSelected() ? 1 : 0, rdoQuanLy.isSelected() ? 1 : 0);
     }
 
     /**
@@ -150,6 +160,7 @@ public class QLNhanVien extends javax.swing.JDialog {
         jButton8 = new javax.swing.JButton();
         lblNguoiDung = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
+        jButton9 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         rdoNghi = new javax.swing.JRadioButton();
@@ -307,7 +318,7 @@ public class QLNhanVien extends javax.swing.JDialog {
         jButton8.setBackground(new java.awt.Color(153, 153, 153));
         jButton8.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
         jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("Thoát");
+        jButton8.setText("Thuộc Tính");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton8ActionPerformed(evt);
@@ -319,6 +330,16 @@ public class QLNhanVien extends javax.swing.JDialog {
         lblNguoiDung.setText("Người dùng ");
 
         jLabel14.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+
+        jButton9.setBackground(new java.awt.Color(153, 153, 153));
+        jButton9.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
+        jButton9.setForeground(new java.awt.Color(255, 255, 255));
+        jButton9.setText("Thoát");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -335,12 +356,18 @@ public class QLNhanVien extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel14))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel14))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addComponent(lblNguoiDung)))
+                        .addGap(0, 47, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(lblNguoiDung)))
-                .addContainerGap(53, Short.MAX_VALUE))
+                        .addGap(0, 0, 0)
+                        .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(0, 0, 0))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -361,7 +388,9 @@ public class QLNhanVien extends javax.swing.JDialog {
                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
+                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblNguoiDung, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -462,7 +491,7 @@ public class QLNhanVien extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(21, Short.MAX_VALUE))))
+                        .addContainerGap(27, Short.MAX_VALUE))))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnSua, btnThem, btnXoa});
@@ -587,8 +616,9 @@ public class QLNhanVien extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//        QLSanPhamJDialog sanPham = new QLSanPhamJDialog(this, true);
-//        sanPham.setVisible(true);
+        TrangChu trangChu = new TrangChu();
+        this.dispose();
+        trangChu.sp.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -598,36 +628,39 @@ public class QLNhanVien extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-//        QLkhachhang kh = new QLkhachhang(this, true);
-//        kh.setVisible(true);
-        // TODO add your handling code here:
+        TrangChu trangChu = new TrangChu();
+        this.dispose();
+        trangChu.kh.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        //        // TODO add your handling code here:
-//        QLKhuyenMai  khuyenMai = new QLKhuyenMai(this, true);
-//        khuyenMai.setVisible(true);
+        TrangChu trangChu = new TrangChu();
+        this.dispose();
+        trangChu.km.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-//        QLHoaDonJDialog qlHD = new QLHoaDonJDialog(this, true);
-//        qlHD.setVisible(true);
-
-        // TODO add your handling code here:
+        TrangChu trangChu = new TrangChu();
+        this.dispose();
+        trangChu.hd.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-//        QLDonHang qlDH = new QLDonHang(this, true);
-//        qlDH.setVisible(true);
+        TrangChu trangChu = new TrangChu();
+        this.dispose();
+        trangChu.dh.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
+        TrangChu trangChu = new TrangChu();
+        this.dispose();
+        trangChu.setVisible(true);
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        System.exit(0);
+        TrangChu trangChu = new TrangChu();
+        this.dispose();
+        trangChu.ttSP.setVisible(true);
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
@@ -638,6 +671,11 @@ public class QLNhanVien extends javax.swing.JDialog {
             fillTable(service.getByTen(txtTimKiem.getText()));
         }
     }//GEN-LAST:event_btnTimKiemActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        System.exit(0);
+
+    }//GEN-LAST:event_jButton9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -712,6 +750,7 @@ public class QLNhanVien extends javax.swing.JDialog {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel3;

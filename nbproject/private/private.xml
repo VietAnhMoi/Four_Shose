@@ -3,11 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/vieta/OneDrive/Desktop/DuAn1/Four_Shose/src/view/QLThuocTinhSP.java</file>
             <file>file:/C:/Users/vieta/OneDrive/Desktop/DuAn1/Four_Shose/src/view/QLDonHang.java</file>
             <file>file:/C:/Users/vieta/OneDrive/Desktop/DuAn1/Four_Shose/src/view/QLSanPham.java</file>
             <file>file:/C:/Users/vieta/OneDrive/Desktop/DuAn1/Four_Shose/src/view/QLKhuyenMai.java</file>
             <file>file:/C:/Users/vieta/OneDrive/Desktop/DuAn1/Four_Shose/src/view/TrangChu.java</file>
+=======
+            <file>file:/D:/ki_4/Block2/Du_an1/DA1/Four_Shose/src/view/QLHoaDonJDialog.java</file>
+            <file>file:/D:/ki_4/Block2/Du_an1/DA1/Four_Shose/src/service/CTHoaDonService.java</file>
+>>>>>>> be9959f455159e2e991024a26088d8ead885a4df
         </group>
     </open-files>
 </project-private>

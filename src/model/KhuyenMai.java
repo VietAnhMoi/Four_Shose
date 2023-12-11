@@ -20,13 +20,15 @@ public class KhuyenMai {
     public KhuyenMai() {
     }
 
-    public KhuyenMai(String idKM, double KMPhanTram, int KMTheoGia, String NguoiTao) {
+    public KhuyenMai(String idKM, double KMPhanTram, int KMTheoGia, String NgayTao, String NguoiTao) {
         this.idKM = idKM;
         this.KMPhanTram = KMPhanTram;
         this.KMTheoGia = KMTheoGia;
-//        this.NgayTao = NgayTao;
+        this.NgayTao = NgayTao;
         this.NguoiTao = NguoiTao;
     }
+
+
 
     
 

@@ -29,8 +29,18 @@ public final class QLkhachhang extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         FillToTable(SERVICE.getAll());
+        this.vaiTro();
     }
 
+    void vaiTro() {
+        String vaitro = null;
+        if (Auth.user.isVaiTro()) {
+            vaitro = "Quản Lý";
+        } else {
+            vaitro = "Nhân Viên";
+        }
+        lblNguoiDung.setText(vaitro);
+    }
     public void FillToTable(List<KhachHang> lst) {
         model = (DefaultTableModel) tblbang.getModel();
         model.setRowCount(0);
@@ -115,6 +125,7 @@ public final class QLkhachhang extends javax.swing.JDialog {
         jButton8 = new javax.swing.JButton();
         lblNguoiDung = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
+        jButton9 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -200,7 +211,9 @@ public final class QLkhachhang extends javax.swing.JDialog {
             }
         });
 
+        jButton2.setBackground(new java.awt.Color(153, 153, 153));
         jButton2.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Nhân Viên");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -208,9 +221,7 @@ public final class QLkhachhang extends javax.swing.JDialog {
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(153, 153, 153));
         jButton3.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Khách Hàng");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -261,7 +272,7 @@ public final class QLkhachhang extends javax.swing.JDialog {
         jButton8.setBackground(new java.awt.Color(153, 153, 153));
         jButton8.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
         jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("Thoát");
+        jButton8.setText("Thuộc Tính");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton8ActionPerformed(evt);
@@ -273,6 +284,16 @@ public final class QLkhachhang extends javax.swing.JDialog {
         lblNguoiDung.setText("Người dùng ");
 
         jLabel14.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+
+        jButton9.setBackground(new java.awt.Color(153, 153, 153));
+        jButton9.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
+        jButton9.setForeground(new java.awt.Color(255, 255, 255));
+        jButton9.setText("Thoát");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -294,7 +315,8 @@ public final class QLkhachhang extends javax.swing.JDialog {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addComponent(lblNguoiDung)))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addGap(0, 47, Short.MAX_VALUE))
+            .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -315,6 +337,8 @@ public final class QLkhachhang extends javax.swing.JDialog {
                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -488,14 +512,15 @@ public final class QLkhachhang extends javax.swing.JDialog {
     }//GEN-LAST:event_btnkiemActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //        QLSanPhamJDialog sanPham = new QLSanPhamJDialog(this, true);
-        //        sanPham.setVisible(true);
+     TrangChu trangChu = new TrangChu();
+        this.dispose();
+        trangChu.sp.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        //        QLNhanVien nv = new QLNhanVien(this, true);
-        //        nv.setVisible(true);
-        // TODO add your handling code here:
+        TrangChu trangChu = new TrangChu();
+        this.dispose();
+        trangChu.nv.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -505,31 +530,39 @@ public final class QLkhachhang extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        //        // TODO add your handling code here:
-        //        QLKhuyenMai  khuyenMai = new QLKhuyenMai(this, true);
-        //        khuyenMai.setVisible(true);
+       TrangChu trangChu = new TrangChu();
+        this.dispose();
+        trangChu.km.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        //        QLHoaDonJDialog qlHD = new QLHoaDonJDialog(this, true);
-        //        qlHD.setVisible(true);
-
-        // TODO add your handling code here:
+        TrangChu trangChu = new TrangChu();
+        this.dispose();
+        trangChu.hd.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-        //        QLDonHang qlDH = new QLDonHang(this, true);
-        //        qlDH.setVisible(true);
+        TrangChu trangChu = new TrangChu();
+        this.dispose();
+        trangChu.dh.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
+ TrangChu trangChu = new TrangChu();
+        this.dispose();
+        trangChu.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
+       TrangChu trangChu = new TrangChu();
+        this.dispose();
+        trangChu.ttSP.setVisible(true);
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        System.exit(0);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -587,6 +620,7 @@ public final class QLkhachhang extends javax.swing.JDialog {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;

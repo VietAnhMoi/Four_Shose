@@ -42,8 +42,19 @@ public class QLThuocTinhSP extends javax.swing.JDialog {
         fillTableXuatXu(XXDAO.getAll());
         setLocationRelativeTo(null);
         checkAdmin();
+        this.vaiTro();
+        
     }
-    
+
+    void vaiTro() {
+        String vaitro = null;
+        if (Auth.user.isVaiTro()) {
+            vaitro = "Quản Lý";
+        } else {
+            vaitro = "Nhân Viên";
+        }
+        lblNguoiDung.setText(vaitro);
+    }
     public void checkAdmin() {
         if (!Auth.isManager()) {
             btnSua.setEnabled(false);
@@ -109,22 +120,22 @@ public class QLThuocTinhSP extends javax.swing.JDialog {
     public Size readFormSize() {
         return new Size(txtIDSize.getText(), txtTenSize.getText());
     }
-    
+
     public void clearH() {
         txtIDHang.setText("");
         txtTenHang.setText("");
     }
-    
+
     public void clearXX() {
         txtIDXuatXu.setText("");
         txtTenXuatXu.setText("");
     }
-    
+
     public void clearMS() {
         txtIDMau.setText("");
         txtTenMau.setText("");
     }
-    
+
     public void clearSZ() {
         txtIDSize.setText("");
         txtTenSize.setText("");
@@ -906,7 +917,7 @@ public class QLThuocTinhSP extends javax.swing.JDialog {
         if (HDAO.delete(txtIDHang.getText())) {
             JOptionPane.showMessageDialog(this, "Đã xóa");
             fillTableHang(HDAO.getAll());
-                clearH();
+            clearH();
         }
     }//GEN-LAST:event_btnXoa4ActionPerformed
 
@@ -939,7 +950,7 @@ public class QLThuocTinhSP extends javax.swing.JDialog {
         if (XXDAO.delete(txtIDXuatXu.getText())) {
             JOptionPane.showMessageDialog(this, "Đã xóa");
             fillTableXuatXu(XXDAO.getAll());
-                clearXX();
+            clearXX();
         }
     }//GEN-LAST:event_btnXoa3ActionPerformed
 
@@ -972,7 +983,7 @@ public class QLThuocTinhSP extends javax.swing.JDialog {
         if (MSDAO.delete(txtIDMau.getText())) {
             JOptionPane.showMessageDialog(this, "Đã xóa");
             fillTableMau(MSDAO.getAll());
-                clearMS();
+            clearMS();
         }
     }//GEN-LAST:event_btnXoaActionPerformed
 
@@ -1001,12 +1012,12 @@ public class QLThuocTinhSP extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSua1ActionPerformed
 
     private void btnXoa1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoa1ActionPerformed
-       
-            if (SDAO.delete(txtIDSize.getText())) {
-                JOptionPane.showMessageDialog(this, "Đã xóa");
-                fillTableSize(SDAO.getAll());
-                clearSZ();
-            }
+
+        if (SDAO.delete(txtIDSize.getText())) {
+            JOptionPane.showMessageDialog(this, "Đã xóa");
+            fillTableSize(SDAO.getAll());
+            clearSZ();
+        }
     }//GEN-LAST:event_btnXoa1ActionPerformed
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
@@ -1016,7 +1027,7 @@ public class QLThuocTinhSP extends javax.swing.JDialog {
 //            e.printStackTrace();
 //            JOptionPane.showMessageDialog(this, "Không thấy:" + txtTimHang.getText());
 //        }
-        
+
         List<Hang> list = HDAO.getByID(txtTimHang.getText());
         fillTableHang(list);
     }//GEN-LAST:event_jButton14ActionPerformed
@@ -1037,35 +1048,49 @@ public class QLThuocTinhSP extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+        TrangChu trangChu = new TrangChu();
+        this.dispose();
+        trangChu.sp.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
+        TrangChu trangChu = new TrangChu();
+        this.dispose();
+        trangChu.nv.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
-        // TODO add your handling code here:
+        TrangChu trangChu = new TrangChu();
+        this.dispose();
+        trangChu.kh.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-
+        TrangChu trangChu = new TrangChu();
+        this.dispose();
+        trangChu.km.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-
+        TrangChu trangChu = new TrangChu();
+        this.dispose();
+        trangChu.hd.setVisible(true);
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
+        TrangChu trangChu = new TrangChu();
+        this.dispose();
+        trangChu.dh.setVisible(true);        // TODO add your handling code here:
 
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
+        TrangChu trangChu = new TrangChu();
+        this.dispose();
+        trangChu.setVisible(true);
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed

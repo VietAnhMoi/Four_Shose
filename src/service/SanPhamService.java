@@ -267,4 +267,18 @@ public class SanPhamService {
             return false;
         }
     }
+
+    public boolean deleteInCTDHorCTHD(String id) {
+        try {
+            String sql = " exec deleteSPinCTDHorCTHD ? ";
+            try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+                ps.setObject(1, id);
+
+                return ps.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
