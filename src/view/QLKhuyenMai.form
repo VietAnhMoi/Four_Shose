@@ -33,30 +33,16 @@
                       <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel1" alignment="1" min="-2" pref="37" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
-                                      <Component id="jLabel7" min="-2" pref="101" max="-2" attributes="0"/>
-                                      <EmptySpace pref="50" max="32767" attributes="0"/>
-                                  </Group>
+                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel1" alignment="1" min="-2" pref="37" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="txtID" alignment="0" min="-2" pref="163" max="-2" attributes="0"/>
                                   <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <Component id="txtTimKiemKM" max="32767" attributes="0"/>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="btnTimKiem" linkSize="1" min="-2" max="-2" attributes="0"/>
-                                      </Group>
                                       <Group type="102" alignment="1" attributes="0">
                                           <Component id="txtKMTheoGia" min="-2" pref="163" max="-2" attributes="0"/>
                                           <EmptySpace max="32767" attributes="0"/>
@@ -83,8 +69,8 @@
                               </Group>
                               <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="jScrollPane1" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -124,15 +110,8 @@
                   <Component id="btnXoa" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                      <Component id="txtTimKiemKM" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnTimKiem" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="jLabel7" alignment="1" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="212" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
@@ -181,8 +160,14 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtNgayTao">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtNguoiTao">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>
@@ -209,16 +194,6 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="jLabel7">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="M&#xe3; khuy&#x1ebf;n m&#xe3;i :"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtTimKiemKM">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTimKiemKMActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JButton" name="btnThem">
       <Properties>
         <Property name="text" type="java.lang.String" value="Th&#xea;m"/>
@@ -241,14 +216,6 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXoaActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnTimKiem">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="T&#xec;m Ki&#x1ebf;m"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTimKiemActionPerformed"/>
       </Events>
     </Component>
     <Container class="javax.swing.JPanel" name="jPanel5">
@@ -476,7 +443,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel6" min="-2" pref="926" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="67" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

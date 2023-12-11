@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import model.KhuyenMai;
 
 import service.KhuyenMaiService;
+import utils.Auth;
 
 /**
  *
@@ -26,6 +27,7 @@ public class QLKhuyenMai extends javax.swing.JDialog {
     KhuyenMaiService service = new KhuyenMaiService();
     DefaultTableModel dtm = new DefaultTableModel();
     List<KhuyenMai> lsh = new ArrayList<>();
+
     int index = 0;
 
     public QLKhuyenMai(java.awt.Frame parent, boolean modal) {
@@ -33,6 +35,7 @@ public class QLKhuyenMai extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         fillTable(service.getAll());
+        txtNguoiTao.setText(Auth.user.getId());
 //        showData(index);
     }
 
@@ -64,31 +67,59 @@ public class QLKhuyenMai extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "KMPhanTram Không được để tên trống");
             txtKMPhanTram.requestFocus();
             return false;
+        } else {
+            try {
+                if (Double.parseDouble(txtKMPhanTram.getText()) < 0) {
+                    JOptionPane.showMessageDialog(this, "KMPhanTram phải lớn hơn 0");
+                    return false;
+                } else if (Double.parseDouble(txtKMPhanTram.getText()) >= 1) {
+                    JOptionPane.showMessageDialog(this, "KMPhanTram phải bé hơn 1");
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Sai định đạng khuyến mãi theo phần trăm");
+                return false;
+            }
         }
+
         if (txtKMTheoGia.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "KHTheoGia Không được để mật khẩu trống");
             txtKMTheoGia.requestFocus();
             return false;
+        } else {
+            try {
+                if (Integer.parseInt(txtKMTheoGia.getText()) < 0) {
+                    JOptionPane.showMessageDialog(this, "KMTheoGia phải lớn hơn 0");
+                    return false;
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Sai định đạng khuyến mãi theo giá");
+                return false;
+            }
         }
-        if (txtNgayTao.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "NgayTao Không được để mật khẩu trống");
-            txtNgayTao.requestFocus();
+        if (Double.parseDouble(txtKMPhanTram.getText()) > 0 && Integer.parseInt(txtKMTheoGia.getText()) > 0) {
+            JOptionPane.showMessageDialog(this, "Bạn chỉ được nhập 1 loại khuyến mãi");
             return false;
         }
-        if (txtNguoiTao.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "NguoiTao Không được để mật khẩu trống");
-            txtNguoiTao.requestFocus();
-            return false;
-        }
+//        if (txtNgayTao.getText().equals("")) {
+//            JOptionPane.showMessageDialog(this, "NgayTao Không được để mật khẩu trống");
+//            txtNgayTao.requestFocus();
+//            return false;
+//        }
+//        if (txtNguoiTao.getText().equals("")) {
+//            JOptionPane.showMessageDialog(this, "NguoiTao Không được để mật khẩu trống");
+//            txtNguoiTao.requestFocus();
+//            return false;
+//        }
         return true;
     }
-     public KhuyenMai readform(){
+
+    public KhuyenMai readform() {
         String ID = txtID.getText();
-        double KMPhanTram = Double.parseDouble(txtKMPhanTram.getText()) ;
-        int KMTheoGia = Integer.parseInt(txtKMTheoGia.getText()) ;
+        double KMPhanTram = Double.parseDouble(txtKMPhanTram.getText());
+        int KMTheoGia = Integer.parseInt(txtKMTheoGia.getText());
         String NgayTao = txtNgayTao.getText();
         String NguoiTao = txtNguoiTao.getText();
-        return new KhuyenMai(ID, KMPhanTram, KMTheoGia,NgayTao, NguoiTao);
+        return new KhuyenMai(ID, KMPhanTram, KMTheoGia, NgayTao, NguoiTao);
     }
 
     @SuppressWarnings("unchecked")
@@ -107,12 +138,9 @@ public class QLKhuyenMai extends javax.swing.JDialog {
         txtNguoiTao = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblKhuyenMai = new javax.swing.JTable();
-        jLabel7 = new javax.swing.JLabel();
-        txtTimKiemKM = new javax.swing.JTextField();
         btnThem = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
-        btnTimKiem = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -152,6 +180,10 @@ public class QLKhuyenMai extends javax.swing.JDialog {
             }
         });
 
+        txtNgayTao.setEnabled(false);
+
+        txtNguoiTao.setEnabled(false);
+
         tblKhuyenMai.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -169,14 +201,6 @@ public class QLKhuyenMai extends javax.swing.JDialog {
             }
         });
         jScrollPane1.setViewportView(tblKhuyenMai);
-
-        jLabel7.setText("Mã khuyến mãi :");
-
-        txtTimKiemKM.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTimKiemKMActionPerformed(evt);
-            }
-        });
 
         btnThem.setText("Thêm");
         btnThem.addActionListener(new java.awt.event.ActionListener() {
@@ -196,13 +220,6 @@ public class QLKhuyenMai extends javax.swing.JDialog {
         btnXoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnXoaActionPerformed(evt);
-            }
-        });
-
-        btnTimKiem.setText("Tìm Kiếm");
-        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTimKiemActionPerformed(evt);
             }
         });
 
@@ -354,7 +371,7 @@ public class QLKhuyenMai extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 926, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -372,25 +389,15 @@ public class QLKhuyenMai extends javax.swing.JDialog {
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(18, 18, 18))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(54, 54, 54)
-                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)))
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(txtTimKiemKM)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(btnTimKiem))
                                         .addGroup(layout.createSequentialGroup()
                                             .addComponent(txtKMTheoGia, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -412,12 +419,12 @@ public class QLKhuyenMai extends javax.swing.JDialog {
                                             .addComponent(btnSua))))
                                 .addGap(59, 59, 59))
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane1)))))
                 .addGap(0, 0, 0))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnSua, btnThem, btnTimKiem, btnXoa});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnSua, btnThem, btnXoa});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -444,13 +451,8 @@ public class QLKhuyenMai extends javax.swing.JDialog {
                     .addComponent(txtKMTheoGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnXoa))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtTimKiemKM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnTimKiem))
-                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -468,14 +470,6 @@ public class QLKhuyenMai extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtKMTheoGiaActionPerformed
 
-    private void txtTimKiemKMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemKMActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTimKiemKMActionPerformed
-
-    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnTimKiemActionPerformed
-
     private void tblKhuyenMaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKhuyenMaiMouseClicked
         // TODO add your handling code here:
         index = tblKhuyenMai.getSelectedRow();
@@ -484,43 +478,59 @@ public class QLKhuyenMai extends javax.swing.JDialog {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
- if(checkrong()){
+        if (checkrong()) {
             KhuyenMai KM = readform();
-            if(service.Add(KM)!=0){
-                JOptionPane.showMessageDialog(this, "Thêm thành công");
-                fillTable(service.getAll());
-        }else{
-           JOptionPane.showMessageDialog(this, "Thêm không thành công"); 
-        }       }
+            if (service.checkMa(KM.getIdKM())) {
+                JOptionPane.showMessageDialog(this, "Trùng ID Khuyến Mãi");
+            } else {
+                if (service.Add(KM) != 0) {
+                    JOptionPane.showMessageDialog(this, "Thêm thành công");
+                    fillTable(service.getAll());
+                } else {
+                    JOptionPane.showMessageDialog(this, "Thêm không thành công");
+                }
+            }
+        }
 
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
-          if(checkrong()){
-            index = tblKhuyenMai.getSelectedRow();
-            KhuyenMai KM = readform();
-            String id =tblKhuyenMai.getValueAt(index, 0).toString();
-          if(service.Update(KM, id)>0){
-            JOptionPane.showMessageDialog(this, "Update thành công");
-            fillTable(service.getAll());
-        }else{
-            JOptionPane.showMessageDialog(this, "Update không thành công");
-        }        }
+        index = tblKhuyenMai.getSelectedRow();
+
+        if (index < 0 || index > tblKhuyenMai.getRowCount() - 1) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn khuyến mãi");
+        } else {
+            if (checkrong()) {
+                KhuyenMai KM = readform();
+                String id = tblKhuyenMai.getValueAt(index, 0).toString();
+                if (service.Update(KM, id) > 0) {
+                    JOptionPane.showMessageDialog(this, "Update thành công");
+                    fillTable(service.getAll());
+                    txtNguoiTao.setText(Auth.user.getId());
+                } else {
+                    JOptionPane.showMessageDialog(this, "Update không thành công");
+                }
+            }
+        }
 
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         // TODO add your handling code here:
         index = tblKhuyenMai.getSelectedRow();
-        String km = tblKhuyenMai.getValueAt(index, 0).toString();
-        if (service.Delete(km) != 0) {
-            JOptionPane.showMessageDialog(this, "Xóa thành công");
-            fillTable(service.getAll());
+        if (index < 0 || index > tblKhuyenMai.getRowCount() - 1) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn khuyến mãi");
         } else {
-            JOptionPane.showMessageDialog(this, "Xóa thất bại");
+            String km = tblKhuyenMai.getValueAt(index, 0).toString();
+            if (service.Delete(km) != 0) {
+                JOptionPane.showMessageDialog(this, "Xóa thành công");
+                fillTable(service.getAll());
+                txtNguoiTao.setText(Auth.user.getId());
+            } else {
+                JOptionPane.showMessageDialog(this, "Xóa thất bại");
+            }
         }
-
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -675,7 +685,6 @@ public class QLKhuyenMai extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
-    private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton btnXoa;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
@@ -692,7 +701,6 @@ public class QLKhuyenMai extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
@@ -703,7 +711,6 @@ public class QLKhuyenMai extends javax.swing.JDialog {
     private javax.swing.JTextField txtKMTheoGia;
     private javax.swing.JTextField txtNgayTao;
     private javax.swing.JTextField txtNguoiTao;
-    private javax.swing.JTextField txtTimKiemKM;
     // End of variables declaration//GEN-END:variables
 
 }
