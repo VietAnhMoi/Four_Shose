@@ -254,7 +254,6 @@ public class CTDonHangService {
 //            return false;
 //        }
 //    }
-
     public List<CTDonHang> checkSPhaminHDCTisNotNull(String maSP, int idDonHang) {
         sql = "select ctDH.*, sp.TenSanPham from CHITIETDONHANG ctDH join SanPham sp on ctDH.IDSanPham = sp.ID\n"
                 + "                where ctDH.IDDonHang =? and ctDH.idsanpham = ?";
@@ -341,4 +340,16 @@ public class CTDonHangService {
         }
     }
 
+    public boolean checkSPinCTDH(String idSAnPham) {
+        String sql = "select * from CHITIETHOADON where idSAnPham = ?";
+        try {
+            Connection con = DBConnect.getConnection();
+            PreparedStatement ps = con.prepareCall(sql);
+            ps.setObject(1, idSAnPham);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

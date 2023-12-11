@@ -17,6 +17,8 @@ import model.MauSac;
 import model.SanPham;
 import model.Size;
 import model.XuatXu;
+import service.CTDonHangService;
+import service.CTHoaDonService;
 import service.CTSanPhamService;
 import service.HangService;
 import service.MauSacService;
@@ -39,6 +41,9 @@ public class QLSanPham extends javax.swing.JDialog {
     private SizeService sizeDao = new SizeService();
     private XuatXuService xuatXuDao = new XuatXuService();
     private HangService hangService = new HangService();
+    private CTDonHangService serviceCTDH = new CTDonHangService();
+    private CTHoaDonService serviceCTHD = new  CTHoaDonService();
+           
     private int index = -1;
     public static String a1;
     public static String a2;
@@ -58,10 +63,18 @@ public class QLSanPham extends javax.swing.JDialog {
         fillHang();
         fillXuatXu();
         checkQuyen();
+        this.vaiTro();
     }
-    
-    
-    
+
+    void vaiTro() {
+        String vaitro = null;
+        if (Auth.user.isVaiTro()) {
+            vaitro = "Quản Lý";
+        } else {
+            vaitro = "Nhân Viên";
+        }
+        lblNguoiDung.setText(vaitro);
+    }
     public void checkQuyen() {
         if (!Auth.isManager()) {
             btnThem.setEnabled(false);
@@ -254,7 +267,19 @@ public class QLSanPham extends javax.swing.JDialog {
 
     public void delete() {
         try {
-            if (JOptionPane.showConfirmDialog(this, "Xóa sản phẩm sẽ ảnh hưởng đến doanh thu.\n Bạn chắc chắn muốn xóa chứ?") == JOptionPane.YES_NO_OPTION) {
+            index = tblQLSanPham.getSelectedRow();
+            String maSP = tblQLSanPham.getValueAt(index, 0).toString();
+            if (serviceCTDH.checkSPinCTDH(maSP) || serviceCTHD.checkSPinCTHD(maSP)) {
+                int hoi = JOptionPane.showConfirmDialog(this, "Sản phẩm này đang có trong Đơn hàng hoặc Hóa đơn bạn có muốn xóa không?");
+                if (hoi == JOptionPane.YES_OPTION) {
+                    if(SPDao.deleteInCTDHorCTHD(maSP)){
+                        JOptionPane.showMessageDialog(this, "Xóa thành công");
+                        fillTable(SPDao.getAll());
+                    }else{
+                       JOptionPane.showMessageDialog(this, "Không thể xoá");
+                    }
+                }
+            } else {
                 if (SPDao.delete(txtIDSanPham.getText())) {
                     JOptionPane.showMessageDialog(this, "Xóa thành công");
                     fillTable(SPDao.getAll());
@@ -913,45 +938,49 @@ public class QLSanPham extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-//        QLNhanVien nv = new QLNhanVien(this, true);
-//        nv.setVisible(true);
-        // TODO add your handling code here:
+        TrangChu trangChu = new TrangChu();
+        this.dispose();
+        trangChu.nv.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-//        QLkhachhang kh = new QLkhachhang(this, true);
-//        kh.setVisible(true);
-        // TODO add your handling code here:
+        TrangChu trangChu = new TrangChu();
+        this.dispose();
+        trangChu.kh.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        //        // TODO add your handling code here:
-//        QLKhuyenMai  khuyenMai = new QLKhuyenMai(this, true);
-//        khuyenMai.setVisible(true);
+        TrangChu trangChu = new TrangChu();
+        this.dispose();
+        trangChu.km.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-//        QLHoaDonJDialog qlHD = new QLHoaDonJDialog(this, true);
-//        qlHD.setVisible(true);
-
-        // TODO add your handling code here:
+        TrangChu trangChu = new TrangChu();
+        this.dispose();
+        trangChu.hd.setVisible(true);
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-//        QLDonHang qlDH = new QLDonHang(this, true);
-//        qlDH.setVisible(true);
+        TrangChu trangChu = new TrangChu();
+        this.dispose();
+        trangChu.dh.setVisible(true);
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
+        TrangChu trangChu = new TrangChu();
+        this.dispose();
+        trangChu.setVisible(true);
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
+        TrangChu trangChu = new TrangChu();
+        this.dispose();
+        trangChu.ttSP.setVisible(true);
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        System.exit(0);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton11ActionPerformed
 

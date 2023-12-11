@@ -12,16 +12,20 @@ import utils.Auth;
  */
 public class TrangChu extends javax.swing.JFrame {
 
-    /**
-     * Creates new form TrangChu
-     */
+    public QLDonHang dh = new QLDonHang(this, true);
+    public QLHoaDonJDialog hd = new QLHoaDonJDialog(this, true);
+    public QLKhuyenMai km = new QLKhuyenMai(this, true);
+    public QLNhanVien nv = new QLNhanVien(this, true);
+    public QLSanPham sp = new QLSanPham(this, true);
+    public QLThuocTinhSP ttSP = new QLThuocTinhSP(this, true);
+    public QLkhachhang kh = new QLkhachhang(this, true);
+
     public TrangChu() {
         initComponents();
         setLocationRelativeTo(null);
         this.vaiTro();
     }
 
-    
     void vaiTro() {
         String vaitro = null;
         if (Auth.user.isVaiTro()) {
@@ -296,10 +300,12 @@ public class TrangChu extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         QLDonHang qlDH = new QLDonHang(this, true);
+        this.dispose();
         qlDH.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        this.dispose();
         QLHoaDonJDialog qlHD = new QLHoaDonJDialog(this, true);
         qlHD.setVisible(true);
 
@@ -307,29 +313,35 @@ public class TrangChu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        this.dispose();
         //        // TODO add your handling code here:
-        QLKhuyenMai  khuyenMai = new QLKhuyenMai(this, true);
+        QLKhuyenMai khuyenMai = new QLKhuyenMai(this, true);
         khuyenMai.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         QLNhanVien nv = new QLNhanVien(this, true);
+        this.dispose();
         nv.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
         QLSanPham sanPham = new QLSanPham(this, true);
         sanPham.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         QLkhachhang kh = new QLkhachhang(this, true);
+        this.dispose();
+
         kh.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        this.dispose();
         QLThuocTinhSP ql = new QLThuocTinhSP(this, true);
         ql.setVisible(true);
     }//GEN-LAST:event_jButton9ActionPerformed

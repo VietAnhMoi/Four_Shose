@@ -157,4 +157,16 @@ public class CTHoaDonService {
         }
     }
 
+    public boolean checkSPinCTHD(String idSAnPham) {
+        String sql = "select * from ChiTietHoaDon where idSAnPham = ?";
+        try {
+            Connection con = DBConnect.getConnection();
+            PreparedStatement ps = con.prepareCall(sql);
+            ps.setObject(1, idSAnPham);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
