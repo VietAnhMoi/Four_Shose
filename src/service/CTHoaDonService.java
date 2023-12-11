@@ -169,4 +169,17 @@ public class CTHoaDonService {
             return false;
         }
     }
+    
+    public boolean checkIDKH(String idKH) {
+        String sql = "select * from khachhang where id = ?";
+        try {
+            Connection con = DBConnect.getConnection();
+            PreparedStatement ps = con.prepareCall(sql);
+            ps.setObject(1, idKH);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

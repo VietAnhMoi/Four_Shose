@@ -170,7 +170,7 @@ public class QLHoaDonJDialog extends javax.swing.JDialog {
         txtMaSP.setText("");
         txtMaNhanVien.setText("");
         txtSoLuong.setText("");
-
+        txtMaKH.setText("");
         txtThanhTien.setText("");
     }
 
@@ -238,6 +238,12 @@ public class QLHoaDonJDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Chi tiết hóa đơn này đã được thêm");
             return false;
         }
+        if (!txtMaKH.getText().equals("")) {
+            if (!serviceCT.checkIDKH(txtMaKH.getText())) {
+                JOptionPane.showMessageDialog(this, "Khách hàng này chưa có trong danh sách");
+                return false;
+            }
+        }
         return true;
     }
 
@@ -249,6 +255,7 @@ public class QLHoaDonJDialog extends javax.swing.JDialog {
         buttonGroup1.clearSelection();
 
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -856,6 +863,7 @@ public class QLHoaDonJDialog extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "Xóa thành công");
                     fillTableHDCT(serviceCT.getAllCTDH(idDH));
                     index = -1;
+                    this.clearFormCTHD();
                 } else {
                     JOptionPane.showMessageDialog(this, "Xóa thất bại");
                 }
